@@ -1,0 +1,13 @@
+name:        "APL"
+scopeName:   "source.apl"
+fileTypes:   ["apl", "dyalog"]
+patterns: [
+	
+	# Comments
+	{
+		"name":  "comment.line.apl"
+		"begin": "⍝"
+		"end":   "$"
+	}
+	
+]
