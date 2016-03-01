@@ -11,6 +11,8 @@ patterns: [
 		name:  "comment.line.apl"
 		begin: "⍝"
 		end:   "$"
+		captures:
+			0: {name: "punctuation.definition.comment.apl"}
 	}
 	
 	
