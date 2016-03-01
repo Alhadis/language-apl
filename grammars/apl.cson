@@ -1,6 +1,7 @@
 name:        "APL"
 scopeName:   "source.apl"
 fileTypes:   ["apl", "dyalog"]
+firstLineMatch: '^#!.*\\b(apl|dyalog)'
 patterns: [
 	
 	# Comments
@@ -10,4 +11,10 @@ patterns: [
 		"end":   "$"
 	}
 	
+	
+	# Shebang
+	{
+		"match": "\\A#!.*$"
+		"name":  "comment.line.shebang.apl"
+	}
 ]

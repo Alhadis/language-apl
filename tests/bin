@@ -1,0 +1,4 @@
+#!/usr/local/bin/apl --script
+txt←'<nowiki><html><body><p>This is <em>emphasized</em> text.</p></body></html></nowiki>'
+⎕←{⍵/⍨~{⍵∨≠\⍵}⍵∊'<>'}txt
+)OFF
