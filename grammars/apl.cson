@@ -8,16 +8,16 @@ patterns: [
 	
 	# Comments
 	{
-		"name":  "comment.line.apl"
-		"begin": "⍝"
-		"end":   "$"
+		name:  "comment.line.apl"
+		begin: "⍝"
+		end:   "$"
 	}
 	
 	
 	# Shebang
 	{
-		"match": "\\A#!.*$"
-		"name":  "comment.line.shebang.apl"
+		match: "\\A#!.*$"
+		name:  "comment.line.shebang.apl"
 	}
 ]
 
