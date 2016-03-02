@@ -2,6 +2,8 @@ name: "APL"
 scopeName: "source.apl"
 fileTypes: ["apl", "dyalog"]
 firstLineMatch: '^#!.*\\b(apl|dyalog)'
+foldingStartMarker: '\\{'
+foldingStopMarker:  '\\}'
 patterns: [
 	
 	{ include: "#strings" }
