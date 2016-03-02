@@ -130,12 +130,13 @@ repository:
 	
 	# Common patterns
 	main: {
-		patterns:[
+		patterns: [
 			{ include: "#comment" }
 			{ include: "#strings" }
 			{ include: "#float"   }
 			{ include: "#int"     }
 			{ include: "#name"    }
+			{ include: "#lambda"  }
 		]
 	}
 	
@@ -221,8 +222,30 @@ repository:
 			name: "storage.type.name.apl"
 			match: "[A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*"
 		}]
-
-
+	
+	
+	# Direct definition notation (Lambda functions)
+	lambda:
+		name: "meta.lambda.function.apl"
+		begin: "\\{"
+		end:   "\\}"
+		beginCaptures: {0: {name: "punctuation.definition.lambda.begin.apl"}}
+		endCaptures:   {0: {name: "punctuation.definition.lambda.end.apl"}}
+		patterns: [
+			{ include: "#main" }
+			{ include: "#lambda-variables" }
+		]
+	
+	
+	# Special variables accessible within the body of a lambda function
+	"lambda-variables":
+		patterns: [
+			{match: "[⍺⍶]", name: "variable.lambda.arguments.left.apl"}
+			{match: "[⍵⍹]", name: "variable.lambda.arguments.right.apl"}
+			{match: "χ",    name: "variable.lambda.arguments.axis.apl"}
+			{match: "λ",    name: "variable.lambda.symbol.apl"}
+		]
+	
 	
 	# Command arguments
 	"command-arguments":
