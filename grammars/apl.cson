@@ -27,8 +27,18 @@ patterns: [
 	}
 	
 	
+	
+	# MISC
+	#=====================================================================
+	{match: ";",       name: "keyword.operator.semicolon.apl"}
+	{match: "¯",       name: "keyword.operator.high-minus.apl"}
+	{match: "←",       name: "keyword.operator.assignment.apl"}
+	{match: "→",       name: "keyword.control.goto.apl"}
+	
+	
+	
 	# FUNCTIONS
-	#======================================================
+	#=====================================================================
 	# Monadic or Dyadic, depending on context
 	{match: "\\?",     name: "support.function.random.apl"}
 	{match: "⌈",       name: "support.function.ceiling.apl"}
