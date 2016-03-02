@@ -25,6 +25,65 @@ patterns: [
 		match: "\\A#!.*$"
 		name:  "comment.line.shebang.apl"
 	}
+	
+	
+	# FUNCTIONS
+	#======================================================
+	# Monadic or Dyadic, depending on context
+	{match: "\\?",     name: "support.function.random.apl"}
+	{match: "⌈",       name: "support.function.ceiling.apl"}
+	{match: "⌊",       name: "support.function.floor.apl"}
+	{match: "⍴",       name: "support.function.rho.apl"}
+	{match: "[∼~]",    name: "support.function.tilde.apl"}
+	{match: "[∣|]",    name: "support.function.absolute.apl"}
+	{match: "⍳",       name: "support.function.iota.apl"}
+	{match: "[⋆*]",    name: "support.function.exponent.apl"}
+	{match: "[-−]",    name: "support.function.minus.apl"}
+	{match: "\\+",     name: "support.function.plus.apl"}
+	{match: "×",       name: "support.function.times.apl"}
+	{match: "÷",       name: "support.function.divide.apl"}
+	{match: ",",       name: "support.function.catenate.apl"}
+	{match: "⌹",       name: "support.function.quad-divide.apl"}
+	{match: "○",       name: "support.function.circle.apl"}
+	{match: "⍟",       name: "support.function.logarithm.apl"}
+	{match: "⌽",       name: "support.function.rotate-last.apl"}
+	{match: "⊖",       name: "support.function.rotate-first.apl"}
+	{match: "⍕",       name: "support.function.format.apl"}
+	{match: "⍉",       name: "support.function.transpose.apl"}
+	{match: "!",       name: "support.function.factorial.apl"}
+	
+	
+	# Monadic-only
+	{match: "⍋",       name: "support.function.grade-up.apl"}
+	{match: "⍒",       name: "support.function.grade-down.apl"}
+	{match: "⍎",       name: "support.function.execute.apl"}
+	
+	
+	# Dyadic-only functions
+	{match: "∈",       name: "support.function.member-of.apl"}
+	{match: "↑",       name: "support.function.take.apl"}
+	{match: "↓",       name: "support.function.drop.apl"}
+	{match: "⊥",       name: "support.function.decode.apl"}
+	{match: "⊤",       name: "support.function.encode.apl"}
+	{match: "\\x5C",   name: "support.function.backslash.apl"}
+	{match: "\\/",     name: "support.function.slash.apl"}
+	{match: "¨",       name: "support.function.each.apl"}
+	{match: "<",       name: "support.function.less.apl"}
+	{match: "≤",       name: "support.function.less-or-equal.apl"}
+	{match: "=",       name: "support.function.equal.apl"}
+	{match: "≥",       name: "support.function.greater-or-equal.apl"}
+	{match: ">",       name: "support.function.greater.apl"}
+	{match: "≠",       name: "support.function.not-equal.apl"}
+	{match: "∨",       name: "support.function.or.apl"}
+	{match: "∧",       name: "support.function.and.apl"}
+	{match: "⍱",       name: "support.function.nor.apl"}
+	{match: "⍲",       name: "support.function.nand.apl"}
+	
+	# Operators
+	{match: "⌿",       name: "support.function.slash-bar.apl"}
+	{match: "⍀",       name: "support.function.backslash-bar.apl"}
+	{match: "\\.",     name: "support.function.inner-product.apl"}
+	{match: "∘\\.",    name: "support.function.outer-product.apl"}
 ]
 
 
