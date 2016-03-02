@@ -1,5 +1,12 @@
 #!/usr/local/bin/apl --script --
 
-]sampleb xyz -TZ=123
+⍝ Space before comments
+]sampleb xyz -TZ=123 ⍝COMMENT
 ]COLOR OFF
-)LIST vars
+)LIST vars ⍝COMMENT
+
+
+⍝ No whitespace
+]sampleb xyz -TZ=123⍝COMMENT
+]COLOR OFF
+)LIST vars⍝COMMENT

@@ -9,16 +9,6 @@ patterns: [
 	{ include: "#main" }
 	
 	
-	# Comments
-	{
-		name:  "comment.line.apl"
-		begin: "⍝"
-		end:   "$"
-		captures:
-			0: {name: "punctuation.definition.comment.apl"}
-	}
-	
-	
 	# Shebang
 	{
 		match: "\\A#!.*$"
@@ -141,12 +131,22 @@ repository:
 	# Common patterns
 	main: {
 		patterns:[
+			{ include: "#comment" }
 			{ include: "#strings" }
 			{ include: "#float"   }
 			{ include: "#int"     }
 			{ include: "#name"    }
 		]
 	}
+	
+	
+	# Comment-lines
+	comment:
+		name:  "comment.line.apl"
+		begin: "⍝"
+		end:   "$"
+		captures:
+			0: {name: "punctuation.definition.comment.apl"}
 	
 	
 	# Floating-point numbers
@@ -238,7 +238,7 @@ repository:
 		patterns: [{
 			name: "variable.parameter.switch.apl"
 			begin: "(?<=\\s)(-)([A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*)(=)"
-			end:   "\\b(?=\\s)"
+			end:   "\\b(?=[\\s⍝])"
 			beginCaptures:
 				1: {name: "punctuation.delimiter.switch.apl"}
 				2: {name: "entity.name.switch.apl"}
