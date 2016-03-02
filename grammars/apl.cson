@@ -238,9 +238,10 @@ repository:
 		patterns: [{
 			name: "variable.parameter.switch.apl"
 			begin: "(?<=\\s)(-)([A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*)(=)"
-			end:   "\\b(?=[\\s⍝])"
+			end:   "\\b(?=\\s)"
 			beginCaptures:
 				1: {name: "punctuation.delimiter.switch.apl"}
 				2: {name: "entity.name.switch.apl"}
 				3: {name: "punctuation.assignment.switch.apl"}
+			patterns: [{include: "#main"}]
 		}]

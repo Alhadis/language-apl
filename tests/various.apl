@@ -7,6 +7,6 @@
 
 
 ⍝ No whitespace
-]sampleb xyz -TZ=123⍝COMMENT
+]sampleb 23 -TZ=123⍝COMMENT
 ]COLOR OFF
 )LIST vars⍝COMMENT
