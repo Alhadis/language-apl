@@ -27,6 +27,24 @@ patterns: [
 	}
 	
 	
+	# System variables
+	{
+		match: "(⎕)[A-Z]*"
+		name: "support.system.variable.apl"
+		captures:
+			1: {name: "punctuation.definition.quad.apl"}
+	}
+	
+	
+	# System functions
+	{
+		match: "(\\))[A-Z]+"
+		name: "support.system.function.apl"
+		captures:
+			1: {name: "punctuation.definition.bracket.apl"}
+	}
+	
+	
 	
 	# MISC
 	#=====================================================================
