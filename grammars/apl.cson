@@ -5,6 +5,8 @@ firstLineMatch: '^#!.*\\b(apl|dyalog)'
 patterns: [
 	
 	{ include: "#strings" }
+	{ include: "#float"   }
+	{ include: "#int"     }
 	
 	# Comments
 	{
@@ -23,34 +25,70 @@ patterns: [
 	}
 ]
 
+
 repository:
+	
+	# Floating-point numbers
+	float: {
+		patterns: [{
+			name:  "constant.numeric.float.apl"
+			match: '(?<!\\$)\\b(\\d+)(\\.)(\\d+([Ee]([\\+\\-])?\\d+)?)\\b'
+			captures:
+				1: {name: "leading.decimal"}
+				2: {name: "decimal.separator"}
+				3: {name: "trailing.decimal"}
+				4: {name: "exponential.decimal"}
+		}, {
+			name:  "constant.numeric.float.no-trailing-digits.apl"
+			match: '\\b(\\d+)(\\.)(?!\\w)'
+			captures:
+				1: {name: "leading.decimal"}
+				2: {name: "decimal.separator"}
+		}, {
+			name:  "constant.numeric.float.no-leading-digits.apl"
+			match: '(?<!\\w)(\\.)(\\d+([Ee]([\\+\\-])?\\d+)?)\\b'
+			captures: {
+				1: {name: "decimal.separator"}
+				2: {name: "trailing.decimal"}
+				3: {name: "exponential.decimal"}
+			}
+		}]
+	}
+	
+	
+	# Integers
+	int: {
+		patterns: [{
+			name:  "constant.numeric.int.apl"
+			match: '(?<!\\$)\\b\\d+\\b'
+		}]
+	}
+	
+	
+	# String literals
 	strings:
-		patterns: [
-			{
-				name: "string.quoted.single.apl"
-				begin: "'"
-				end:   "'|$"
-				beginCaptures:
-					0: {name: "punctuation.definition.string.begin.apl"}
-				endCaptures:
-					0: {name: "punctuation.definition.string.end.apl"}
-				patterns: [{
-					match: "[^']*[^'\\n\\r\\\\]$"
-					name: "invalid.illegal.string.apl"
-				}]
-			}
-			
-			{
-				name: "string.quoted.double.apl",
-				begin: '"'
-				end:   '"|$'
-				beginCaptures:
-					0: {name: "punctuation.definition.string.begin.apl"}
-				endCaptures:
-					0: {name: "punctuation.definition.string.end.apl"}
-				patterns: [{
-					match: '[^"]*[^"\\n\\r\\\\]$'
-					name: "invalid.illegal.string.apl"
-				}]
-			}
-		]
+		patterns: [{
+			name: "string.quoted.single.apl"
+			begin: "'"
+			end:   "'|$"
+			beginCaptures:
+				0: {name: "punctuation.definition.string.begin.apl"}
+			endCaptures:
+				0: {name: "punctuation.definition.string.end.apl"}
+			patterns: [{
+				match: "[^']*[^'\\n\\r\\\\]$"
+				name: "invalid.illegal.string.apl"
+			}]
+		}, {
+			name: "string.quoted.double.apl",
+			begin: '"'
+			end:   '"|$'
+			beginCaptures:
+				0: {name: "punctuation.definition.string.begin.apl"}
+			endCaptures:
+				0: {name: "punctuation.definition.string.end.apl"}
+			patterns: [{
+				match: '[^"]*[^"\\n\\r\\\\]$'
+				name: "invalid.illegal.string.apl"
+			}]
+		}]
