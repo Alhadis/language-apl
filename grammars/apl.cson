@@ -9,6 +9,7 @@ patterns: [
 	{ include: "#strings" }
 	{ include: "#float"   }
 	{ include: "#int"     }
+	{ include: "#name"    }
 	
 	# Comments
 	{
@@ -180,4 +181,12 @@ repository:
 				match: '[^"]*[^"\\n\\r\\\\]$'
 				name: "invalid.illegal.string.apl"
 			}]
+		}]
+
+	
+	# Names
+	name:
+		patterns: [{
+			name: "storage.type.name.apl"
+			match: "[A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*"
 		}]
