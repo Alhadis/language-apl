@@ -6,10 +6,8 @@ foldingStartMarker: '\\{'
 foldingStopMarker:  '\\}'
 patterns: [
 	
-	{ include: "#strings" }
-	{ include: "#float"   }
-	{ include: "#int"     }
-	{ include: "#name"    }
+	{ include: "#main" }
+	
 	
 	# Comments
 	{
@@ -37,12 +35,33 @@ patterns: [
 	}
 	
 	
-	# System functions
+	# System commands
 	{
-		match: "(\\))[A-Z]+"
-		name: "support.system.function.apl"
-		captures:
-			1: {name: "punctuation.definition.bracket.apl"}
+		name: "meta.system.command.apl"
+		begin: "^\\s*(\\)\\S+)"
+		end:   "$"
+		beginCaptures:
+			1: {name: "entity.name.command.apl"}
+		patterns: [
+			{ include: "#command-arguments" }
+			{ include: "#command-switches"  }
+			{ include: "#main" }
+		]
+	}
+	
+	
+	# User commands
+	{
+		name: "meta.user.command.apl"
+		begin: "^\\s*(\\]\\S+)"
+		end:   "$"
+		beginCaptures:
+			1: {name: "entity.name.command.apl"}
+		patterns: [
+			{ include: "#command-arguments" }
+			{ include: "#command-switches"  }
+			{ include: "#main" }
+		]
 	}
 	
 	
@@ -116,7 +135,19 @@ patterns: [
 ]
 
 
+
 repository:
+	
+	# Common patterns
+	main: {
+		patterns:[
+			{ include: "#strings" }
+			{ include: "#float"   }
+			{ include: "#int"     }
+			{ include: "#name"    }
+		]
+	}
+	
 	
 	# Floating-point numbers
 	float: {
@@ -189,4 +220,27 @@ repository:
 		patterns: [{
 			name: "storage.type.name.apl"
 			match: "[A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*"
+		}]
+
+
+	
+	# Command arguments
+	"command-arguments":
+		patterns: [{
+			name: "variable.parameter.argument.apl"
+			begin: "\\b(?=\\S)"
+			end:   "\\b(?=\\s)"
+			patterns: [{include: "#main"}]
+		}]
+	
+	# Switches (Dyalog-specific feature)
+	"command-switches":
+		patterns: [{
+			name: "variable.parameter.switch.apl"
+			begin: "(?<=\\s)(-)([A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*)(=)"
+			end:   "\\b(?=\\s)"
+			beginCaptures:
+				1: {name: "punctuation.delimiter.switch.apl"}
+				2: {name: "entity.name.switch.apl"}
+				3: {name: "punctuation.assignment.switch.apl"}
 		}]
