@@ -58,7 +58,10 @@ patterns: [
 		endCaptures:
 			0: {name: "constant.other.apl"}
 		contentName: "text.embedded.html.basic"
-		patterns: [{ include: "text.html.basic" }]
+		patterns: [
+			{ include: "text.html.basic" }
+			{ include: "#embedded-apl"   }
+		]
 	}
 ]
 
@@ -284,4 +287,18 @@ repository:
 				2: {name: "entity.name.switch.apl"}
 				3: {name: "punctuation.assignment.switch.apl"}
 			patterns: [{include: "#main"}]
+		}]
+
+
+	# Embedded APL sequences (for GNU APL heredocs)
+	"embedded-apl":
+		patterns: [{
+			name: "meta.embedded.block.apl"
+			begin: "(?i)(<(\\?|%)(?:apl(?=\\s+)|=))"
+			end:   "(?<=\\s)(\\2>)"
+			patterns: [{include: "#main"}]
+			beginCaptures:
+				1: {name: "punctuation.section.embedded.begin.apl"}
+			endCaptures:
+				1: {name: "punctuation.section.embedded.end.apl"}
 		}]
