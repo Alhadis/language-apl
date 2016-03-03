@@ -16,15 +16,6 @@ patterns: [
 	}
 	
 	
-	# System variables
-	{
-		match: "(⎕)[A-Z]*"
-		name: "support.system.variable.apl"
-		captures:
-			1: {name: "punctuation.definition.quad.apl"}
-	}
-	
-	
 	# System commands
 	{
 		name: "meta.system.command.apl"
@@ -69,75 +60,6 @@ patterns: [
 		contentName: "text.embedded.html.basic"
 		patterns: [{ include: "text.html.basic" }]
 	}
-	
-	
-	
-	# MISC
-	#=====================================================================
-	{match: ";",       name: "keyword.operator.semicolon.apl"}
-	{match: "¯",       name: "keyword.operator.high-minus.apl"}
-	{match: "←",       name: "keyword.operator.assignment.apl"}
-	{match: "→",       name: "keyword.control.goto.apl"}
-	
-	
-	
-	# FUNCTIONS
-	#=====================================================================
-	# Monadic or Dyadic, depending on context
-	{match: "\\?",     name: "keyword.operator.random.apl"}
-	{match: "⌈",       name: "keyword.operator.ceiling.apl"}
-	{match: "⌊",       name: "keyword.operator.floor.apl"}
-	{match: "⍴",       name: "keyword.operator.rho.apl"}
-	{match: "[∼~]",    name: "keyword.operator.tilde.apl"}
-	{match: "[∣|]",    name: "keyword.operator.absolute.apl"}
-	{match: "⍳",       name: "keyword.operator.iota.apl"}
-	{match: "[⋆*]",    name: "keyword.operator.exponent.apl"}
-	{match: "[-−]",    name: "keyword.operator.minus.apl"}
-	{match: "\\+",     name: "keyword.operator.plus.apl"}
-	{match: "×",       name: "keyword.operator.times.apl"}
-	{match: "÷",       name: "keyword.operator.divide.apl"}
-	{match: ",",       name: "keyword.operator.catenate.apl"}
-	{match: "⌹",       name: "keyword.operator.quad-divide.apl"}
-	{match: "○",       name: "keyword.operator.circle.apl"}
-	{match: "⍟",       name: "keyword.operator.logarithm.apl"}
-	{match: "⌽",       name: "keyword.operator.rotate-last.apl"}
-	{match: "⊖",       name: "keyword.operator.rotate-first.apl"}
-	{match: "⍕",       name: "keyword.operator.format.apl"}
-	{match: "⍉",       name: "keyword.operator.transpose.apl"}
-	{match: "!",       name: "keyword.operator.factorial.apl"}
-	
-	
-	# Monadic-only
-	{match: "⍋",       name: "keyword.operator.grade-up.apl"}
-	{match: "⍒",       name: "keyword.operator.grade-down.apl"}
-	{match: "⍎",       name: "keyword.operator.execute.apl"}
-	
-	
-	# Dyadic-only functions
-	{match: "∈",       name: "keyword.operator.member-of.apl"}
-	{match: "↑",       name: "keyword.operator.take.apl"}
-	{match: "↓",       name: "keyword.operator.drop.apl"}
-	{match: "⊥",       name: "keyword.operator.decode.apl"}
-	{match: "⊤",       name: "keyword.operator.encode.apl"}
-	{match: "\\x5C",   name: "keyword.operator.backslash.apl"}
-	{match: "\\/",     name: "keyword.operator.slash.apl"}
-	{match: "¨",       name: "keyword.operator.each.apl"}
-	{match: "<",       name: "keyword.operator.less.apl"}
-	{match: "≤",       name: "keyword.operator.less-or-equal.apl"}
-	{match: "=",       name: "keyword.operator.equal.apl"}
-	{match: "≥",       name: "keyword.operator.greater-or-equal.apl"}
-	{match: ">",       name: "keyword.operator.greater.apl"}
-	{match: "≠",       name: "keyword.operator.not-equal.apl"}
-	{match: "∨",       name: "keyword.operator.or.apl"}
-	{match: "∧",       name: "keyword.operator.and.apl"}
-	{match: "⍱",       name: "keyword.operator.nor.apl"}
-	{match: "⍲",       name: "keyword.operator.nand.apl"}
-	
-	# Operators
-	{match: "⌿",       name: "keyword.operator.slash-bar.apl"}
-	{match: "⍀",       name: "keyword.operator.backslash-bar.apl"}
-	{match: "\\.",     name: "keyword.operator.inner-product.apl"}
-	{match: "∘\\.",    name: "keyword.operator.outer-product.apl"}
 ]
 
 
@@ -153,6 +75,8 @@ repository:
 			{ include: "#int"     }
 			{ include: "#name"    }
 			{ include: "#lambda"  }
+			{ include: "#symbols" }
+			{ include: "#sysvars" }
 		]
 	}
 	
@@ -240,6 +164,75 @@ repository:
 		}]
 	
 	
+	
+	# Symbols
+	symbols:
+		patterns: [
+			{match: ";",       name: "keyword.operator.semicolon.apl"}
+			{match: "¯",       name: "keyword.operator.high-minus.apl"}
+			{match: "←",       name: "keyword.operator.assignment.apl"}
+			{match: "→",       name: "keyword.control.goto.apl"}
+			
+			
+			# Monadic or Dyadic functions, depending on context
+			{match: "\\?",     name: "keyword.operator.random.apl"}
+			{match: "⌈",       name: "keyword.operator.ceiling.apl"}
+			{match: "⌊",       name: "keyword.operator.floor.apl"}
+			{match: "⍴",       name: "keyword.operator.rho.apl"}
+			{match: "[∼~]",    name: "keyword.operator.tilde.apl"}
+			{match: "[∣|]",    name: "keyword.operator.absolute.apl"}
+			{match: "⍳",       name: "keyword.operator.iota.apl"}
+			{match: "[⋆*]",    name: "keyword.operator.exponent.apl"}
+			{match: "[-−]",    name: "keyword.operator.minus.apl"}
+			{match: "\\+",     name: "keyword.operator.plus.apl"}
+			{match: "×",       name: "keyword.operator.times.apl"}
+			{match: "÷",       name: "keyword.operator.divide.apl"}
+			{match: ",",       name: "keyword.operator.catenate.apl"}
+			{match: "⌹",       name: "keyword.operator.quad-divide.apl"}
+			{match: "○",       name: "keyword.operator.circle.apl"}
+			{match: "⍟",       name: "keyword.operator.logarithm.apl"}
+			{match: "⌽",       name: "keyword.operator.rotate-last.apl"}
+			{match: "⊖",       name: "keyword.operator.rotate-first.apl"}
+			{match: "⍕",       name: "keyword.operator.format.apl"}
+			{match: "⍉",       name: "keyword.operator.transpose.apl"}
+			{match: "!",       name: "keyword.operator.factorial.apl"}
+			
+			
+			# Monadic-only functions
+			{match: "⍋",       name: "keyword.operator.grade-up.apl"}
+			{match: "⍒",       name: "keyword.operator.grade-down.apl"}
+			{match: "⍎",       name: "keyword.operator.execute.apl"}
+			
+			
+			# Dyadic-only functions
+			{match: "∈",       name: "keyword.operator.member-of.apl"}
+			{match: "↑",       name: "keyword.operator.take.apl"}
+			{match: "↓",       name: "keyword.operator.drop.apl"}
+			{match: "⊥",       name: "keyword.operator.decode.apl"}
+			{match: "⊤",       name: "keyword.operator.encode.apl"}
+			{match: "\\x5C",   name: "keyword.operator.backslash.apl"}
+			{match: "\\/",     name: "keyword.operator.slash.apl"}
+			{match: "¨",       name: "keyword.operator.each.apl"}
+			{match: "<",       name: "keyword.operator.less.apl"}
+			{match: "≤",       name: "keyword.operator.less-or-equal.apl"}
+			{match: "=",       name: "keyword.operator.equal.apl"}
+			{match: "≥",       name: "keyword.operator.greater-or-equal.apl"}
+			{match: ">",       name: "keyword.operator.greater.apl"}
+			{match: "≠",       name: "keyword.operator.not-equal.apl"}
+			{match: "∨",       name: "keyword.operator.or.apl"}
+			{match: "∧",       name: "keyword.operator.and.apl"}
+			{match: "⍱",       name: "keyword.operator.nor.apl"}
+			{match: "⍲",       name: "keyword.operator.nand.apl"}
+			
+			# Operators
+			{match: "⌿",       name: "keyword.operator.slash-bar.apl"}
+			{match: "⍀",       name: "keyword.operator.backslash-bar.apl"}
+			{match: "\\.",     name: "keyword.operator.inner-product.apl"}
+			{match: "∘\\.",    name: "keyword.operator.outer-product.apl"}
+		]
+	
+	
+	
 	# Direct definition notation (Lambda functions)
 	lambda:
 		name: "meta.lambda.function.apl"
@@ -261,6 +254,14 @@ repository:
 			{match: "χ",    name: "variable.lambda.arguments.axis.apl"}
 			{match: "λ",    name: "variable.lambda.symbol.apl"}
 		]
+	
+	
+	# System variables
+	sysvars:
+		match: "(⎕)[A-Z]*"
+		name: "support.system.variable.apl"
+		captures:
+			1: {name: "punctuation.definition.quad.apl"}
 	
 	
 	# Command arguments
