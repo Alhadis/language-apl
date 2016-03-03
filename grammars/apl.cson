@@ -16,6 +16,28 @@ patterns: [
 	}
 	
 	
+	# Brackets
+	{
+		name: "meta.round.bracketed.group.apl"
+		patterns: [{include: "#main"}]
+		begin: "\\("
+		end:   "\\)"
+		beginCaptures: {0: {name: "punctuation.round.bracket.begin.apl"}}
+		endCaptures:   {0: {name: "punctuation.round.bracket.end.apl"}}
+	}
+	
+	
+	# Square brackets
+	{
+		name: "meta.square.bracketed.group.apl"
+		patterns: [{include: "#main"}]
+		begin: "\\["
+		end:   "\\]"
+		beginCaptures: {0: {name: "punctuation.square.bracket.begin.apl"}}
+		endCaptures:   {0: {name: "punctuation.square.bracket.end.apl"}}
+	}
+	
+	
 	# System commands
 	{
 		name: "meta.system.command.apl"
