@@ -55,6 +55,22 @@ patterns: [
 	}
 	
 	
+	# Heredoc (GNU APL)
+	{
+		name: "meta.heredoc.apl"
+		begin: "^\\s*(?:(?:⎕|[A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*)\\s*←\\s*)?.*?⎕INP\\s+(?:('|\")(.+?)\\1).*$"
+		end:   "^\\2$"
+		beginCaptures:
+			0:
+				name: "meta.heredoc.apl"
+				patterns: [{include: "#main"}]
+		endCaptures:
+			0: {name: "constant.other.apl"}
+		contentName: "text.embedded.html.basic"
+		patterns: [{ include: "text.html.basic" }]
+	}
+	
+	
 	
 	# MISC
 	#=====================================================================
