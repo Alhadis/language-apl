@@ -126,7 +126,7 @@ yZ←⊃ HTML∆Ol I1, I2, I3, I4
       ⍝ We first give an example of ⎕INP in the style of PHP and another,
       ⍝ more compact, example further down below.
       ⍝
-      yBODY← '<?apl' '?>' ⎕INP 'END-OF-⎕INP'   ⍝ php style
+      yBODY← '<?apl' '?>' ⎕INP 'END-OF-HTML'   ⍝ PHP-style
 
 <DIV class="c1">
 <?apl HTML∆H1[''] xTITLE ?>
@@ -275,7 +275,7 @@ the creation of an own hosting account would be an overkill.
 
 </DIV>
 
-END-OF-⎕INP
+END-OF-HTML
 
 
       ⍝ the text above used an 'escape style' similar to PHP
@@ -286,7 +286,7 @@ END-OF-⎕INP
       ⍝ preferred style, for example the more compact { ... } style
       ⍝ as shown in the following example:
       ⍝
-      yBODY←yBODY, (,¨'{}') ⎕INP 'END-OF-⎕INP'   ⍝ more compact style
+      yBODY←yBODY, (,¨'{}') ⎕INP 'END-OF-HTML'   ⍝ more compact style
 <DIV class="c7">
 Return to {HTML∆x2y "http://www.gnu.org/home.html" HTML∆A "GNU's home page"}.
 <P>
@@ -309,7 +309,7 @@ Copyright (C) 2014 Free Software Foundation, Inc.,
 Verbatim copying and distribution of this entire article is
 permitted in any medium, provided this notice is preserved.<P>
 </DIV>
-END-OF-⎕INP
+END-OF-HTML
 
       HTML∆emit HTML∆Document
 

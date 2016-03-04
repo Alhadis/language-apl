@@ -6,7 +6,8 @@ foldingStartMarker: '\\{'
 foldingStopMarker:  '\\}'
 patterns: [
 	
-	{ include: "#main" }
+	{ include: "#heredocs" }
+	{ include: "#main"     }
 	
 	
 	# Shebang
@@ -66,25 +67,6 @@ patterns: [
 			{ include: "#main" }
 		]
 	}
-	
-	
-	# Heredoc (GNU APL)
-	{
-		name: "meta.heredoc.apl"
-		begin: "^\\s*(?:(?:⎕|[A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*)\\s*←\\s*)?.*?⎕INP\\s+(?:('|\")(.+?)\\1).*$"
-		end:   "^\\2$"
-		beginCaptures:
-			0:
-				name: "meta.heredoc.apl"
-				patterns: [{include: "#main"}]
-		endCaptures:
-			0: {name: "constant.other.apl"}
-		contentName: "text.embedded.html.basic"
-		patterns: [
-			{ include: "text.html.basic" }
-			{ include: "#embedded-apl"   }
-		]
-	}
 ]
 
 
@@ -100,8 +82,8 @@ repository:
 			{ include: "#int"     }
 			{ include: "#name"    }
 			{ include: "#lambda"  }
-			{ include: "#symbols" }
 			{ include: "#sysvars" }
+			{ include: "#symbols" }
 		]
 	}
 	
@@ -332,8 +314,92 @@ repository:
 				3: {name: "punctuation.assignment.switch.apl"}
 			patterns: [{include: "#main"}]
 		}]
+	
+	
+	# Heredocs (GNU APL)
+	heredocs:
+		patterns: [{
+			
+			# HTML
+			name: "meta.heredoc.apl"
+			begin: "^.*?⎕INP\\s+('|\")((?i).*?HTML?.*?)\\1.*$"
+			end:   "^.*?\\2.*?$"
+			beginCaptures: {0: {patterns: [{include: "#main"}]}}
+			endCaptures:   {0: {name: "constant.other.apl"}}
+			contentName: "text.embedded.html.basic"
+			patterns: [
+				{ include: "text.html.basic" }
+				{ include: "#embedded-apl"   }
+			]
+			
+		}, {
+			
+			# XML
+			name: "meta.heredoc.apl"
+			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:XML|XSLT|SVG|RSS).*?)\\1.*$"
+			end:   "^.*?\\2.*?$"
+			beginCaptures: {0: {patterns: [{include: "#main"}]}}
+			endCaptures:   {0: {name: "constant.other.apl"}}
+			contentName: "text.embedded.xml"
+			patterns: [
+				{ include: "text.xml"      }
+				{ include: "#embedded-apl" }
+			]
+			
+		}, {
+			
+			# CSS
+			name: "meta.heredoc.apl"
+			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:CSS|stylesheet).*?)\\1.*$"
+			end:   "^.*?\\2.*?$"
+			beginCaptures: {0: {patterns: [{include: "#main"}]}}
+			endCaptures:   {0: {name: "constant.other.apl"}}
+			contentName: "source.embedded.css"
+			patterns: [
+				{ include: "source.css"    }
+				{ include: "#embedded-apl" }
+			]
+			
+		}, {
+			
+			# JavaScript
+			name: "meta.heredoc.apl"
+			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:JS(?!ON)|(?:ECMA|J|Java).?Script).*?)\\1.*$"
+			end:   "^.*?\\2.*?$"
+			beginCaptures: {0: {patterns: [{include: "#main"}]}}
+			endCaptures:   {0: {name: "constant.other.apl"}}
+			contentName: "source.embedded.js"
+			patterns: [
+				{ include: "source.js"     }
+				{ include: "#embedded-apl" }
+			]
+			
+		}, {
+			
+			# JSON
+			name: "meta.heredoc.apl"
+			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:JSON).*?)\\1.*$"
+			end:   "^.*?\\2.*?$"
+			beginCaptures: {0: {patterns: [{include: "#main"}]}}
+			endCaptures:   {0: {name: "constant.other.apl"}}
+			contentName: "source.embedded.json"
+			patterns: [
+				{ include: "source.json"   }
+				{ include: "#embedded-apl" }
+			]
+		}, {
+			
+			# Raw text
+			name: "meta.heredoc.apl"
+			begin: "^.*?⎕INP\\s+('|\")(?i)((?:Raw|Plain)?\\s*Te?xt)\\1.*$"
+			end:   "^.*?\\2.*?$"
+			beginCaptures: {0: {patterns: [{include: "#main"}]}}
+			endCaptures:   {0: {name: "constant.other.apl"}}
+			patterns: [{ include: "#embedded-apl" }]
+		}]
 
-
+	
+	
 	# Embedded APL sequences (for GNU APL heredocs)
 	"embedded-apl":
 		patterns: [{
