@@ -256,7 +256,7 @@ repository:
 			{match: "→",       name: "keyword.control.goto.apl"}
 			{match: "⍬",       name: "constant.language.zilde.apl"}
 			{match: "⋄",       name: "keyword.operator.diamond.apl"}
-			{match: "∇",       name: "keyword.control.recurse.apl"}
+			{match: "∇",       name: "keyword.control.nabla.apl"}
 			{match: "⎕",       name: "keyword.operator.quad.apl"}
 		]
 	
