@@ -173,7 +173,7 @@ repository:
 	name:
 		patterns: [{
 			name: "storage.type.name.apl"
-			match: "[A-Za-z∆⍙_]+[A-Za-z0-9∆⍙_¯]*"
+			match: "[A-Za-z_∆⍙]+[\\w∆⍙¯]*"
 		}]
 	
 	
@@ -352,7 +352,7 @@ repository:
 	"command-switches":
 		patterns: [{
 			name: "variable.parameter.switch.apl"
-			begin: "(?<=\\s)(-)([A-Za-z0-9∆⍙_]+[A-Za-z0-9∆⍙_¯]*)(=)"
+			begin: "(?<=\\s)(-)([\\w∆⍙]+[\\w∆⍙¯]*)(=)"
 			end:   "\\b(?=\\s)"
 			beginCaptures:
 				1: {name: "punctuation.delimiter.switch.apl"}
