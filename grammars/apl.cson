@@ -321,6 +321,8 @@ repository:
 	# Special variables accessible within the body of a lambda function
 	"lambda-variables":
 		patterns: [
+			{match: "⍺⍺",   name: "variable.lambda.operands.left.apl"}
+			{match: "⍵⍵",   name: "variable.lambda.operands.right.apl"}
 			{match: "[⍺⍶]", name: "variable.lambda.arguments.left.apl"}
 			{match: "[⍵⍹]", name: "variable.lambda.arguments.right.apl"}
 			{match: "χ",    name: "variable.lambda.arguments.axis.apl"}
