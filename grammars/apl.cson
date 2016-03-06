@@ -146,10 +146,8 @@ repository:
 			name: "string.quoted.single.apl"
 			begin: "'"
 			end:   "'|$"
-			beginCaptures:
-				0: {name: "punctuation.definition.string.begin.apl"}
-			endCaptures:
-				0: {name: "punctuation.definition.string.end.apl"}
+			beginCaptures: {0: {name: "punctuation.definition.string.begin.apl"}}
+			endCaptures:   {0: {name: "punctuation.definition.string.end.apl"}}
 			patterns: [{
 				match: "[^']*[^'\\n\\r\\\\]$"
 				name: "invalid.illegal.string.apl"
@@ -158,10 +156,8 @@ repository:
 			name: "string.quoted.double.apl",
 			begin: '"'
 			end:   '"|$'
-			beginCaptures:
-				0: {name: "punctuation.definition.string.begin.apl"}
-			endCaptures:
-				0: {name: "punctuation.definition.string.end.apl"}
+			beginCaptures: {0: {name: "punctuation.definition.string.begin.apl"}}
+			endCaptures:   {0: {name: "punctuation.definition.string.end.apl"}}
 			patterns: [{
 				match: '[^"]*[^"\\n\\r\\\\]$'
 				name: "invalid.illegal.string.apl"
