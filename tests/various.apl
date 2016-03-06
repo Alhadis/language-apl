@@ -25,3 +25,38 @@ Another3DModel ← Mesh
 ]sampleb 23 -TZ=123⍝COMMENT
 ]COLOR OFF
 )LIST vars⍝COMMENT
+
+
+⍝ Function: Valid
+∇R ← X FUNCTION Y ;A;B
+	R ← X + Y
+∇
+
+⍝ Function: Invalid
+∇R ← X FUNCTION Y ;A;B;
+	R ← X + Y
+∇
+
+
+⍝ Operator: Valid
+∇R ← X (LOP OPERATOR ROP) Y ;A;B
+	R ← X + Y
+∇
+
+⍝ Operator: Invalid
+∇R ← X (LOP OPERATOR ROP) Y ;A;B;
+	R ← X + Y
+∇
+
+∇R ← X (LOP OPERATOR ROP) Y Whoops;A;B;;;a
+	R ← X + Y
+∇
+
+
+∇R ← X (LOP OPERATOR ROP) Y Whoops;A;B;a
+	R ← X + Y
+∇
+
+∇R ← X (LOP OPERATOR ROP) Y Invalid;A;B;a;
+	R ← X + Y
+∇

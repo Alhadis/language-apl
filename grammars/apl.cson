@@ -318,7 +318,7 @@ repository:
 	definition:
 		patterns: [{
 			name:  "meta.function.apl"
-			begin: "^\\s*?(∇)(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*(←))?\\s*(?:([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s+)?(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)|(\\((\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*\\s*)?\\)))(\\s+[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*((?:\\s*;\\s*[⎕A-Za-z_∆⍙]+[\\w∆⍙¯]*)+)?\\s*(⍝.*)?$"
+			begin: "^\\s*?(∇)(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*(←))?\\s*(?:([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s+)?(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)|(\\((\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*\\s*)?\\)))(\\s+[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*([^;]+)?((?:\\s*;\\s*[;⎕A-Za-z_∆⍙]+[\\w∆⍙¯]*)+)?\\s*?(;+)?\\s*?(⍝.*)?$"
 			end:   "^\\s*?(?:(∇)|(⍫))\\s*?(⍝.*?)?$"
 			patterns: [{ include: "$self" }]
 			beginCaptures:
@@ -333,8 +333,10 @@ repository:
 				8:  {name: "entity.function.name.apl"}
 				9:  {name: "entity.function.operands.right.apl"}
 				10: {name: "entity.function.arguments.right.apl"}
-				11: {name: "entity.function.local-variables.apl"}
-				12: {name: "comment.line.apl"}
+				11: {name: "invalid.illegal.arguments.right.apl"}
+				12: {name: "entity.function.local-variables.apl"}
+				13: {name: "invalid.illegal.local-variables.apl"}
+				14: {name: "comment.line.apl"}
 			endCaptures:
 				1:  {name: "punctuation.definition.function.end.nabla.apl"}
 				2:  {name: "punctuation.definition.function.end.lock.apl"}
