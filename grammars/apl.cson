@@ -269,6 +269,47 @@ repository:
 			{match: "∇",       name: "keyword.operator.nabla.apl"}
 			{match: "⍫",       name: "keyword.operator.lock.apl"}
 			{match: "⎕",       name: "keyword.operator.quad.apl"}
+			
+			
+			# Unused
+			{match: "⌺",       name: "keyword.operator.quad-diamond.apl"}
+			{match: "⌻",       name: "keyword.operator.quad-jot.apl"}
+			{match: "⌼",       name: "keyword.operator.quad-circle.apl"}
+			{match: "⌾",       name: "keyword.operator.circle-jot.apl"}
+			{match: "⍁",       name: "keyword.operator.quad-slash.apl"}
+			{match: "⍂",       name: "keyword.operator.quad-backslash.apl"}
+			{match: "⍃",       name: "keyword.operator.quad-less.apl"}
+			{match: "⍄",       name: "keyword.operator.greater.apl"}
+			{match: "⍅",       name: "keyword.operator.vane-left.apl"}
+			{match: "⍆",       name: "keyword.operator.vane-right.apl"}
+			{match: "⍇",       name: "keyword.operator.quad-arrow-left.apl"}
+			{match: "⍈",       name: "keyword.operator.quad-arrow-right.apl"}
+			{match: "⍊",       name: "keyword.operator.tack-down.apl"}
+			{match: "⍌",       name: "keyword.operator.quad-caret-down.apl"}
+			{match: "⍍",       name: "keyword.operator.quad-del-up.apl"}
+			{match: "⍏",       name: "keyword.operator.vane-up.apl"}
+			{match: "⍐",       name: "keyword.operator.quad-arrow-up.apl"}
+			{match: "⍑",       name: "keyword.operator.tack-up.apl"}
+			{match: "⍓",       name: "keyword.operator.quad-caret-up.apl"}
+			{match: "⍔",       name: "keyword.operator.quad-del-down.apl"}
+			{match: "⍖",       name: "keyword.operator.vane-down.apl"}
+			{match: "⍗",       name: "keyword.operator.quad-arrow-down.apl"}
+			{match: "⍘",       name: "keyword.operator.underbar-quote.apl"}
+			{match: "⍚",       name: "keyword.operator.underbar-diamond.apl"}
+			{match: "⍛",       name: "keyword.operator.underbar-jot.apl"}
+			{match: "⍜",       name: "keyword.operator.underbar-circle.apl"}
+			{match: "⍞",       name: "keyword.operator.quad-quote.apl"}
+			{match: "⍡",       name: "keyword.operator.dotted-tack-up.apl"}
+			{match: "⍢",       name: "keyword.operator.dotted-del.apl"}
+			{match: "⍥",       name: "keyword.operator.dotted-circle.apl"}
+			{match: "⍦",       name: "keyword.operator.stile-shoe-up.apl"}
+			{match: "⍧",       name: "keyword.operator.stile-shoe-left.apl"}
+			{match: "⍩",       name: "keyword.operator.dotted-greater.apl"}
+			{match: "⍭",       name: "keyword.operator.stile-tilde.apl"}
+			{match: "⍮",       name: "keyword.operator.underbar-semicolon.apl"}
+			{match: "⍯",       name: "keyword.operator.quad-not-equal.apl"}
+			{match: "⍰",       name: "keyword.operator.quad-question.apl"}
+			{match: "⍸",       name: "keyword.operator.underbar-iota.apl"}
 		]
 	
 	
