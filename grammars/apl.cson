@@ -280,11 +280,12 @@ repository:
 	# User-defined functions/operators
 	definition:
 		patterns: [{
-			name:  "meta.function.definition.apl"
+			name:  "meta.function.apl"
 			begin: "^\\s*?(∇)(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*(←))?\\s*(?:([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s+)?(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)|(\\((\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*\\s*)?\\)))(\\s+[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*((?:\\s*;\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)+)?\\s*(⍝.*)?$"
 			end:   "^\\s*?(?:(∇)|(⍫))\\s*?(⍝.*?)?$"
 			patterns: [{ include: "$self" }]
 			beginCaptures:
+				0:  {name: "entity.function.definition.apl"}
 				1:  {name: "punctuation.definition.function.begin.nabla.apl"}
 				2:  {name: "entity.function.return-value.apl"}
 				3:  {name: "keyword.operator.assignment.apl"}
