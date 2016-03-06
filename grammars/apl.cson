@@ -78,6 +78,7 @@ repository:
 		patterns: [
 			{ include: "#definition" }
 			{ include: "#comment"    }
+			{ include: "#label"      }
 			{ include: "#strings"    }
 			{ include: "#float"      }
 			{ include: "#int"        }
@@ -172,6 +173,17 @@ repository:
 		patterns: [{
 			name: "storage.type.name.apl"
 			match: "[A-Za-z∆⍙_]+[A-Za-z0-9∆⍙_¯]*"
+		}]
+	
+	
+	# Labels
+	label:
+		patterns: [{
+			name: "meta.label.apl"
+			match: "^\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)(:)"
+			captures:
+				1: {name: "entity.label.name.apl"}
+				2: {name: "punctuation.definition.label.end.apl"}
 		}]
 	
 	
