@@ -76,14 +76,15 @@ repository:
 	# Common patterns
 	main: {
 		patterns: [
-			{ include: "#comment" }
-			{ include: "#strings" }
-			{ include: "#float"   }
-			{ include: "#int"     }
-			{ include: "#name"    }
-			{ include: "#lambda"  }
-			{ include: "#sysvars" }
-			{ include: "#symbols" }
+			{ include: "#definition" }
+			{ include: "#comment"    }
+			{ include: "#strings"    }
+			{ include: "#float"      }
+			{ include: "#int"        }
+			{ include: "#name"       }
+			{ include: "#lambda"     }
+			{ include: "#sysvars"    }
+			{ include: "#symbols"    }
 		]
 	}
 	
@@ -256,9 +257,38 @@ repository:
 			{match: "→",       name: "keyword.control.goto.apl"}
 			{match: "⍬",       name: "constant.language.zilde.apl"}
 			{match: "⋄",       name: "keyword.operator.diamond.apl"}
-			{match: "∇",       name: "keyword.control.nabla.apl"}
+			{match: "∇",       name: "keyword.operator.nabla.apl"}
+			{match: "⍫",       name: "keyword.operator.lock.apl"}
 			{match: "⎕",       name: "keyword.operator.quad.apl"}
 		]
+	
+	
+	
+	# User-defined functions/operators
+	definition:
+		patterns: [{
+			name:  "meta.function.definition.apl"
+			begin: "^\\s*?(∇)(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*(←))?\\s*(?:([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s+)?(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)|(\\((\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*\\s*)?\\)))(\\s+[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*((?:\\s*;\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)+)?\\s*(⍝.*)?$"
+			end:   "^\\s*?(?:(∇)|(⍫))\\s*?(⍝.*?)?$"
+			patterns: [{ include: "$self" }]
+			beginCaptures:
+				1:  {name: "punctuation.definition.function.begin.nabla.apl"}
+				2:  {name: "entity.function.return-value.apl"}
+				3:  {name: "keyword.operator.assignment.apl"}
+				4:  {name: "entity.function.arguments.left.apl"}
+				5:  {name: "entity.function.name.apl"}
+				6:  {name: "entity.function.operands.apl"}
+				7:  {name: "entity.function.operands.left.apl"}
+				8:  {name: "entity.function.name.apl"}
+				9:  {name: "entity.function.operands.right.apl"}
+				10: {name: "entity.function.arguments.right.apl"}
+				11: {name: "entity.function.local-variables.apl"}
+				12: {name: "comment.line.apl"}
+			endCaptures:
+				1:  {name: "punctuation.definition.function.end.nabla.apl"}
+				2:  {name: "punctuation.definition.function.end.lock.apl"}
+				3:  {name: "comment.line.apl"}
+		}]
 	
 	
 	
