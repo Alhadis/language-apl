@@ -1,6 +1,6 @@
 {
 	"name": "language-apl",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "APL language support for Atom",
 	"keywords": ["APL", "Dyalog"],
 	"repository": "https://github.com/Alhadis/language-apl",
