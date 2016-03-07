@@ -260,6 +260,7 @@ repository:
 			
 			
 			# Other symbols
+			{match: "◊",       name: "keyword.operator.lozenge.apl"}
 			{match: ";",       name: "keyword.operator.semicolon.apl"}
 			{match: "¯",       name: "keyword.operator.high-minus.apl"}
 			{match: "←",       name: "keyword.operator.assignment.apl"}
