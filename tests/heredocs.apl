@@ -13,6 +13,12 @@ END-OF-HTML
 END-OF-XHTML
 
 
+text ← ⎕INP "END-OF-⎕INP"
+<header id="top">
+	Heading
+</header>
+=== END-OF-⎕INP ===
+
 
  aatext ← ⎕INP "END-OF-HTML"
 <header id="top">Heading</header>

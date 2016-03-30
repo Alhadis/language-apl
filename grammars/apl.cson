@@ -419,7 +419,7 @@ repository:
 			
 			# HTML
 			name: "meta.heredoc.apl"
-			begin: "^.*?⎕INP\\s+('|\")((?i).*?HTML?.*?)\\1.*$"
+			begin: "^.*?⎕INP\\s+('|\")((?i).*?HTML?.*?|END-OF-⎕INP)\\1.*$"
 			end:   "^.*?\\2.*?$"
 			beginCaptures: {0: {patterns: [{include: "#main"}]}}
 			endCaptures:   {0: {name: "constant.other.apl"}}
