@@ -324,7 +324,7 @@ repository:
 			patterns: [{ include: "$self" }]
 			beginCaptures:
 				0:  {name: "entity.function.definition.apl"}
-				1:  {name: "punctuation.definition.function.begin.nabla.apl"}
+				1:  {name: "keyword.operator.nabla.apl"}
 				2:  {name: "entity.function.return-value.apl"}
 				3:  {name: "keyword.operator.assignment.apl"}
 				4:  {name: "entity.function.arguments.left.apl"}
@@ -339,8 +339,8 @@ repository:
 				13: {name: "invalid.illegal.local-variables.apl"}
 				14: {name: "comment.line.apl"}
 			endCaptures:
-				1:  {name: "punctuation.definition.function.end.nabla.apl"}
-				2:  {name: "punctuation.definition.function.end.lock.apl"}
+				1:  {name: "keyword.operator.nabla.apl"}
+				2:  {name: "keyword.operator.lock.apl"}
 				3:  {name: "comment.line.apl"}
 		}]
 	
