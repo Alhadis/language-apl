@@ -57,7 +57,7 @@ ENDJS
 json ← ⎕INP "JSON"
 {
 	"name": "language-apl",
-	"version": "0.0.1",
+	"version": "1.0.1",
 	"description": "APL language support for Atom",
 	"keywords": ["APL", "Dyalog"],
 	"repository": "https://github.com/Alhadis/language-apl",
@@ -83,3 +83,14 @@ END-CSS
 text ← ⎕INP "Plain Text"
 Z←Z←81 9⍴1 ◊ F1←0
 Plain Text
+
+
+
+⍝ Anything else: native APL
+native ← ⎕INP 'END-OF-STORY'
+
+⍝ APL comment
+Z←Z←81 9⍴1 ◊ F1←0
+life←{↑1 ⍵∨.∧3 4=+/,¯1 0 1∘.⊖¯1 0 1∘.⌽⊂⍵}
+
+==/ END-OF-STORY \==
