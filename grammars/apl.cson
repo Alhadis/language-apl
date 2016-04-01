@@ -419,7 +419,6 @@ repository:
 		patterns: [{
 			begin: "(?<=\\s|^)((:)Class)\\s+('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*((:)\\s*(?:('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*)?)?(.*?)$"
 			end:   "(?<=\\s|^)((:)EndClass)(?=\\b)"
-			patterns: [{include: "$self"}]
 			beginCaptures:
 				0: {name: "meta.class.apl"}
 				1: {name: "keyword.control.class.apl"}
@@ -432,6 +431,32 @@ repository:
 			endCaptures:
 				1: {name: "keyword.control.class.apl"}
 				2: {name: "punctuation.definition.class.apl"}
+			patterns: [{
+				
+				# Fields
+				name: "meta.field.apl"
+				begin: "(?<=\\s|^)(:)Field(?=\\s)"
+				end:   "(('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*))\\s*(←.*)?$"
+				beginCaptures:
+					0: {name: "keyword.control.field.apl"}
+					1: {name: "punctuation.definition.field.apl"}
+				endCaptures:
+					1: {name: "entity.name.type.apl"}
+					2: {patterns: [{include: "#strings"}]}
+					3: {name: "entity.other.initial-value.apl", patterns: [{include: "#main"}]}
+				patterns: [{
+					
+					# Access type (private/public)
+					name: "storage.modifier.access.${1:/downcase}.apl"
+					match: "(?<=\\s|^)(Public|Private)(?=\\s|$)"
+				}, {
+					
+					# Shared/instanced field modifier
+					name: "storage.modifier.${1:/downcase}.apl"
+					match: "(?<=\\s|^)(Shared|Instance)(?=\\s|$)"
+				}]
+				
+			}, {include: "$self"}]
 		}]
 	
 	
