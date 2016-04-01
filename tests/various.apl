@@ -27,19 +27,33 @@ Another3DModel ← Mesh
 )LIST vars⍝COMMENT
 
 
-⍝ Function: Valid
-∇R ← X FUNCTION Y ;A;B
+⍝ Function: Monadic
+∇R ← FUNCTION X
+	R ← X + X
+∇
+
+∇R ← FUNCTION X ;A;B
+	R ← X + X
+∇
+
+
+⍝ Function: Dyadic
+∇R ← X FUNCTION Y
 	R ← X + Y
 ∇
 
-⍝ Function: Invalid
-∇R ← X FUNCTION Y ;A;B;
+∇R ← X FUNCTION Y;A;B
 	R ← X + Y
 ∇
+
 
 
 ⍝ Operator: Valid
 ∇R ← X (LOP OPERATOR ROP) Y ;A;B
+	R ← X + Y
+∇
+
+∇R ← (LOP OPERATOR ROP) X ;A;B
 	R ← X + Y
 ∇
 
@@ -48,15 +62,14 @@ Another3DModel ← Mesh
 	R ← X + Y
 ∇
 
-∇R ← X (LOP OPERATOR ROP) Y Whoops;A;B;;;a
+∇R ← X (LOP OPERATOR ROP) Y Whoops;L;E;;;L
 	R ← X + Y
 ∇
 
-
-∇R ← X (LOP OPERATOR ROP) Y Whoops;A;B;a
+∇R ← X (LOP OPERATOR ROP) Y Whoops;k;e;k
 	R ← X + Y
 ∇
 
-∇R ← X (LOP OPERATOR ROP) Y Invalid;A;B;a;
+∇R ← (LOP OPERATOR ROP) Y Invalid;B;R;U;H;
 	R ← X + Y
 ∇

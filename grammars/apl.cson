@@ -320,7 +320,108 @@ repository:
 	definition:
 		patterns: [{
 			name:  "meta.function.apl"
-			begin: "^\\s*?(∇)(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*(←))?\\s*(?:([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s+)?(?:\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)|(\\((\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*\\s*)?\\)))(\\s+[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*([^;]+)?((?:\\s*;\\s*[;⎕A-Za-z_∆⍙]+[\\w∆⍙¯]*)+)?\\s*?(;+)?\\s*?(⍝.*)?$"
+			begin: "(?x)
+				^\\s*?
+				
+				(?# 1: keyword.operator.nabla.apl)
+				(∇)
+				
+				
+				(?:
+					\\s*
+					
+					(?# 2: entity.function.return-value.apl)
+					([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+					
+					\\s*
+					
+					(?# 3: keyword.operator.assignment.apl)
+					(←)
+				)?
+				
+				\\s*
+				
+				
+				(?:
+					(?# MONADIC)
+					(?:
+						(?# 4: entity.function.name.apl)
+						([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+						\\s+
+						
+						(?# 5: entity.function.arguments.right.apl)
+						([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+						\\s*
+						(?=;|$)
+					)
+					
+					|
+					
+					(?# DYADIC/AMBIVALENT)
+					(?:
+						(?:
+							(?# 6: entity.function.arguments.left.apl)
+							([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s+
+						)?
+						
+						(?:
+							\\s*
+							
+							(?# 7: entity.function.name.apl)
+							([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+							
+							|
+							
+							(?# 8: entity.function.operands.apl)
+							(
+								(?# 9: punctuation.definition.operands.begin.apl)
+								(\\()
+								
+								(?# 10: entity.function.operands.left.apl)
+								(\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?
+								
+								\\s*
+								
+								(?# 11: entity.function.name.apl)
+								([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+								
+								\\s*
+								
+								(?# 12: entity.function.operands.right.apl)
+								([A-Za-z_∆⍙]+[\\w∆⍙¯]*\\s*)?
+								
+								(?# 13: punctuation.definition.operands.end.apl)
+								(\\))
+							)
+						)
+						
+						(?# 14: entity.function.arguments.right.apl)
+						(\\s+[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?
+					)
+				)
+
+
+				\\s*
+				
+				
+				(?# 15: invalid.illegal.arguments.right.apl)
+				([^;]+)?
+				
+				(?# 16: entity.function.local-variables.apl)
+				(
+					(?# 17: Include ;)
+					((?:\\s*;\\s*[⎕A-Za-z_∆⍙][\\w∆⍙¯]*)+)
+					|
+					(?# 18: invalid.illegal.local-variables.apl)
+					([^⍝]+)
+				)?
+				
+				\\s*
+				
+				(?# 19: comment.line.apl)
+				(⍝.*)?
+				
+			$"
 			end:   "^\\s*?(?:(∇)|(⍫))\\s*?(⍝.*?)?$"
 			patterns: [{ include: "$self" }]
 			beginCaptures:
@@ -328,17 +429,22 @@ repository:
 				1:  {name: "keyword.operator.nabla.apl"}
 				2:  {name: "entity.function.return-value.apl"}
 				3:  {name: "keyword.operator.assignment.apl"}
-				4:  {name: "entity.function.arguments.left.apl"}
-				5:  {name: "entity.function.name.apl"}
-				6:  {name: "entity.function.operands.apl"}
-				7:  {name: "entity.function.operands.left.apl"}
-				8:  {name: "entity.function.name.apl"}
-				9:  {name: "entity.function.operands.right.apl"}
-				10: {name: "entity.function.arguments.right.apl"}
-				11: {name: "invalid.illegal.arguments.right.apl"}
-				12: {name: "entity.function.local-variables.apl"}
-				13: {name: "invalid.illegal.local-variables.apl"}
-				14: {name: "comment.line.apl"}
+				4:  {name: "entity.function.name.apl"}
+				5:  {name: "entity.function.arguments.right.apl"}
+				6:  {name: "entity.function.arguments.left.apl"}
+				7:  {name: "entity.function.name.apl"}
+				8:  {name: "entity.function.operands.apl"}
+				9:  {name: "punctuation.definition.operands.begin.apl"}
+				10: {name: "entity.function.operands.left.apl"}
+				11: {name: "entity.function.name.apl"}
+				12: {name: "entity.function.operands.right.apl"}
+				13: {name: "punctuation.definition.operands.end.apl"}
+				14: {name: "entity.function.arguments.right.apl"}
+				15: {name: "invalid.illegal.arguments.right.apl"}
+				16: {name: "entity.function.local-variables.apl"}
+				17: {patterns: [{name: "punctuation.separator.apl", match: ";"}]}
+				18: {name: "invalid.illegal.local-variables.apl"}
+				19: {name: "comment.line.apl"}
 			endCaptures:
 				1:  {name: "keyword.operator.nabla.apl"}
 				2:  {name: "keyword.operator.lock.apl"}
