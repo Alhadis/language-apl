@@ -330,12 +330,37 @@ repository:
 				(?:
 					\\s*
 					
-					(?# 2: entity.function.return-value.apl)
-					([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+					(?:
+						(?# 2: entity.function.return-value.apl)
+						([A-Za-z_∆⍙][\\w∆⍙¯]*)
+						
+						|
+						
+						\\s*
+						(?# 3: entity.function.return-value.shy.apl)
+						(
+							(\\{)             (?# 4: punctuation.definition.return-value.begin.apl)
+							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(\\})             (?# 5: punctuation.definition.return-value.end.apl)
+							
+							|
+							
+							(\\(\\s*\\{)      (?# 6: punctuation.definition.return-value.begin.apl)
+							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(\\}\\s*\\))      (?# 7: punctuation.definition.return-value.end.apl)
+							
+							|
+							
+							(\\{\\s*\\()      (?# 8: punctuation.definition.return-value.begin.apl)
+							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(\\)\\s*\\})      (?# 9: punctuation.definition.return-value.end.apl)
+						)
+						\\s*
+					)
 					
 					\\s*
 					
-					(?# 3: keyword.operator.assignment.apl)
+					(?# 10: keyword.operator.assignment.apl)
 					(←)
 				)?
 				
@@ -345,12 +370,18 @@ repository:
 				(?:
 					(?# MONADIC)
 					(?:
-						(?# 4: entity.function.name.apl)
+						(?# 11: entity.function.name.apl)
 						([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
-						\\s+
 						
-						(?# 5: entity.function.arguments.right.apl)
-						([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+						(?# 12: entity.function.arguments.right.apl)
+						(
+							\\s+[A-Za-z_∆⍙][\\w∆⍙¯]*
+							|
+							\\s*
+							(\\()   (?# 13: punctuation.definition.arguments.begin.apl)
+							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(\\))   (?# 14: punctuation.definition.arguments.end.apl)
+						)
 						\\s*
 						(?=;|$)
 					)
@@ -359,66 +390,94 @@ repository:
 					
 					(?# DYADIC/AMBIVALENT)
 					(?:
-						(?:
-							(?# 6: entity.function.arguments.left.apl)
-							([A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s+
-						)?
+						(?# 15: entity.function.arguments.left.apl)
+						([A-Za-z_∆⍙][\\w∆⍙¯]*\\s+)
 						
-						(?:
+						|
+						
+						(?# 16: entity.function.arguments.left.optional.apl)
+						(
+							(\\{)          (?# 17: punctuation.definition.arguments.begin.apl)
+							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(\\})          (?# 18: punctuation.definition.arguments.end.apl)
+							|
+							(\\(\\s*\\{)   (?# 19: punctuation.definition.arguments.begin.apl)
+							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(\\}\\s*\\))   (?# 20: punctuation.definition.arguments.end.apl)
+							|
+							(\\{\\s*\\()   (?# 21: punctuation.definition.arguments.begin.apl)
+							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(\\)\\s*\\})   (?# 22: punctuation.definition.arguments.end.apl)
+						)
+					)?
+					
+					\\s*
+					
+					(?:
+						(?# 23: entity.function.name.apl)
+						([A-Za-z_∆⍙][\\w∆⍙¯]*)
+						
+						|
+						
+						(?# 24: entity.function.operands.apl)
+						(
+							(?# 25: punctuation.definition.operands.begin.apl)
+							(\\()
+							
+							(?# 26: entity.function.operands.left.apl)
+							(\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*)?
+							
 							\\s*
 							
-							(?# 7: entity.function.name.apl)
-							([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
+							(?# 27: entity.function.name.apl)
+							([A-Za-z_∆⍙][\\w∆⍙¯]*)
 							
-							|
+							\\s*
 							
-							(?# 8: entity.function.operands.apl)
-							(
-								(?# 9: punctuation.definition.operands.begin.apl)
-								(\\()
-								
-								(?# 10: entity.function.operands.left.apl)
-								(\\s*[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?
-								
-								\\s*
-								
-								(?# 11: entity.function.name.apl)
-								([A-Za-z_∆⍙]+[\\w∆⍙¯]*)
-								
-								\\s*
-								
-								(?# 12: entity.function.operands.right.apl)
-								([A-Za-z_∆⍙]+[\\w∆⍙¯]*\\s*)?
-								
-								(?# 13: punctuation.definition.operands.end.apl)
-								(\\))
-							)
+							(?# 28: entity.function.operands.right.apl)
+							([A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)?
+							
+							(?# 29: punctuation.definition.operands.end.apl)
+							(\\))
 						)
-						
-						(?# 14: entity.function.arguments.right.apl)
-						(\\s+[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?
 					)
+					
+					(?# 30: entity.function.arguments.right.apl)
+					(
+						\\s+[A-Za-z_∆⍙][\\w∆⍙¯]*
+						|
+						\\s*
+						(\\()   (?# 31: punctuation.definition.arguments.begin.apl)
+						(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+						(\\))   (?# 32: punctuation.definition.arguments.end.apl)
+					)?
 				)
 
 
 				\\s*
 				
 				
-				(?# 15: invalid.illegal.arguments.right.apl)
+				(?# 33: invalid.illegal.arguments.right.apl)
 				([^;]+)?
 				
-				(?# 16: entity.function.local-variables.apl)
+				(?# 34: entity.function.local-variables.apl)
 				(
-					(?# 17: Include ;)
-					((?:\\s*;\\s*[⎕A-Za-z_∆⍙][\\w∆⍙¯]*)+)
+					(?# 35: Include “;”)
+					(
+						(?:
+							\\s*
+							;
+							(?:\\s*[⎕A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)+
+						)+
+					)
 					|
-					(?# 18: invalid.illegal.local-variables.apl)
+					(?# 36: invalid.illegal.local-variables.apl)
 					([^⍝]+)
 				)?
 				
 				\\s*
 				
-				(?# 19: comment.line.apl)
+				(?# 37: comment.line.apl)
 				(⍝.*)?
 				
 			$"
@@ -428,23 +487,41 @@ repository:
 				0:  {name: "entity.function.definition.apl"}
 				1:  {name: "keyword.operator.nabla.apl"}
 				2:  {name: "entity.function.return-value.apl"}
-				3:  {name: "keyword.operator.assignment.apl"}
-				4:  {name: "entity.function.name.apl"}
-				5:  {name: "entity.function.arguments.right.apl"}
-				6:  {name: "entity.function.arguments.left.apl"}
-				7:  {name: "entity.function.name.apl"}
-				8:  {name: "entity.function.operands.apl"}
-				9:  {name: "punctuation.definition.operands.begin.apl"}
-				10: {name: "entity.function.operands.left.apl"}
+				3:  {name: "entity.function.return-value.shy.apl"}
+				4:  {name: "punctuation.definition.return-value.begin.apl"}
+				5:  {name: "punctuation.definition.return-value.end.apl"}
+				6:  {name: "punctuation.definition.return-value.begin.apl"}
+				7:  {name: "punctuation.definition.return-value.end.apl"}
+				8:  {name: "punctuation.definition.return-value.begin.apl"}
+				9:  {name: "punctuation.definition.return-value.end.apl"}
+				10: {name: "keyword.operator.assignment.apl"}
 				11: {name: "entity.function.name.apl"}
-				12: {name: "entity.function.operands.right.apl"}
-				13: {name: "punctuation.definition.operands.end.apl"}
-				14: {name: "entity.function.arguments.right.apl"}
-				15: {name: "invalid.illegal.arguments.right.apl"}
-				16: {name: "entity.function.local-variables.apl"}
-				17: {patterns: [{name: "punctuation.separator.apl", match: ";"}]}
-				18: {name: "invalid.illegal.local-variables.apl"}
-				19: {name: "comment.line.apl"}
+				12: {name: "entity.function.arguments.right.apl"}
+				13: {name: "punctuation.definition.arguments.begin.apl"}
+				14: {name: "punctuation.definition.arguments.end.apl"}
+				15: {name: "entity.function.arguments.left.apl"}
+				16: {name: "entity.function.arguments.left.optional.apl"}
+				17: {name: "punctuation.definition.arguments.begin.apl"}
+				18: {name: "punctuation.definition.arguments.end.apl"}
+				19: {name: "punctuation.definition.arguments.begin.apl"}
+				20: {name: "punctuation.definition.arguments.end.apl"}
+				21: {name: "punctuation.definition.arguments.begin.apl"}
+				22: {name: "punctuation.definition.arguments.end.apl"}
+				23: {name: "entity.function.name.apl"}
+				24: {name: "entity.function.operands.apl"}
+				25: {name: "punctuation.definition.operands.begin.apl"}
+				26: {name: "entity.function.operands.left.apl"}
+				27: {name: "entity.function.name.apl"}
+				28: {name: "entity.function.operands.right.apl"}
+				29: {name: "punctuation.definition.operands.end.apl"}
+				30: {name: "entity.function.arguments.right.apl"}
+				31: {name: "punctuation.definition.arguments.begin.apl"}
+				32: {name: "punctuation.definition.arguments.end.apl"}
+				33: {name: "invalid.illegal.arguments.right.apl"}
+				34: {name: "entity.function.local-variables.apl"}
+				35: {patterns: [{name: "punctuation.separator.apl", match: ";"}]}
+				36: {name: "invalid.illegal.local-variables.apl"}
+				37: {name: "comment.line.apl"}
 			endCaptures:
 				1:  {name: "keyword.operator.nabla.apl"}
 				2:  {name: "keyword.operator.lock.apl"}
