@@ -548,6 +548,7 @@ repository:
 			end:   "^.*?\\2.*?$"
 			beginCaptures: {0: {patterns: [{include: "#main"}]}}
 			endCaptures:   {0: {name: "constant.other.apl"}}
+			contentName: "text.embedded.plain"
 			patterns: [{ include: "#embedded-apl" }]
 		
 		}, {

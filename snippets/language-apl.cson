@@ -25,7 +25,10 @@
 	"GNU Heredoc: HTML":
 		prefix: "html"
 		body:   "${1:result} ← '<?apl' '?>' ⎕INP '${2:END-}HTML'\n\t$0\n${2:END-}HTML"
-	
+
+
+# Snippets scoped to heredocs containing foreign languages (like HTML)
+".heredoc.apl .embedded":
 	"GNU Heredoc: Embedded APL":
 		prefix: "apl"
 		body:   "<?apl $0 ?>"
