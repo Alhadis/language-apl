@@ -12,6 +12,10 @@
 		prefix: "a"
 		body:   "${1:⎕ }← ${2:VALUE}"
 	
+	Hashbang:
+		prefix: "#"
+		body: "#!/usr/${3:local/bin/apl} ${2:--noCIN -f}$1"
+	
 	
 	# GNU APL extensions
 	"GNU Heredoc: Plain":
