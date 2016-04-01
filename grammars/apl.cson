@@ -417,20 +417,21 @@ repository:
 	# Classes (Dyalog-flavoured implementation)
 	class:
 		patterns: [{
-			begin: "(?<=\\s|^)(:)(Class)\\s+('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*(?:(:)\\s*('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)?\\s*)?(.*?)$"
-			end:   "(?<=\\s|^)(:)(EndClass)(?=\\b)"
+			begin: "(?<=\\s|^)((:)Class)\\s+('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*((:)\\s*(?:('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*)?)?(.*?)$"
+			end:   "(?<=\\s|^)((:)EndClass)(?=\\b)"
 			patterns: [{include: "$self"}]
 			beginCaptures:
 				0: {name: "meta.class.apl"}
-				1: {name: "punctuation.definition.class.apl"}
-				2: {name: "keyword.control.class.apl"}
+				1: {name: "keyword.control.class.apl"}
+				2: {name: "punctuation.definition.class.apl"}
 				3: {name: "entity.name.type.class.apl", patterns: [{include: "#strings"}]}
-				4: {name: "punctuation.separator.inheritance.apl"}
-				5: {name: "entity.other.inherited-class.apl",  patterns: [{include: "#strings"}]}
-				6: {name: "entity.other.class.interfaces.apl", patterns: [{include: "#csv"}]}
+				4: {name: "entity.other.inherited-class.apl"}
+				5: {name: "punctuation.separator.inheritance.apl"}
+				6: {patterns: [{include: "#strings"}]}
+				7: {name: "entity.other.class.interfaces.apl", patterns: [{include: "#csv"}]}
 			endCaptures:
-				1: {name: "punctuation.definition.class.apl"}
-				2: {name: "keyword.control.class.apl"}
+				1: {name: "keyword.control.class.apl"}
+				2: {name: "punctuation.definition.class.apl"}
 		}]
 	
 	
