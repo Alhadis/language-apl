@@ -712,14 +712,13 @@ repository:
 				# Fields
 				name: "meta.field.apl"
 				begin: "(?<=\\s|^)(:)Field(?=\\s)"
-				end:   "(('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*))\\s*(←.*)?$"
+				end:   "\\s*(←.*)?(?:$|(?=⍝))"
 				beginCaptures:
 					0: {name: "keyword.control.field.apl"}
 					1: {name: "punctuation.definition.field.apl"}
 				endCaptures:
-					1: {name: "entity.name.type.apl"}
-					2: {patterns: [{include: "#strings"}]}
-					3: {name: "entity.other.initial-value.apl", patterns: [{include: "#main"}]}
+					0: {name: "entity.other.initial-value.apl"}
+					1: {patterns: [{include: "#main"}]}
 				patterns: [{
 					
 					# Access type (private/public)
@@ -727,9 +726,15 @@ repository:
 					match: "(?<=\\s|^)(Public|Private)(?=\\s|$)"
 				}, {
 					
-					# Shared/instanced field modifier
+					# Other modifiers (Shared/instanced, ReadOnly)
 					name: "storage.modifier.${1:/downcase}.apl"
-					match: "(?<=\\s|^)(Shared|Instance)(?=\\s|$)"
+					match: "(?<=\\s|^)(Shared|Instance|ReadOnly)(?=\\s|$)"
+				}, {
+					
+					# Anything else is assumed to be the name of the field
+					name: "entity.name.type.apl"
+					match: "('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)"
+					captures: 1: {include: "#strings"}
 				}]
 				
 			}, {include: "$self"}]
