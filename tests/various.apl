@@ -75,6 +75,19 @@ Another3DModel ← Mesh
 ∇
 
 
+⍝ Axis operators
+∇ FUNCTION [AXIS] right;X;Y
+	⎕←input
+∇
+
+∇ left FUNCTION[AXIS INVALID] right
+	⎕←input
+∇
+
+
+∇ Z ← X FUNCTION [ AXIS ] Y
+	Z ← X + Y
+∇
 
 
 ⍝ Dyalog/NARS2000-style headers
@@ -82,7 +95,7 @@ Another3DModel ← Mesh
 	Z ← R1 + R2
 ∇
 
-∇ Z ← X (A FUNCTION B) (X Y)
+∇ Z ← X (A FUNCTION [AXIS] B) (X Y)
 	Z ← R1 + R2
 ∇
 
@@ -110,7 +123,7 @@ Another3DModel ← Mesh
 ∇ {(Z1 Z2)}←{(L1 L2 L3)} (LO MonadicOp) (R1 R2 R3 R4)
 ∇
 
-∇ {(Z1 Z2)}←{(L1 L2 L3)} (LO DydadicOp[X] RO) (R1 R2 R3 R4)
+∇ {(Z1 Z2)}←{(L1 L2 L3)} (LO DydadicOp [X] RO) (R1 R2 R3 R4)
 ∇
 
 ∇ {(Z1 Z2)}←{(L1 L2 L3)} (LO MonadicOp[X]) (R1 R2 R3 R4)
