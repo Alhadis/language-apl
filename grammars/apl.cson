@@ -400,9 +400,8 @@ repository:
 						
 						(?# 17: entity.function.arguments.right.apl)
 						(
-							[A-Za-z_∆⍙][\\w∆⍙¯]*
+							(?<=\\s|\\])[A-Za-z_∆⍙][\\w∆⍙¯]*
 							|
-							\\s*
 							(\\()   (?# 18: punctuation.definition.arguments.begin.apl)
 							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
 							(\\))   (?# 19: punctuation.definition.arguments.end.apl)
