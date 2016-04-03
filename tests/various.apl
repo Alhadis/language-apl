@@ -128,3 +128,9 @@ Another3DModel ← Mesh
 
 ∇ {(Z1 Z2)}←{(L1 L2 L3)} (LO MonadicOp[X]) (R1 R2 R3 R4)
 ∇
+
+
+)OFF ⍝ The following lines should be unhinted:
+
+⍝ Comment
+⌺ ⌻ ⌼ ⌾ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍊ ⍌ ⍍ ⍏ ⍐ ⍑ ⍓ ⍔ ⍖ ⍗ ⍘ ⍚ ⍛ ⍜ ⍞ ⍡ ⍢ ⍥ ⍦ ⍧ ⍩ ⍭ ⍮ ⍯ ⍰ ⍸

@@ -17,6 +17,16 @@ patterns: [
 	}
 	
 	
+	# EOF terminators for GNU APL
+	{
+		contentName: "text.embedded.apl"
+		begin: "^\\s*(\\)OFF|\\]NEXTFILE)\\b(.*)$"
+		beginCaptures:
+			1: {name: "entity.name.command.eof.apl"}
+			2: {patterns: [{include: "#comment"}]}
+	}
+	
+	
 	# Brackets
 	{
 		name: "meta.round.bracketed.group.apl"
