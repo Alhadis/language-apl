@@ -13,8 +13,8 @@
 		body:   "${1:⎕ }← ${2:VALUE}"
 	
 	Hashbang:
-		prefix: "#"
-		body: "#!/usr/${3:local/bin/apl} ${2:--noCIN -f}$1"
+		prefix: "apl"
+		body: "#!/usr/bin/env apl --script\n\n$1\n\n)OFF"
 	
 	
 	# GNU APL extensions
