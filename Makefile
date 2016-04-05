@@ -1,22 +1,13 @@
-all: json
-
-json: grammars/apl.json
-.SILENT: json
+all: toggle
 
 
-# Generate a flattened JSON file from CSON source
-grammars/%.json: grammars/%.js
-	@node -e 'console.log(JSON.stringify(require("./$<"), "", "\t"))' > $@
-	
-grammars/%.js: grammars/%.cson
-	@coffee --print $< | perl -0777 -pe '\
-		s/^.*?(name:)/module.exports = {$$1/ms; \
-		s/\);?\s*\}\).call\(this\);?/;/ms; \
-	' > $@
+toggle: grammars/apl.cson
+	@grep 'ALPHA | BRAVO' $< >/dev/null && { \
+		sed -ri -e 's/(ALPHA \| BRAVO)/\ALPHA/' $<; \
+		echo 'Crash disabled'; \
+	} || { \
+		sed -ri -e 's/\( ALPHA \)/\( ALPHA | BRAVO \)/' $<; \
+		echo 'Crash enabled'; \
+	}
 
-
-# Delete previously-generated JSON files
-clean:
-	@rm -rf grammars/apl.json
-
-.PHONY: clean
+.PHONY: toggle
