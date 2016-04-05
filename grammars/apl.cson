@@ -7,6 +7,7 @@ foldingStopMarker:  '\\}'
 patterns: [
 	
 	{ include: "#heredocs" }
+	{ include: "#idioms"   }
 	{ include: "#main"     }
 	
 	
@@ -86,6 +87,42 @@ patterns: [
 
 
 repository:
+		
+	idioms:
+		patterns: [{
+			
+			# This causes Atom to choke...
+			name: "meta.idiom.apl"
+			match: "(?x)
+				((?:\\s*(?:'[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*|\\d+))+)
+				\\s*
+				
+				( ALPHA )
+				
+				\\s*
+				((?:\\s*(?:'[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*|\\d+))+)"
+			captures: {
+				1: {name: "meta.idiom.left.apl",  patterns: [{include: "#symbols"}]}
+				2: {name: "meta.idiom.body.apl",  patterns: [{include: "#symbols"}]}
+				3: {name: "meta.idiom.right.apl", patterns: [{include: "#symbols"}]}
+			}
+			
+		}, {
+			
+			# ... yet the following block works fine:
+			name: "meta.idiom.apl",
+			match: "(?x)
+				([⊃↑]\\s*⌽(?:\\s*,)?|↓\\s*⍉\\s*[↑⊃]|[⊃↑]\\s*∘\\s*⍴\\s*¨)
+				\\s*
+				((?:\\s*(?:'[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*|\\d+))+)
+			",
+			captures: {
+				1: {name: "meta.idiom.body.apl",  patterns: [{include: "#main"}]}
+				2: {name: "meta.idiom.right.apl", patterns: [{include: "#main"}]}
+			}
+		}]
+	
+	
 	
 	# Common patterns
 	main: {
