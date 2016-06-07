@@ -1,7 +1,7 @@
 name: "APL"
 scopeName: "source.apl"
 fileTypes: ["apl", "dyalog"]
-firstLineMatch: '^#!.*\\b(apl|dyalog)'
+firstLineMatch: "^#!.*\\b(apl|dyalog)|⍝|(?i:-\\*-[^*]*(mode:\\s*)?apl(\\s*;.*?)?\\s*-\\*-|(?:vim?|ex):\\s*(?:set?.*\\s)?(?:syntax|filetype|ft)=apl\\s?(?:.*:)?)"
 foldingStartMarker: '\\{'
 foldingStopMarker:  '\\}'
 patterns: [
