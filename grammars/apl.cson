@@ -1,9 +1,34 @@
 name: "APL"
 scopeName: "source.apl"
 fileTypes: ["apl", "dyalog"]
-firstLineMatch: "^#!.*\\b(apl|dyalog)|⍝|(?i:-\\*-[^*]*(mode:\\s*)?apl(\\s*;.*?)?\\s*-\\*-|(?:vim?|ex):\\s*(?:set?.*\\s)?(?:syntax|filetype|ft)=apl\\s?(?:.*:)?)"
-foldingStartMarker: '\\{'
-foldingStopMarker:  '\\}'
+firstLineMatch: """(?x)
+	# APL symbols
+	[⌶-⍺]
+	|
+
+	# Hashbang
+	^\\#!.*(?:\\s|\\/|(?<=!)\\b)
+		(?:gnu[-._]?apl|aplx?|dyalog)
+	(?:$|\\s)
+	|
+
+	# Modeline
+	(?i:
+		# Emacs
+		-\\*-(?:\\s*(?=[^:;\\s]+\\s*-\\*-)|(?:.*?[;\\s]|(?<=-\\*-))mode\\s*:\\s*)
+			apl
+		(?=[\\s;]|(?<![-*])-\\*-).*?-\\*-
+
+		|
+
+		# Vim
+		(?:(?:\\s|^)vi(?:m[<=>]?\\d+|m)?|\\sex)(?=:(?=\\s*set?\\s[^\\n:]+:)|:(?!\\s* set?\\s))(?:(?:\\s|\\s*:\\s*)\\w*(?:\\s*=(?:[^\\n\\\\\\s]|\\\\.)*)?)*[\\s:](?:filetype|ft|syntax)\\s*=
+			apl
+		(?=\\s|:|$)
+	)
+"""
+foldingStartMarker: "{"
+foldingStopMarker:  "}"
 patterns: [
 
 	{ include: "#heredocs" }
