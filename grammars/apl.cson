@@ -5,18 +5,18 @@ firstLineMatch: "^#!.*\\b(apl|dyalog)|⍝|(?i:-\\*-[^*]*(mode:\\s*)?apl(\\s*;.*?
 foldingStartMarker: '\\{'
 foldingStopMarker:  '\\}'
 patterns: [
-	
+
 	{ include: "#heredocs" }
 	{ include: "#main"     }
-	
-	
+
+
 	# Shebang
 	{
 		match: "\\A#!.*$"
 		name:  "comment.line.shebang.apl"
 	}
-	
-	
+
+
 	# EOF terminators for GNU APL
 	{
 		contentName: "text.embedded.apl"
@@ -28,8 +28,8 @@ patterns: [
 			3: {name: "punctuation.definition.command.apl"}
 			4: {patterns: [{include: "#comment"}]}
 	}
-	
-	
+
+
 	# Brackets
 	{
 		name: "meta.round.bracketed.group.apl"
@@ -39,8 +39,8 @@ patterns: [
 		beginCaptures: {0: {name: "punctuation.round.bracket.begin.apl"}}
 		endCaptures:   {0: {name: "punctuation.round.bracket.end.apl"}}
 	}
-	
-	
+
+
 	# Square brackets
 	{
 		name: "meta.square.bracketed.group.apl"
@@ -50,8 +50,8 @@ patterns: [
 		beginCaptures: {0: {name: "punctuation.square.bracket.begin.apl"}}
 		endCaptures:   {0: {name: "punctuation.square.bracket.end.apl"}}
 	}
-	
-	
+
+
 	# System commands
 	{
 		name: "meta.system.command.apl"
@@ -66,8 +66,8 @@ patterns: [
 			{ include: "#main" }
 		]
 	}
-	
-	
+
+
 	# User commands
 	{
 		name: "meta.user.command.apl"
@@ -87,7 +87,7 @@ patterns: [
 
 
 repository:
-	
+
 	# Common patterns
 	main: {
 		patterns: [
@@ -105,8 +105,8 @@ repository:
 			{ include: "#symbols"    }
 		]
 	}
-	
-	
+
+
 	# Comment-lines
 	comment:
 		name:  "comment.line.apl"
@@ -114,8 +114,8 @@ repository:
 		end:   "$"
 		captures:
 			0: {name: "punctuation.definition.comment.apl"}
-	
-	
+
+
 	# Floating-point numbers
 	float: {
 		patterns: [{
@@ -142,8 +142,8 @@ repository:
 			}
 		}]
 	}
-	
-	
+
+
 	# Integers
 	int: {
 		patterns: [{
@@ -154,8 +154,8 @@ repository:
 			match: '\\b\\d+(?!\\.?[Ee][\\d¯])'
 		}]
 	}
-	
-	
+
+
 	# String literals
 	strings:
 		patterns: [{
@@ -180,15 +180,15 @@ repository:
 			}]
 		}]
 
-	
+
 	# Names
 	name:
 		patterns: [{
 			name: "storage.type.name.apl"
 			match: "[A-Za-z_∆⍙]+[\\w∆⍙¯]*"
 		}]
-	
-	
+
+
 	# Labels
 	label:
 		patterns: [{
@@ -198,13 +198,19 @@ repository:
 				1: {name: "entity.label.name.apl"}
 				2: {name: "punctuation.definition.label.end.apl"}
 		}]
-	
-	
-	
+
+
+
 	# Symbols
 	symbols:
 		patterns: [
-			
+
+			# Allow OpenType-aware fonts to display larger symbols
+			{match: "(?<=\\s)←(?=\\s|$)",  name: "keyword.spaced.operator.assignment.apl"}
+			{match: "(?<=\\s)→(?=\\s|$)",  name: "keyword.spaced.control.goto.apl"}
+			{match: "(?<=\\s)≡(?=\\s|$)",  name: "keyword.spaced.operator.identical.apl"}
+			{match: "(?<=\\s)≢(?=\\s|$)",  name: "keyword.spaced.operator.not-identical.apl"}
+
 			# APL functions (and hybrid operators)
 			{match: "\\+",     name: "keyword.operator.plus.apl"}
 			{match: "[-−]",    name: "keyword.operator.minus.apl"}
@@ -260,8 +266,8 @@ repository:
 			{match: "∪",       name: "keyword.operator.union.apl"}
 			{match: "⍎",       name: "keyword.operator.hydrant.apl"}
 			{match: "⍕",       name: "keyword.operator.thorn.apl"}
-			
-			
+
+
 			# APL Operators
 			{match: "¨",       name: "keyword.operator.each.apl"}
 			{match: "⍤",       name: "keyword.operator.rank.apl"}
@@ -273,8 +279,8 @@ repository:
 			{match: "⍠",       name: "keyword.operator.quad-colon.apl"}
 			{match: "&",       name: "keyword.operator.ampersand.apl"}
 			{match: "⌶",       name: "keyword.operator.i-beam.apl"}
-			
-			
+
+
 			# Other symbols
 			{match: "◊",       name: "keyword.operator.lozenge.apl"}
 			{match: ";",       name: "keyword.operator.semicolon.apl"}
@@ -286,8 +292,8 @@ repository:
 			{match: "∇",       name: "keyword.operator.nabla.apl"}
 			{match: "⍫",       name: "keyword.operator.lock.apl"}
 			{match: "⎕",       name: "keyword.operator.quad.apl"}
-			
-			
+
+
 			# Unused
 			{match: "⌺",       name: "keyword.operator.quad-diamond.apl"}
 			{match: "⌻",       name: "keyword.operator.quad-jot.apl"}
@@ -328,75 +334,75 @@ repository:
 			{match: "⍰",       name: "keyword.operator.quad-question.apl"}
 			{match: "⍸",       name: "keyword.operator.underbar-iota.apl"}
 		]
-	
-	
-	
+
+
+
 	# User-defined functions/operators
 	definition:
 		patterns: [{
 			name:  "meta.function.apl"
 			begin: "(?x)
 				^\\s*?
-				
+
 				(?# 1: keyword.operator.nabla.apl)
 				(∇)
-				
-				
+
+
 				(?:
 					\\s*
-					
+
 					(?:
 						(?# 2: entity.function.return-value.apl)
 						([A-Za-z_∆⍙][\\w∆⍙¯]*)
-						
+
 						|
-						
+
 						\\s*
 						(?# 3: entity.function.return-value.shy.apl)
 						(
 							(\\{)             (?# 4: punctuation.definition.return-value.begin.apl)
 							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
 							(\\})             (?# 5: punctuation.definition.return-value.end.apl)
-							
+
 							|
-							
+
 							(\\()             (?# 6: punctuation.definition.return-value.begin.apl)
 							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
 							(\\))             (?# 7: punctuation.definition.return-value.end.apl)
-							
+
 							|
-							
+
 							(\\(\\s*\\{)      (?# 8: punctuation.definition.return-value.begin.apl)
 							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
 							(\\}\\s*\\))      (?# 9: punctuation.definition.return-value.end.apl)
-							
+
 							|
-							
+
 							(\\{\\s*\\()      (?# 10: punctuation.definition.return-value.begin.apl)
 							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
 							(\\)\\s*\\})      (?# 11: punctuation.definition.return-value.end.apl)
 						)
 						\\s*
 					)
-					
+
 					\\s*
-					
+
 					(?# 12: keyword.operator.assignment.apl)
 					(←)
 				)?
-				
+
 				\\s*
-				
-				
+
+
 				(?:
 					(?# MONADIC)
 					(?:
 						(?# 13: entity.function.name.apl)
 						([A-Za-z_∆⍙][\\w∆⍙¯]*)
-						
+
 						\\s*
-						
-						
+
+
 						(?# 14: entity.function.axis.apl)
 						(
 							(?# 15: punctuation.definition.axis.begin.apl)
@@ -404,7 +410,7 @@ repository:
 								\\s*
 								(?:
 									\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*
-									
+
 									(?# 16: invalid.illegal.extra-characters.apl)
 									(.*?)
 									|
@@ -415,10 +421,10 @@ repository:
 							(?# 18: punctuation.definition.axis.end.apl)
 							(\\])
 						)?
-						
+
 						\\s*?
-						
-						
+
+
 						(?# 19: entity.function.arguments.right.apl)
 						(
 							(?<=\\s|\\])[A-Za-z_∆⍙][\\w∆⍙¯]*
@@ -430,17 +436,17 @@ repository:
 						\\s*
 						(?=;|$)
 					)
-					
+
 					|
-					
+
 					(?# DYADIC/AMBIVALENT)
 					(?#==================)
 						(?:
 							(?# 22: entity.function.arguments.left.apl)
 							([A-Za-z_∆⍙][\\w∆⍙¯]*\\s+)
-							
+
 							|
-							
+
 							(?# 23: entity.function.arguments.left.optional.apl)
 							(
 								(\\{)          (?# 24: punctuation.definition.arguments.begin.apl)
@@ -456,15 +462,15 @@ repository:
 								(\\)\\s*\\})   (?# 29: punctuation.definition.arguments.end.apl)
 							)
 						)?
-					
+
 						\\s*
-						
+
 						(?:
 							(?# 30: entity.function.name.apl)
 							([A-Za-z_∆⍙][\\w∆⍙¯]*)
-							
+
 							\\s*
-							
+
 							(?# 31: entity.function.axis.apl)
 							(
 								(?# 32: punctuation.definition.axis.begin.apl)
@@ -472,7 +478,7 @@ repository:
 									\\s*
 									(?:
 										\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*
-										
+
 										(?# 33: invalid.illegal.extra-characters.apl)
 										(.*?)
 										|
@@ -483,24 +489,24 @@ repository:
 								(?# 35: punctuation.definition.axis.end.apl)
 								(\\])
 							)?
-							
+
 							|
-							
+
 							(?# 36: entity.function.operands.apl)
 							(
 								(?# 37: punctuation.definition.operands.begin.apl)
 								(\\()
-								
+
 								(?# 38: entity.function.operands.left.apl)
 								(\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*)?
-								
+
 								\\s*
-								
+
 								(?# 39: entity.function.name.apl)
 								([A-Za-z_∆⍙][\\w∆⍙¯]*)
-								
+
 								\\s*?
-								
+
 								(?# 40: entity.function.axis.apl)
 								(
 									(?# 41: punctuation.definition.axis.begin.apl)
@@ -508,7 +514,7 @@ repository:
 										\\s*
 										(?:
 											\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*
-											
+
 											(?# 42: invalid.illegal.extra-characters.apl)
 											(.*?)
 											|
@@ -519,19 +525,19 @@ repository:
 									(?# 44: punctuation.definition.axis.end.apl)
 									(\\])
 								)?
-								
+
 								\\s*
-								
+
 								(?# 45: entity.function.operands.right.apl)
 								([A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)?
-								
+
 								(?# 46: punctuation.definition.operands.end.apl)
 								(\\))
 							)
 						)
-						
+
 						\\s*
-						
+
 						(?# 47: entity.function.arguments.right.apl)
 						(
 							(?<=\\s|\\])[A-Za-z_∆⍙][\\w∆⍙¯]*
@@ -546,11 +552,11 @@ repository:
 
 
 				\\s*
-				
-				
+
+
 				(?# 50: invalid.illegal.arguments.right.apl)
 				([^;]+)?
-				
+
 				(?# 51: entity.function.local-variables.apl)
 				(
 					(?# 52: Include “;”)
@@ -565,12 +571,12 @@ repository:
 					(?# 53: invalid.illegal.local-variables.apl)
 					([^⍝]+)
 				)?
-				
+
 				\\s*
-				
+
 				(?# 54: comment.line.apl)
 				(⍝.*)?
-				
+
 			$"
 			end:   "^\\s*?(?:(∇)|(⍫))\\s*?(⍝.*?)?$"
 			patterns: [{ include: "$self" }]
@@ -635,9 +641,9 @@ repository:
 				2:  {name: "keyword.operator.lock.apl"}
 				3:  {name: "comment.line.apl"}
 		}]
-	
-	
-	
+
+
+
 	# Direct definition notation (Lambda functions)
 	lambda:
 		name: "meta.lambda.function.apl"
@@ -649,8 +655,8 @@ repository:
 			{ include: "#main" }
 			{ include: "#lambda-variables" }
 		]
-	
-	
+
+
 	# Special variables accessible within the body of a lambda function
 	"lambda-variables":
 		patterns: [
@@ -661,16 +667,16 @@ repository:
 			{match: "χ",    name: "variable.lambda.arguments.axis.apl"}
 			{match: "λ",    name: "variable.lambda.symbol.apl"}
 		]
-	
-	
+
+
 	# System variables
 	sysvars:
 		match: "(⎕)[A-Z]*"
 		name: "support.system.variable.apl"
 		captures:
 			1: {name: "punctuation.definition.quad.apl"}
-	
-	
+
+
 	# Command arguments
 	"command-arguments":
 		patterns: [{
@@ -679,7 +685,7 @@ repository:
 			end:   "\\b(?=\\s)"
 			patterns: [{include: "#main"}]
 		}]
-	
+
 	# Switches (Dyalog-specific feature)
 	"command-switches":
 		patterns: [{
@@ -692,8 +698,8 @@ repository:
 				3: {name: "punctuation.assignment.switch.apl"}
 			patterns: [{include: "#main"}]
 		}]
-	
-	
+
+
 	# Structured-control keywords (APLX/Dyalog feature)
 	sck:
 		patterns: [{
@@ -703,8 +709,8 @@ repository:
 				1: {name: "punctuation.definition.sck.begin.apl"}
 				2: {name: "entity.sck.name.apl"}
 		}]
-	
-	
+
+
 	# Classes (Dyalog-flavoured implementation)
 	class:
 		patterns: [{
@@ -723,7 +729,7 @@ repository:
 				1: {name: "keyword.control.class.apl"}
 				2: {name: "punctuation.definition.class.apl"}
 			patterns: [{
-				
+
 				# Fields
 				name: "meta.field.apl"
 				begin: "(?<=\\s|^)(:)Field(?=\\s)"
@@ -735,40 +741,40 @@ repository:
 					0: {name: "entity.other.initial-value.apl"}
 					1: {patterns: [{include: "#main"}]}
 				patterns: [{
-					
+
 					# Access type (private/public)
 					name: "storage.modifier.access.${1:/downcase}.apl"
 					match: "(?<=\\s|^)(Public|Private)(?=\\s|$)"
 				}, {
-					
+
 					# Other modifiers (Shared/instanced, ReadOnly)
 					name: "storage.modifier.${1:/downcase}.apl"
 					match: "(?<=\\s|^)(Shared|Instance|ReadOnly)(?=\\s|$)"
 				}, {
-					
+
 					# Anything else is assumed to be the name of the field
 					name: "entity.name.type.apl"
 					match: "('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)"
 					captures: 1: {include: "#strings"}
 				}]
-				
+
 			}, {include: "$self"}]
 		}]
-	
-	
+
+
 	# Sequence of comma-separated values
 	csv:
 		patterns: [
 			{match: ",", name: "punctuation.separator.apl"}
 			{include: "$self"}
 		]
-	
-	
-	
+
+
+
 	# Heredocs (GNU APL)
 	heredocs:
 		patterns: [{
-			
+
 			# HTML
 			name: "meta.heredoc.apl"
 			begin: "^.*?⎕INP\\s+('|\")((?i).*?HTML?.*?|END-OF-⎕INP)\\1.*$"
@@ -780,9 +786,9 @@ repository:
 				{ include: "text.html.basic" }
 				{ include: "#embedded-apl"   }
 			]
-			
+
 		}, {
-			
+
 			# XML
 			name: "meta.heredoc.apl"
 			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:XML|XSLT|SVG|RSS).*?)\\1.*$"
@@ -794,9 +800,9 @@ repository:
 				{ include: "text.xml"      }
 				{ include: "#embedded-apl" }
 			]
-			
+
 		}, {
-			
+
 			# CSS
 			name: "meta.heredoc.apl"
 			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:CSS|stylesheet).*?)\\1.*$"
@@ -808,9 +814,9 @@ repository:
 				{ include: "source.css"    }
 				{ include: "#embedded-apl" }
 			]
-			
+
 		}, {
-			
+
 			# JavaScript
 			name: "meta.heredoc.apl"
 			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:JS(?!ON)|(?:ECMA|J|Java).?Script).*?)\\1.*$"
@@ -822,9 +828,9 @@ repository:
 				{ include: "source.js"     }
 				{ include: "#embedded-apl" }
 			]
-			
+
 		}, {
-			
+
 			# JSON
 			name: "meta.heredoc.apl"
 			begin: "^.*?⎕INP\\s+('|\")((?i).*?(?:JSON).*?)\\1.*$"
@@ -837,7 +843,7 @@ repository:
 				{ include: "#embedded-apl" }
 			]
 		}, {
-			
+
 			# Raw text
 			name: "meta.heredoc.apl"
 			begin: "^.*?⎕INP\\s+('|\")(?i)((?:Raw|Plain)?\\s*Te?xt)\\1.*$"
@@ -846,9 +852,9 @@ repository:
 			endCaptures:   {0: {name: "constant.other.apl"}}
 			contentName: "text.embedded.plain"
 			patterns: [{ include: "#embedded-apl" }]
-		
+
 		}, {
-			
+
 			# Everything else: regular APL
 			name: "meta.heredoc.apl"
 			begin: "^.*?⎕INP\\s+('|\")(.*?)\\1.*$"
@@ -858,8 +864,8 @@ repository:
 			patterns: [{ include: "$self" }]
 		}]
 
-	
-	
+
+
 	# Embedded APL sequences (for GNU APL heredocs)
 	"embedded-apl":
 		patterns: [{
