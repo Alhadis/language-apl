@@ -256,6 +256,8 @@ repository:
 			{match: "∪",       name: "keyword.operator.union.apl"}
 			{match: "⍎",       name: "keyword.operator.hydrant.apl"}
 			{match: "⍕",       name: "keyword.operator.thorn.apl"}
+			{match: "⊆",       name: "keyword.operator.underbar-shoe-left.apl"}
+			{match: "⍸",       name: "keyword.operator.underbar-iota.apl"}
 
 
 			# APL Operators
@@ -269,6 +271,8 @@ repository:
 			{match: "⍠",       name: "keyword.operator.quad-colon.apl"}
 			{match: "&",       name: "keyword.operator.ampersand.apl"}
 			{match: "⌶",       name: "keyword.operator.i-beam.apl"}
+			{match: "⌺",       name: "keyword.operator.quad-diamond.apl"}
+			{match: "@",       name: "keyword.operator.at.apl"}
 
 
 			# Other symbols
@@ -285,7 +289,6 @@ repository:
 
 
 			# Unused
-			{match: "⌺",       name: "keyword.operator.quad-diamond.apl"}
 			{match: "⌻",       name: "keyword.operator.quad-jot.apl"}
 			{match: "⌼",       name: "keyword.operator.quad-circle.apl"}
 			{match: "⌾",       name: "keyword.operator.circle-jot.apl"}
@@ -322,7 +325,6 @@ repository:
 			{match: "⍮",       name: "keyword.operator.underbar-semicolon.apl"}
 			{match: "⍯",       name: "keyword.operator.quad-not-equal.apl"}
 			{match: "⍰",       name: "keyword.operator.quad-question.apl"}
-			{match: "⍸",       name: "keyword.operator.underbar-iota.apl"}
 		]
 
 
