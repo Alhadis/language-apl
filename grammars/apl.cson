@@ -665,7 +665,7 @@ repository:
 
 	# System variables
 	sysvars:
-		match: "(⎕)[A-Z]*"
+		match: "(⎕)[A-Za-z]*"
 		name: "support.system.variable.apl"
 		captures:
 			1: {name: "punctuation.definition.quad.apl"}
