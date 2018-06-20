@@ -698,10 +698,9 @@ repository:
 	sck:
 		patterns: [{
 			name: "keyword.control.sck.apl"
-			match: "(?<=\\s|^)(:)([A-Za-z]+)"
+			match: "(?<=\\s|^)(:)[A-Za-z]+"
 			captures:
 				1: {name: "punctuation.definition.sck.begin.apl"}
-				2: {name: "entity.sck.name.apl"}
 		}]
 
 
