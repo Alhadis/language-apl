@@ -123,10 +123,10 @@ repository:
 			{ include: "#sck"        }
 			{ include: "#strings"    }
 			{ include: "#number"     }
-			{ include: "#name"       }
 			{ include: "#lambda"     }
 			{ include: "#sysvars"    }
 			{ include: "#symbols"    }
+			{ include: "#name"       }
 		]
 	}
 
@@ -173,10 +173,8 @@ repository:
 
 	# Names
 	name:
-		patterns: [{
-			name: "storage.type.name.apl"
-			match: "[A-Za-z_∆⍙]+[\\w∆⍙¯]*"
-		}]
+		name: "variable.other.apl"
+		match: "[A-Za-z_∆⍙]+[\\w∆⍙¯]*"
 
 
 	# Labels
@@ -283,7 +281,6 @@ repository:
 			{match: "→",       name: "keyword.control.goto.apl"}
 			{match: "⍬",       name: "constant.language.zilde.apl"}
 			{match: "⋄",       name: "keyword.operator.diamond.apl"}
-			{match: "∇",       name: "keyword.operator.nabla.apl"}
 			{match: "⍫",       name: "keyword.operator.lock.apl"}
 			{match: "⎕",       name: "keyword.operator.quad.apl"}
 			{match: "##",      name: "constant.language.namespace.parent.apl"}
