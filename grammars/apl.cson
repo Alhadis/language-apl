@@ -122,8 +122,7 @@ repository:
 			{ include: "#label"      }
 			{ include: "#sck"        }
 			{ include: "#strings"    }
-			{ include: "#float"      }
-			{ include: "#int"        }
+			{ include: "#number"     }
 			{ include: "#name"       }
 			{ include: "#lambda"     }
 			{ include: "#sysvars"    }
@@ -141,44 +140,10 @@ repository:
 			0: {name: "punctuation.definition.comment.apl"}
 
 
-	# Floating-point numbers
-	float: {
-		patterns: [{
-			name:  "constant.numeric.float.apl"
-			match: '\\b(\\d+)(\\.)(\\d*([Ee]¯?\\d+)?)'
-			captures:
-				1: {name: "leading.decimal"}
-				2: {name: "decimal.separator"}
-				3: {name: "trailing.decimal"}
-				4: {name: "exponential.decimal"}
-		}, {
-			name:  "constant.numeric.float.no-trailing-digits.apl"
-			match: '\\b(\\d+)(\\.)(?!\\w)'
-			captures:
-				1: {name: "leading.decimal"}
-				2: {name: "decimal.separator"}
-		}, {
-			name:  "constant.numeric.float.no-leading-digits.apl"
-			match: '(?<!\\w)(\\.)(\\d+([Ee]¯?\\d+)?)'
-			captures: {
-				1: {name: "decimal.separator"}
-				2: {name: "trailing.decimal"}
-				3: {name: "exponential.decimal"}
-			}
-		}]
-	}
-
-
-	# Integers
-	int: {
-		patterns: [{
-			name:  "constant.numeric.int.exponential.apl"
-			match: '\\b\\d+[Ee]¯?\\d+'
-		}, {
-			name:  "constant.numeric.int.basic.apl"
-			match: '\\b\\d+(?!\\.?[Ee][\\d¯])'
-		}]
-	}
+	# Numeric literal
+	number:
+		name:  "constant.numeric.apl"
+		match: "(?:[¯0-9]|\\.[0-9])[¯0-9A-Za-z]*"
 
 
 	# String literals
