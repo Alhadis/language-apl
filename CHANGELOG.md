@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 * __Added:__    Support for Dyalog's `#` and `##` namespace tokens
 * __Added:__    Support for Dyalog's `⊆` and `@` primitives
 * __Added:__    Support for mixed-case and lowercase system names
+* __Fixed:__    Dyalog switches without arguments not being highlighted
 * __Fixed:__    Inconsistent highlighting of quad-quotes and control keywords
 * __Improved:__ Syntax highlighting of numeric literals
 

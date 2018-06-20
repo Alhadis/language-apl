@@ -684,6 +684,12 @@ repository:
 	"command-switches":
 		patterns: [{
 			name: "variable.parameter.switch.apl"
+			match: "(?<=\\s)(-)([\\w∆⍙]+[\\w∆⍙¯]*)(?!=)"
+			captures:
+				1: {name: "punctuation.delimiter.switch.apl"}
+				2: {name: "entity.name.switch.apl"}
+		},{
+			name: "variable.parameter.switch.apl"
 			begin: "(?<=\\s)(-)([\\w∆⍙]+[\\w∆⍙¯]*)(=)"
 			end:   "\\b(?=\\s)"
 			beginCaptures:
