@@ -665,10 +665,11 @@ repository:
 
 	# System variables
 	sysvars:
-		match: "(⎕)[A-Za-z]*"
+		match: "(?:(⎕)|(⍞))[A-Za-z]*"
 		name: "support.system.variable.apl"
 		captures:
 			1: {name: "punctuation.definition.quad.apl"}
+			2: {name: "punctuation.definition.quad-quote.apl"}
 
 
 	# Command arguments
