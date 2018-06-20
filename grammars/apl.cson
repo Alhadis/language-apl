@@ -286,6 +286,8 @@ repository:
 			{match: "∇",       name: "keyword.operator.nabla.apl"}
 			{match: "⍫",       name: "keyword.operator.lock.apl"}
 			{match: "⎕",       name: "keyword.operator.quad.apl"}
+			{match: "##",      name: "constant.language.namespace.parent.apl"}
+			{match: "#",       name: "constant.language.namespace.root.apl"}
 
 
 			# Unused
