@@ -659,6 +659,8 @@ repository:
 			{match: "[⍺⍶]", name: "variable.lambda.arguments.left.apl"}
 			{match: "[⍵⍹]", name: "variable.lambda.arguments.right.apl"}
 			{match: "χ",    name: "variable.lambda.arguments.axis.apl"}
+			{match: "∇∇",   name: "variable.lambda.operands.self.operator.apl"}
+			{match: "∇",    name: "variable.lambda.operands.self.function.apl"}
 			{match: "λ",    name: "variable.lambda.symbol.apl"}
 		]
 
