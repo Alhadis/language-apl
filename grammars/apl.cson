@@ -30,16 +30,16 @@ firstLineMatch: """(?x)
 foldingStartMarker: "{"
 foldingStopMarker:  "}"
 patterns: [
-
-	{ include: "#heredocs" }
-	{ include: "#main"     }
-
-
+	
 	# Shebang
 	{
 		match: "\\A#!.*$"
 		name:  "comment.line.shebang.apl"
 	}
+
+
+	{ include: "#heredocs" }
+	{ include: "#main"     }
 
 
 	# EOF terminators for GNU APL
