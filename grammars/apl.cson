@@ -173,15 +173,25 @@ repository:
 
 	# Names
 	name:
-		name: "variable.other.apl"
-		match: "[A-Za-z_∆⍙]+[\\w∆⍙¯]*"
+		name:  "variable.other.readwrite.apl"
+		match: """(?x)
+			[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+			[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+		"""
 
 
 	# Labels
 	label:
 		patterns: [{
-			name: "meta.label.apl"
-			match: "^\\s*([A-Za-z_∆⍙]+[\\w∆⍙¯]*)(:)"
+			name:  "meta.label.apl"
+			match: """(?x)
+				^\\s*
+				(
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+				)
+				(:)
+			"""
 			captures:
 				1: {name: "entity.label.name.apl"}
 				2: {name: "punctuation.definition.label.end.apl"}
@@ -344,7 +354,10 @@ repository:
 
 					(?:
 						(?# 2: entity.function.return-value.apl)
-						([A-Za-z_∆⍙][\\w∆⍙¯]*)
+						(
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+						)
 
 						|
 
@@ -352,25 +365,45 @@ repository:
 						(?# 3: entity.function.return-value.shy.apl)
 						(
 							(\\{)             (?# 4: punctuation.definition.return-value.begin.apl)
-							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(?:
+								\\s*
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s*
+							)*
 							(\\})             (?# 5: punctuation.definition.return-value.end.apl)
 
 							|
 
 							(\\()             (?# 6: punctuation.definition.return-value.begin.apl)
-							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(?:
+								\\s*
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s*
+							)*
 							(\\))             (?# 7: punctuation.definition.return-value.end.apl)
 
 							|
 
 							(\\(\\s*\\{)      (?# 8: punctuation.definition.return-value.begin.apl)
-							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(?:
+								\\s*
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s*
+							)*
 							(\\}\\s*\\))      (?# 9: punctuation.definition.return-value.end.apl)
 
 							|
 
 							(\\{\\s*\\()      (?# 10: punctuation.definition.return-value.begin.apl)
-							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(?:
+								\\s*
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s*
+							)*
 							(\\)\\s*\\})      (?# 11: punctuation.definition.return-value.end.apl)
 						)
 						\\s*
@@ -389,7 +422,10 @@ repository:
 					(?# MONADIC)
 					(?:
 						(?# 13: entity.function.name.apl)
-						([A-Za-z_∆⍙][\\w∆⍙¯]*)
+						(
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+						)
 
 						\\s*
 
@@ -400,7 +436,10 @@ repository:
 							(\\[)
 								\\s*
 								(?:
-									\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*
+									\\s*
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+									\\s*
 
 									(?# 16: invalid.illegal.extra-characters.apl)
 									(.*?)
@@ -418,10 +457,17 @@ repository:
 
 						(?# 19: entity.function.arguments.right.apl)
 						(
-							(?<=\\s|\\])[A-Za-z_∆⍙][\\w∆⍙¯]*
+							(?<=\\s|\\])
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
 							|
 							(\\()   (?# 20: punctuation.definition.arguments.begin.apl)
-							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(?:
+								\\s*
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s*
+							)*
 							(\\))   (?# 21: punctuation.definition.arguments.end.apl)
 						)
 						\\s*
@@ -434,22 +480,41 @@ repository:
 					(?#==================)
 						(?:
 							(?# 22: entity.function.arguments.left.apl)
-							([A-Za-z_∆⍙][\\w∆⍙¯]*\\s+)
+							(
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s+
+							)
 
 							|
 
 							(?# 23: entity.function.arguments.left.optional.apl)
 							(
 								(\\{)          (?# 24: punctuation.definition.arguments.begin.apl)
-								(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+								(?:
+									\\s*
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+									\\s*
+								)*
 								(\\})          (?# 25: punctuation.definition.arguments.end.apl)
 								|
 								(\\(\\s*\\{)   (?# 26: punctuation.definition.arguments.begin.apl)
-								(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+								(?:
+									\\s*
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+									\\s*
+								)*
 								(\\}\\s*\\))   (?# 27: punctuation.definition.arguments.end.apl)
 								|
 								(\\{\\s*\\()   (?# 28: punctuation.definition.arguments.begin.apl)
-								(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+								(?:
+									\\s*
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+									\\s*
+								)*
 								(\\)\\s*\\})   (?# 29: punctuation.definition.arguments.end.apl)
 							)
 						)?
@@ -458,7 +523,10 @@ repository:
 
 						(?:
 							(?# 30: entity.function.name.apl)
-							([A-Za-z_∆⍙][\\w∆⍙¯]*)
+							(
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+							)
 
 							\\s*
 
@@ -468,7 +536,10 @@ repository:
 								(\\[)
 									\\s*
 									(?:
-										\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*
+										\\s*
+										[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+										[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+										\\s*
 
 										(?# 33: invalid.illegal.extra-characters.apl)
 										(.*?)
@@ -489,12 +560,19 @@ repository:
 								(\\()
 
 								(?# 38: entity.function.operands.left.apl)
-								(\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*)?
+								(
+									\\s*
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								)?
 
 								\\s*
 
 								(?# 39: entity.function.name.apl)
-								([A-Za-z_∆⍙][\\w∆⍙¯]*)
+								(
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								)
 
 								\\s*?
 
@@ -504,7 +582,10 @@ repository:
 									(\\[)
 										\\s*
 										(?:
-											\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*
+											\\s*
+											[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+											[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+											\\s*
 
 											(?# 42: invalid.illegal.extra-characters.apl)
 											(.*?)
@@ -520,7 +601,11 @@ repository:
 								\\s*
 
 								(?# 45: entity.function.operands.right.apl)
-								([A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)?
+								(
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+									[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+									\\s*
+								)?
 
 								(?# 46: punctuation.definition.operands.end.apl)
 								(\\))
@@ -531,11 +616,18 @@ repository:
 
 						(?# 47: entity.function.arguments.right.apl)
 						(
-							(?<=\\s|\\])[A-Za-z_∆⍙][\\w∆⍙¯]*
+							(?<=\\s|\\])
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
 							|
 							\\s*
 							(\\()   (?# 48: punctuation.definition.arguments.begin.apl)
-							(?:\\s*[A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)*
+							(?:
+								\\s*
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s*
+							)*
 							(\\))   (?# 49: punctuation.definition.arguments.end.apl)
 						)?
 					(?#==================)
@@ -555,7 +647,12 @@ repository:
 						(?:
 							\\s*
 							;
-							(?:\\s*[⎕A-Za-z_∆⍙][\\w∆⍙¯]*\\s*)+
+							(?:
+								\\s*
+								[⎕A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+								\\s*
+							)+
 						)+
 					)
 					|
@@ -683,17 +780,31 @@ repository:
 	# Switches (Dyalog-specific feature)
 	"command-switches":
 		patterns: [{
-			name: "variable.parameter.switch.apl"
-			begin: "(?<=\\s)(-)([\\w∆⍙]+[\\w∆⍙¯]*)(=)"
-			end:   "\\b(?=\\s)"
+			name:  "variable.parameter.switch.apl"
+			begin: """(?x)
+				(?<=\\s)(-)
+				(
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+				)
+				(=)
+			"""
+			end: "\\b(?=\\s)"
 			beginCaptures:
 				1: {name: "punctuation.delimiter.switch.apl"}
 				2: {name: "entity.name.switch.apl"}
 				3: {name: "punctuation.assignment.switch.apl"}
 			patterns: [{include: "#main"}]
 		},{
-			name: "variable.parameter.switch.apl"
-			match: "(?<=\\s)(-)([\\w∆⍙]+[\\w∆⍙¯]*)(?!=)"
+			name:  "variable.parameter.switch.apl"
+			match: """(?x)
+				(?<=\\s)(-)
+				(
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+				)
+				(?!=)
+			"""
 			captures:
 				1: {name: "punctuation.delimiter.switch.apl"}
 				2: {name: "entity.name.switch.apl"}
@@ -713,8 +824,33 @@ repository:
 	# Classes (Dyalog-flavoured implementation)
 	class:
 		patterns: [{
-			begin: "(?<=\\s|^)((:)Class)\\s+('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*((:)\\s*(?:('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)\\s*)?)?(.*?)$"
-			end:   "(?<=\\s|^)((:)EndClass)(?=\\b)"
+			begin: """(?x)
+				(?<=\\s|^)
+				((:)Class)
+				\\s+
+				(
+					'[^']*'?
+					|
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+					[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+				)
+				\\s*
+				(
+					(:)
+					\\s*
+					(?:
+						(
+							'[^']*'?
+							|
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+						)
+						\\s*
+					)?
+				)?
+				(.*?)$
+			"""
+			end: "(?<=\\s|^)((:)EndClass)(?=\\b)"
 			beginCaptures:
 				0: {name: "meta.class.apl"}
 				1: {name: "keyword.control.class.apl"}
@@ -753,7 +889,14 @@ repository:
 
 					# Anything else is assumed to be the name of the field
 					name: "entity.name.type.apl"
-					match: "('[^']*'?|[A-Za-z_∆⍙]+[\\w∆⍙¯]*)"
+					match: """(?x)
+						(
+							'[^']*'?
+							|
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+							[A-Z¯_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ0-9]*
+						)
+					"""
 					captures: 1: {include: "#strings"}
 				}]
 
