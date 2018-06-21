@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 [Staged]
 --------------------------------------------------------------------------------
 * __Added:__    First-line matching of modelines and APL symbols
+* __Added:__    Highlighting of function/operator names in definition headers
 * __Added:__    Recognition of `∇` and `∇∇` in lambda bodies
 * __Added:__    Support for Dyalog's `#` and `##` namespace tokens
 * __Added:__    Support for Dyalog's `⊆` and `@` primitives
