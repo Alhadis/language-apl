@@ -1,4 +1,5 @@
 .DS_Store
+.apl.history
 Thumbs.db
 Desktop.ini
 node_modules
