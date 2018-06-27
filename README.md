@@ -6,17 +6,6 @@ This package adds Atom support for everybody's favourite array-wrangling crypto-
 ![Do you even ⍨, bro?](https://raw.githubusercontent.com/Alhadis/language-apl/master/preview.png)
 
 
-Roadmap
--------
-Still to come:
-
-* **Input method editors:**  
-  Shortcuts, customisable virtual keyboards, ASCII-to-APL substitution typing modes.
-  
-* **Inline documentation:**  
-  Stuff to remind you what each APL symbol does.
-
-
 Font Support
 ------------
 No APL symbol fonts are bundled with this package.
