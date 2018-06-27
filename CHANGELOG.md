@@ -4,8 +4,13 @@ Change Log
 This project adheres to [Semantic Versioning](http://semver.org).
 
 
-[Staged]
+[v1.2.0]
 --------------------------------------------------------------------------------
+**June 27th, 2018**  
+Substantial improvements to the grammar's accuracy and coverage, courtesy of
+@jayfoad. Extensive snippets have also been added to allow users without APL
+keyboards to enter APL symbols with "ASCII-fied" representations (`|O`→`⌽`).
+
 * __Added:__    First-line matching of modelines and APL symbols
 * __Added:__    Highlighting of function/operator names in definition headers
 * __Added:__    Recognition of `∇` and `∇∇` in lambda bodies
@@ -50,7 +55,8 @@ Initial release. Adds highlighting support and snippets for APL.
 
 
 [Referenced links]:_____________________________________________________________
-[Staged]: https://github.com/Alhadis/language-apl/compare/v1.1.0...HEAD
+[Staged]: https://github.com/Alhadis/language-apl/compare/v1.2.0...HEAD
+[v1.2.0]: https://github.com/Alhadis/language-apl/releases/tag/v1.2.0
 [v1.1.0]: https://github.com/Alhadis/language-apl/releases/tag/v1.1.0
 [v1.0.1]: https://github.com/Alhadis/language-apl/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/Alhadis/language-apl/releases/tag/v1.0.0
