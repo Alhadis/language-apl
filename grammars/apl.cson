@@ -682,7 +682,7 @@ repository:
 				10: {name: "punctuation.definition.return-value.begin.apl"}
 				11: {name: "punctuation.definition.return-value.end.apl"}
 				12: {name: "keyword.operator.assignment.apl"}
-				13: {name: "entity.function.name.apl", captures: {0: patterns: [include: "#embolden"]}}
+				13: {name: "entity.function.name.apl", patterns: [include: "#embolden"]}
 				14: {name: "entity.function.axis.apl"}
 				15: {name: "punctuation.definition.axis.begin.apl"}
 				16: {name: "invalid.illegal.extra-characters.apl"}
