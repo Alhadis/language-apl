@@ -1,2 +1,5 @@
 # Prevent fixtures from showing in diffs or skewing language stats
 tests/* linguist-vendored
+
+# Include CSON files GitHub's language breakdown graph
+*.cson  linguist-detectable=true
