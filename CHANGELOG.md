@@ -4,6 +4,15 @@ Change Log
 This project adheres to [Semantic Versioning](http://semver.org).
 
 
+[Staged]
+--------------------------------------------------------------------------------
+**April 25th, 2019**  
+Added support for another 8 file-extensions: `.apla`, `.aplc`, `.aplf`, `.apli`,
+`.apln`, `.aplo`, `.dyapp`, and `.mipage`. Sourced from @OptimaSystems's port of
+this package for [VSCode](https://github.com/OptimaSystems/vscode-apl-language).
+
+
+
 [v1.2.0]
 --------------------------------------------------------------------------------
 **June 27th, 2018**  

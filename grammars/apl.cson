@@ -1,6 +1,17 @@
 name: "APL"
 scopeName: "source.apl"
-fileTypes: ["apl", "dyalog"]
+fileTypes: [
+	"apl"
+	"apla"
+	"aplc"
+	"aplf"
+	"apli"
+	"apln"
+	"aplo"
+	"dyalog"
+	"dyapp"
+	"mipage"
+]
 firstLineMatch: """(?x)
 	# APL symbols
 	[⌶-⍺]
