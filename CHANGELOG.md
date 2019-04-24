@@ -4,7 +4,7 @@ Change Log
 This project adheres to [Semantic Versioning](http://semver.org).
 
 
-[Staged]
+[v1.2.1]
 --------------------------------------------------------------------------------
 **April 25th, 2019**  
 Added support for another 8 file-extensions: `.apla`, `.aplc`, `.aplf`, `.apli`,
@@ -65,7 +65,8 @@ Initial release. Adds highlighting support and snippets for APL.
 
 
 [Referenced links]:_____________________________________________________________
-[Staged]: https://github.com/Alhadis/language-apl/compare/v1.2.0...HEAD
+[Staged]: https://github.com/Alhadis/language-apl/compare/v1.2.1...HEAD
+[v1.2.1]: https://github.com/Alhadis/language-apl/releases/tag/v1.2.1
 [v1.2.0]: https://github.com/Alhadis/language-apl/releases/tag/v1.2.0
 [v1.1.0]: https://github.com/Alhadis/language-apl/releases/tag/v1.1.0
 [v1.0.1]: https://github.com/Alhadis/language-apl/releases/tag/v1.0.1
