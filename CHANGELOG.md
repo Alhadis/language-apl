@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 Added support for another 8 file-extensions: `.apla`, `.aplc`, `.aplf`, `.apli`,
 `.apln`, `.aplo`, `.dyapp`, and `.mipage`. Sourced from @OptimaSystems's port of
 this package for [VSCode](https://github.com/OptimaSystems/vscode-apl-language).
+Snippets for various Dyalog-specific constructs were also ported from said repo.
 
 
 

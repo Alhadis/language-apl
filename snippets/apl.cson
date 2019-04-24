@@ -27,6 +27,68 @@
 		body:   "${1:result} ← '<?apl' '?>' ⎕INP '${2:END-}HTML'\n\t$0\n${2:END-}HTML"
 
 
+	# Dyalog APL extensions
+	Class:
+		prefix: "class"
+		body: "Class ${1:NAME}\n\t$2\n:EndClass\n$0"
+
+	"Condition: If":
+		prefix: "if"
+		body: "If ${1:CONDITION}\n\t$2\n:EndIf\n$0"
+	
+	"Condition: If Else":
+		prefix: "ie"
+		body: "If ${1:CONDITION}\n\t$2\n:Else\n\t$3\n:EndIf\n$0"
+
+	"Condition: Select":
+		prefix: "sel"
+		body: "Select ${1:OBJECT}\n:Case ${2:VALUE}\n\t$3\n:Else\n\t$4\n:EndSelect\n$0"
+
+	"Condition: With":
+		prefix: "with"
+		body: "With ${1:CONDITION}\n\t$2\n:EndWith\n$0"
+
+	Disposable:
+		prefix: "disp"
+		body: "Disposable ${1:OBJECTS}\n\t$2\n:EndDisposable\n$0"
+
+	Interface:
+		prefix: "int"
+		body: "Interface ${1:NAME}\n\t$2\n:EndInterface\n$0"
+
+	"Loop: For":
+		prefix: "for"
+		body: "For ${1:ITEM} :In ${2:ITEMS}\n\t$3\n:EndFor\n$0"
+	
+	"Loop: Repeat":
+		prefix: "rep"
+		body: "Repeat\n\t$1\n:EndRepeat\n$0"
+
+	"Loop: Repeat Until":
+		prefix: "until"
+		body: "Repeat\n\t$1\n:Until ${2:CONDITION}\n$0"
+
+	"Loop: While":
+		prefix: "while"
+		body: "While ${1:CONDITION}\n\t$2\n:EndWhile\n$0"
+
+	Namespace:
+		prefix: "ns"
+		body: "Namespace ${1:NAME}\n\t$2\n:EndNamespace\n$0"
+
+	Property:
+		prefix: "prop"
+		body: "Property ${1:NAME}\n\t∇ r←get args\n\t\tr←$2\n\t∇\n\t∇ set args\n\t∇\n:EndProperty\n$0"
+	
+	Section:
+		prefix: "sect"
+		body: "Section ${1:NAME}\n\t$2\n:EndSection\n$0"
+
+	Trap:
+		prefix: "trap"
+		body: "Trap ${1:ERROR-NUMBER}\n\t$2\n:Else\n\t$3\n:EndTrap\n$0"
+
+
 	# ASCII-fied mnemonics for each APL symbol
 	⌶:  body: "⌶", prefix: "I"
 	⌸:  body: "⌸", prefix: "[=]"
@@ -43,7 +105,7 @@
 	⍁:  body: "⍁", prefix: "[/]"
 	⍂:  body: "⍂", prefix: "[\\]"
 	⍃:  body: "⍃", prefix: "[<]"
-	⍄:  body: "⍄", prefix: "[>]" 
+	⍄:  body: "⍄", prefix: "[>]"
 	⍅:  body: "⍅", prefix: "<-|"
 	⍆:  body: "⍆", prefix: "|->"
 	⍇:  body: "⍇", prefix: "[<-]"
@@ -53,7 +115,7 @@
 	⍉3: body: "⍉", prefix: "\\o"
 	⍉4: body: "⍉", prefix: "\\O"
 	⍊:  body: "⍊", prefix: "__|__"
-	⍋:  body: "⍋", prefix: "A" 
+	⍋:  body: "⍋", prefix: "A"
 	⍌:  body: "⍌", prefix: "[V]"
 	⍓:  body: "⍓", prefix: "[A]"
 	⍔:  body: "⍔", prefix: "[V_]"
