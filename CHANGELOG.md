@@ -4,8 +4,9 @@ Change Log
 This project adheres to [Semantic Versioning](http://semver.org).
 
 
-[Staged]
+[v1.2.2]
 --------------------------------------------------------------------------------
+**May 6th, 2019**  
 * __Added:__ Highlighting of local variable lists declared on separate lines
 * __Fixed:__ Catastrophic backtracking when typing function headers
 
@@ -72,7 +73,8 @@ Initial release. Adds highlighting support and snippets for APL.
 
 
 [Referenced links]:_____________________________________________________________
-[Staged]: https://github.com/Alhadis/language-apl/compare/v1.2.1...HEAD
+[Staged]: https://github.com/Alhadis/language-apl/compare/v1.2.2...HEAD
+[v1.2.2]: https://github.com/Alhadis/language-apl/releases/tag/v1.2.2
 [v1.2.1]: https://github.com/Alhadis/language-apl/releases/tag/v1.2.1
 [v1.2.0]: https://github.com/Alhadis/language-apl/releases/tag/v1.2.0
 [v1.1.0]: https://github.com/Alhadis/language-apl/releases/tag/v1.1.0
