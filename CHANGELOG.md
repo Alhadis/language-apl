@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org).
 [Staged]
 --------------------------------------------------------------------------------
 * __Added:__ Highlighting of local variable lists declared on separate lines
+* __Fixed:__ Catastrophic backtracking when typing function headers
 
 
 
