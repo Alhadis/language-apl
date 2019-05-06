@@ -1,6 +1,10 @@
 APL language support in Atom
 ============================
 
+[![Build status: TravisCI](https://travis-ci.org/Alhadis/language-apl.svg?branch=master)](https://travis-ci.org/Alhadis/language-apl)
+[![Build status: AppVeyor](https://ci.appveyor.com/api/projects/status/a6551f72vh91bjly?svg=true)](https://ci.appveyor.com/project/Alhadis/language-apl)
+[![Latest package version](https://img.shields.io/apm/v/language-apl.svg?colorB=brightgreen)](https://atom.io/packages/language-apl)
+
 This package adds Atom support for everybody's favourite array-wrangling crypto-language.
 
 ![Do you even ⍨, bro?](https://raw.githubusercontent.com/Alhadis/language-apl/master/preview.png)
