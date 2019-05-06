@@ -11,7 +11,6 @@ describe("Package activation", () => {
 			atom.packages.activatePackage("language-css"),
 			atom.packages.activatePackage("language-javascript"),
 			atom.packages.activatePackage("language-json"),
-			atom.packages.activatePackage("language-text"),
 		]);
 	});
 	

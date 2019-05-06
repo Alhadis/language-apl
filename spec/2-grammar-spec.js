@@ -781,4 +781,244 @@ describe("Syntax highlighting", () => {
 			lines[2][1].should.eql({value: "EndClass", scopes: ["source.apl", "keyword.control.class.apl"]});
 		});
 	});
+	
+	describe("Embedded highlighting", () => {
+		it("tokenises HTML heredocs", () => {
+			const htmlInput = '<header id="top">\n\tHeading\n</header>';
+			const htmlLines = atom.grammars.grammarForScopeName("text.html.basic").tokenizeLines(htmlInput);
+			for(const tokens of htmlLines)
+				for(const token of tokens)
+					token.scopes.splice(0, 1, "source.apl", "meta.heredoc.apl", "text.embedded.html.basic");
+			
+			let lines = grammar.tokenizeLines(`text ← ⎕INP "END-OF-HTML"\n${htmlInput}\nEND-OF-HTML`);
+			lines[0][0].should.eql({value: "text", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",    scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",    scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP",  scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "END-OF-HTML", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1].forEach((token, index) => token.should.eql(htmlLines[0][index]));
+			lines[2].forEach((token, index) => token.should.eql(htmlLines[1][index]));
+			lines[3].forEach((token, index) => token.should.eql(htmlLines[2][index]));
+			lines[4][0].should.eql({value: "END-OF-HTML", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+			
+			lines = grammar.tokenizeLines(`  aaa text ← ⎕INP "END-OF-XHTML"\n${htmlInput}\nEND-OF-XHTML`);
+			lines[0][1].should.eql({value: "aaa",  scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][3].should.eql({value: "text", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][5].should.eql({value: "←",    scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][7].should.eql({value: "⎕",    scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][8].should.eql({value: "INP",  scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][10].should.eql({value: '"',   scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][11].should.eql({value: "END-OF-XHTML", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][12].should.eql({value: '"',   scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1].forEach((token, index) => token.should.eql(htmlLines[0][index]));
+			lines[2].forEach((token, index) => token.should.eql(htmlLines[1][index]));
+			lines[3].forEach((token, index) => token.should.eql(htmlLines[2][index]));
+			lines[4][0].should.eql({value: "END-OF-XHTML", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+			
+			lines = grammar.tokenizeLines(`text ← ⎕INP "END-OF-⎕INP"\n${htmlInput}\n=== END-OF-⎕INP ===`);
+			lines[0][0].should.eql({value: "text", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",    scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",    scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP",  scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "END-OF-⎕INP", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1].forEach((token, index) => token.should.eql(htmlLines[0][index]));
+			lines[2].forEach((token, index) => token.should.eql(htmlLines[1][index]));
+			lines[3].forEach((token, index) => token.should.eql(htmlLines[2][index]));
+			lines[4][0].should.eql({value: "=== END-OF-⎕INP ===", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+			
+			lines = grammar.tokenizeLines(` aatext ← ⎕INP "END-OF-HTML"\n${htmlInput}\n========== END-OF-HTML ===============`);
+			lines[0][1].should.eql({value: "aatext", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][3].should.eql({value: "←",      scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][5].should.eql({value: "⎕",      scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][6].should.eql({value: "INP",    scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][8].should.eql({value: '"',      scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][9].should.eql({value: "END-OF-HTML", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][10].should.eql({value: '"',     scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1].forEach((token, index) => token.should.eql(htmlLines[0][index]));
+			lines[2].forEach((token, index) => token.should.eql(htmlLines[1][index]));
+			lines[3].forEach((token, index) => token.should.eql(htmlLines[2][index]));
+			lines[4][0].should.eql({value: "========== END-OF-HTML ===============", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+		});
+		
+		it("tokenises XML/SVG heredocs", () => {
+			const xmlInput = '<?xml version="1.0" encoding="utf-8"?>\n<svg><!-- Fancy lines, etc --></svg>';
+			const xmlLines = atom.grammars.grammarForScopeName("text.xml").tokenizeLines(xmlInput);
+			for(const tokens of xmlLines)
+				for(const token of tokens)
+					token.scopes.splice(0, 1, "source.apl", "meta.heredoc.apl", "text.embedded.xml");
+			
+			let lines = grammar.tokenizeLines(`tree ← ⎕INP "END-OF-XML"\n${xmlInput}\nEND-OF-XML`);
+			lines[0][0].should.eql({value: "tree", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",    scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",    scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP",  scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "END-OF-XML", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1].forEach((token, index) => token.should.eql(xmlLines[0][index]));
+			lines[2].forEach((token, index) => token.should.eql(xmlLines[1][index]));
+			lines[3][0].should.eql({value: "END-OF-XML", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+			
+			lines = grammar.tokenizeLines(`svg ← ⎕INP "SVG"\n${xmlInput}\nEnd of SVG`);
+			lines[0][0].should.eql({value: "svg", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",   scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",   scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP", scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',   scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "SVG", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',   scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1].forEach((token, index) => token.should.eql(xmlLines[0][index]));
+			lines[2].forEach((token, index) => token.should.eql(xmlLines[1][index]));
+			lines[3][0].should.eql({value: "End of SVG", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+		});
+		
+		it("tokenises JavaScript heredocs", () => {
+			const jsInput = [
+				'"use strict";',
+				'let light = "shine";',
+				"function fn(){",
+				"\treturn Math.max(...[5, 6, 8]);",
+				"}",
+				"JSON.stringify({});",
+				"const $ = s => document.querySelector(s);",
+			].join("\n");
+			const jsLines = atom.grammars.grammarForScopeName("source.js").tokenizeLines(jsInput);
+			for(const tokens of jsLines)
+				for(const token of tokens)
+					token.scopes.splice(0, 1, "source.apl", "meta.heredoc.apl", "source.embedded.js");
+			const lines = grammar.tokenizeLines(`js ← ⎕INP "ENDJS"\n${jsInput}\nENDJS`);
+			lines[0][0].should.eql({value: "js",    scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",     scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",     scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP",   scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',     scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "ENDJS", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',     scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			for(let i = 1; i < 8; ++i)
+				lines[i].forEach((token, index) => token.should.eql(jsLines[i - 1][index]));
+			lines[8][0].should.eql({value: "ENDJS", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+		});
+		
+		it("tokenises CSS heredocs", () => {
+			const cssInput = "html{\n\tbackground: #f00;\n}";
+			const cssLines = atom.grammars.grammarForScopeName("source.css").tokenizeLines(cssInput);
+			for(const tokens of cssLines)
+				for(const token of tokens)
+					token.scopes.splice(0, 1, "source.apl", "meta.heredoc.apl", "source.embedded.css");
+			const lines = grammar.tokenizeLines(`styles ← ⎕INP "END-CSS"\n${cssInput}\nEND-CSS`);
+			lines[0][0].should.eql({value: "styles",  scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",       scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",       scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP",     scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',       scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "END-CSS", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',       scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1].forEach((token, index) => token.should.eql(cssLines[0][index]));
+			lines[2].forEach((token, index) => token.should.eql(cssLines[1][index]));
+			lines[3].forEach((token, index) => token.should.eql(cssLines[2][index]));
+			lines[4][0].should.eql({value: "END-CSS", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+		});
+		
+		it("tokenises JSON heredocs", () => {
+			const jsonInput = '{\n\t"name": "language-apl",\n\t"version": "1.0.1"\n}';
+			const jsonLines = atom.grammars.grammarForScopeName("source.json").tokenizeLines(jsonInput);
+			for(const tokens of jsonLines)
+				for(const token of tokens)
+					token.scopes.splice(0, 1, "source.apl", "meta.heredoc.apl", "source.embedded.json");
+			const lines = grammar.tokenizeLines(`json ← ⎕INP "JSON"\n${jsonInput}\nJSON`);
+			lines[0][0].should.eql({value: "json",  scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",     scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",     scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP",   scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',     scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "JSON",  scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',     scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			for(let i = 1; i < 4; ++i)
+				lines[i].forEach((token, index) => token.should.eql(jsonLines[i - 1][index]));
+			lines[5][0].should.eql({value: "JSON", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+		});
+		
+		it("tokenises plain-text heredocs", () => {
+			const lines = grammar.tokenizeLines('text ← ⎕INP "Plain Text"\nZ←Z←81 9⍴1 ◊ F1←0\nPlain Text');
+			lines[0][0].should.eql({value: "text", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←",    scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕",    scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP",  scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "Plain Text", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl"]});
+			lines[0][9].should.eql({value: '"',    scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.double.apl", "punctuation.definition.string.end.apl"]});
+			lines[1][0].should.eql({value: "Z←Z←81 9⍴1 ◊ F1←0", scopes: ["source.apl", "meta.heredoc.apl", "text.embedded.plain"]});
+			lines[2][0].should.eql({value: "Plain Text", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+		});
+		
+		it("tokenises APL heredocs", () => {
+			const lines = grammar.tokenizeLines("native ← ⎕INP 'END-OF-STORY'\n\n⍝ APL comment\nZ←Z←81 9⍴1 ◊ F1←0\nlife←{↑1 ⍵∨.∧3 4=+/,¯1 0 1∘.⊖¯1 0 1∘.⌽⊂⍵}\n\n==/ END-OF-STORY \\==");
+			lines[0][0].should.eql({value: "native", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[0][2].should.eql({value: "←", scopes: ["source.apl", "meta.heredoc.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "⎕", scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl", "punctuation.definition.quad.apl"]});
+			lines[0][5].should.eql({value: "INP", scopes: ["source.apl", "meta.heredoc.apl", "support.system.variable.apl"]});
+			lines[0][7].should.eql({value: "'", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.single.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][8].should.eql({value: "END-OF-STORY", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.single.apl"]});
+			lines[0][9].should.eql({value: "'", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.single.apl", "punctuation.definition.string.end.apl"]});
+			lines[2][0].should.eql({value: "⍝", scopes: ["source.apl", "meta.heredoc.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
+			lines[2][1].should.eql({value: " APL comment", scopes: ["source.apl", "meta.heredoc.apl", "comment.line.apl"]});
+			lines[3][0].should.eql({value: "Z", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[3][1].should.eql({value: "←", scopes: ["source.apl", "meta.heredoc.apl", "keyword.operator.assignment.apl"]});
+			lines[3][2].should.eql({value: "Z", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[3][3].should.eql({value: "←", scopes: ["source.apl", "meta.heredoc.apl", "keyword.operator.assignment.apl"]});
+			lines[3][4].should.eql({value: "81", scopes: ["source.apl", "meta.heredoc.apl", "constant.numeric.apl"]});
+			lines[3][6].should.eql({value: "9", scopes: ["source.apl", "meta.heredoc.apl", "constant.numeric.apl"]});
+			lines[3][7].should.eql({value: "⍴", scopes: ["source.apl", "meta.heredoc.apl", "keyword.operator.rho.apl"]});
+			lines[3][8].should.eql({value: "1", scopes: ["source.apl", "meta.heredoc.apl", "constant.numeric.apl"]});
+			lines[3][10].should.eql({value: "◊", scopes: ["source.apl", "meta.heredoc.apl", "keyword.operator.lozenge.apl"]});
+			lines[3][12].should.eql({value: "F1", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[3][13].should.eql({value: "←", scopes: ["source.apl", "meta.heredoc.apl", "keyword.operator.assignment.apl"]});
+			lines[3][14].should.eql({value: "0", scopes: ["source.apl", "meta.heredoc.apl", "constant.numeric.apl"]});
+			lines[4][0].should.eql({value: "life", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
+			lines[4][1].should.eql({value: "←", scopes: ["source.apl", "meta.heredoc.apl", "keyword.operator.assignment.apl"]});
+			lines[4][2].should.eql({value: "{", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "punctuation.definition.lambda.begin.apl"]});
+			lines[4][3].should.eql({value: "↑", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.take.apl"]});
+			lines[4][4].should.eql({value: "1", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][6].should.eql({value: "⍵", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.language.lambda.arguments.right.apl"]});
+			lines[4][7].should.eql({value: "∨", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.or.apl"]});
+			lines[4][8].should.eql({value: ".", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.dot.apl"]});
+			lines[4][9].should.eql({value: "∧", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.and.apl"]});
+			lines[4][10].should.eql({value: "3", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][12].should.eql({value: "4", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][13].should.eql({value: "=", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.equal.apl"]});
+			lines[4][14].should.eql({value: "+", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.plus.apl"]});
+			lines[4][15].should.eql({value: "/", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.slash.apl"]});
+			lines[4][16].should.eql({value: ",", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.comma.apl"]});
+			lines[4][17].should.eql({value: "¯1", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][19].should.eql({value: "0", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][21].should.eql({value: "1", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][22].should.eql({value: "∘", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.jot.apl"]});
+			lines[4][23].should.eql({value: ".", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.dot.apl"]});
+			lines[4][24].should.eql({value: "⊖", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.rotate-first.apl"]});
+			lines[4][25].should.eql({value: "¯1", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][27].should.eql({value: "0", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][29].should.eql({value: "1", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.numeric.apl"]});
+			lines[4][30].should.eql({value: "∘", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.jot.apl"]});
+			lines[4][31].should.eql({value: ".", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.dot.apl"]});
+			lines[4][32].should.eql({value: "⌽", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.rotate-last.apl"]});
+			lines[4][33].should.eql({value: "⊂", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "keyword.operator.enclose.apl"]});
+			lines[4][34].should.eql({value: "⍵", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "constant.language.lambda.arguments.right.apl"]});
+			lines[4][35].should.eql({value: "}", scopes: ["source.apl", "meta.heredoc.apl", "meta.lambda.function.apl", "punctuation.definition.lambda.end.apl"]});
+			lines[6][0].should.eql({value: "==/ END-OF-STORY \\==", scopes: ["source.apl", "meta.heredoc.apl", "constant.other.apl"]});
+		});
+		
+		it("tokenises EOF terminators", () => {
+			const lines = grammar.tokenizeLines(")OFF ⍝ The following lines should be unhinted:\n\n⍝ Comment\n⌺ ⌻ ⌼ ⌾ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍊ ⍌ ⍍ ⍏ ⍐ ⍑ ⍓ ⍔ ⍖ ⍗ ⍘ ⍚ ⍛ ⍜ ⍞ ⍡ ⍢ ⍥ ⍦ ⍧ ⍩ ⍭ ⍮ ⍯ ⍰ ⍸");
+			lines[0][0].should.eql({value: ")",   scopes: ["source.apl", "entity.name.command.eof.apl", "punctuation.definition.command.apl"]});
+			lines[0][1].should.eql({value: "OFF", scopes: ["source.apl", "entity.name.command.eof.apl"]});
+			lines[0][3].should.eql({value: "⍝",   scopes: ["source.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
+			lines[0][4].should.eql({value: " The following lines should be unhinted:", scopes: ["source.apl", "comment.line.apl"]});
+			lines[2][0].should.eql({value: "⍝ Comment", scopes: ["source.apl", "text.embedded.apl"]});
+			lines[3][0].should.eql({value: "⌺ ⌻ ⌼ ⌾ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍊ ⍌ ⍍ ⍏ ⍐ ⍑ ⍓ ⍔ ⍖ ⍗ ⍘ ⍚ ⍛ ⍜ ⍞ ⍡ ⍢ ⍥ ⍦ ⍧ ⍩ ⍭ ⍮ ⍯ ⍰ ⍸", scopes: ["source.apl", "text.embedded.apl"]});
+		});
+	});
 });
