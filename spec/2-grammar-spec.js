@@ -704,6 +704,44 @@ describe("Syntax highlighting", () => {
 			lines[0][10].should.eql({value: "X", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.arguments.right.apl"]});
 			lines[1][0].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "keyword.operator.nabla.apl"]});
 		});
+		
+		it("tokenises local variable lists on separate lines", () => {
+			const lines = grammar.tokenizeLines("∇ r←foo y;a;b       ⍝ Locals\n         ;c;d       ⍝ More locals\n  (a b c d)←y\n  r←a+b-c×d\n∇");
+			lines[0][0].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "keyword.operator.nabla.apl"]});
+			lines[0][2].should.eql({value: "r", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.return-value.apl"]});
+			lines[0][3].should.eql({value: "←", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "keyword.operator.assignment.apl"]});
+			lines[0][4].should.eql({value: "foo", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.name.apl", "markup.bold.identifier.apl"]});
+			lines[0][6].should.eql({value: "y", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.arguments.right.apl"]});
+			lines[0][7].should.eql({value: ";", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl", "punctuation.separator.apl"]});
+			lines[0][8].should.eql({value: "a", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
+			lines[0][9].should.eql({value: ";", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl", "punctuation.separator.apl"]});
+			lines[0][10].should.eql({value: "b       ", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
+			lines[0][11].should.eql({value: "⍝ Locals", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "comment.line.apl"]});
+			lines[1][1].should.eql({value: ";", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl", "punctuation.separator.apl"]});
+			lines[1][2].should.eql({value: "c", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
+			lines[1][3].should.eql({value: ";", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl", "punctuation.separator.apl"]});
+			lines[1][4].should.eql({value: "d       ", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
+			lines[1][5].should.eql({value: "⍝", scopes: ["source.apl", "meta.function.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
+			lines[1][6].should.eql({value: " More locals", scopes: ["source.apl", "meta.function.apl", "comment.line.apl"]});
+			lines[2][1].should.eql({value: "(", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "punctuation.round.bracket.begin.apl"]});
+			lines[2][2].should.eql({value: "a", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
+			lines[2][4].should.eql({value: "b", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
+			lines[2][6].should.eql({value: "c", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
+			lines[2][8].should.eql({value: "d", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
+			lines[2][9].should.eql({value: ")", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "punctuation.round.bracket.end.apl"]});
+			lines[2][10].should.eql({value: "←", scopes: ["source.apl", "meta.function.apl", "keyword.operator.assignment.apl"]});
+			lines[2][11].should.eql({value: "y", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[3][1].should.eql({value: "r", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[3][2].should.eql({value: "←", scopes: ["source.apl", "meta.function.apl", "keyword.operator.assignment.apl"]});
+			lines[3][3].should.eql({value: "a", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[3][4].should.eql({value: "+", scopes: ["source.apl", "meta.function.apl", "keyword.operator.plus.apl"]});
+			lines[3][5].should.eql({value: "b", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[3][6].should.eql({value: "-", scopes: ["source.apl", "meta.function.apl", "keyword.operator.minus.apl"]});
+			lines[3][7].should.eql({value: "c", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[3][8].should.eql({value: "×", scopes: ["source.apl", "meta.function.apl", "keyword.operator.times.apl"]});
+			lines[3][9].should.eql({value: "d", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[4][0].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "keyword.operator.nabla.apl"]});
+		});
 	});
 
 	describe("Classes", () => {

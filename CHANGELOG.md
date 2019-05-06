@@ -4,6 +4,12 @@ Change Log
 This project adheres to [Semantic Versioning](http://semver.org).
 
 
+[Staged]
+--------------------------------------------------------------------------------
+* __Added:__ Highlighting of local variable lists declared on separate lines
+
+
+
 [v1.2.1]
 --------------------------------------------------------------------------------
 **April 25th, 2019**  

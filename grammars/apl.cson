@@ -678,7 +678,27 @@ repository:
 
 			$"
 			end:   "^\\s*?(?:(∇)|(⍫))\\s*?(⍝.*?)?$"
-			patterns: [{ include: "$self" }]
+			patterns: [{
+				# Local variables declared on separate line
+				name: "entity.function.definition.apl"
+				match: """(?x)
+					^\\s*
+					(
+						(?>
+							;
+							(?:
+								\\s*
+								[⎕A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
+								[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]*
+								\\s*
+							)+
+						)+
+					)
+				"""
+				captures:
+					0: name: "entity.function.local-variables.apl"
+					1: patterns: [name: "punctuation.separator.apl", match: ";"]
+			}, include: "$self"]
 			beginCaptures:
 				0:  {name: "entity.function.definition.apl"}
 				1:  {name: "keyword.operator.nabla.apl"}
