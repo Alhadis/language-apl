@@ -279,7 +279,7 @@ describe("Syntax highlighting", () => {
 			tokens[17].should.eql({value: "∇", scopes: ["source.apl", "meta.lambda.function.apl", "constant.language.lambda.operands.self.function.apl"]});
 			tokens[19].should.eql({value: "λ", scopes: ["source.apl", "meta.lambda.function.apl", "constant.language.lambda.symbol.apl"]});
 			tokens[20].should.eql({value: "}", scopes: ["source.apl", "meta.lambda.function.apl", "punctuation.definition.lambda.end.apl"]});
-		})
+		});
 	});
 
 	describe("Functions", () => {
@@ -374,7 +374,7 @@ describe("Syntax highlighting", () => {
 			lines[1][5].should.eql({value: "X", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
 			lines[1][7].should.eql({value: "+", scopes: ["source.apl", "meta.function.apl", "keyword.operator.plus.apl"]});
 			lines[1][9].should.eql({value: "Y", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
-			lines[2][0].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "keyword.operator.nabla.apl"]});	
+			lines[2][0].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "keyword.operator.nabla.apl"]});
 
 			lines = grammar.tokenizeLines("∇R ← (LOP OPERATOR ROP) X ;A;B\n\tR ← X + Y\n∇");
 			lines[0][0].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "keyword.operator.nabla.apl"]});
