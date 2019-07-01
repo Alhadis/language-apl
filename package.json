@@ -11,9 +11,8 @@
 	"dependencies": {},
 	"devDependencies": {
 		"@alhadis/eslint-config": "^1.2.0",
-		"atom-mocha": "^2.1.1",
-		"eslint":     "^5.16.0",
-		"mocha-when": "^1.0.0"
+		"atom-mocha": "^2.2.0",
+		"eslint":     "^5.16.0"
 	},
 	"atomTestRunner": "atom-mocha",
 	"eslintConfig": {"extends": "@alhadis/eslint-config/atom"},

@@ -5,6 +5,5 @@ module.exports = {
 	sort: true,
 	require: [
 		"chai/register-should",
-		"mocha-when/register",
 	],
 };
