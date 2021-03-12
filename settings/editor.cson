@@ -1,3 +1,59 @@
-".source.apl":
+".source.apl, .meta.embedded.block.apl":
 	editor:
 		commentStart: "⍝ "
+		increaseIndentPattern: """(?x)
+			^\\s*(?:
+				# Function or operator definition header
+				∇ .*? [^\\s⍝]
+				|
+				
+				# Dyalog extensions for control flow and OOP
+				:
+				( Class
+				| Disposable
+				| For
+				| If
+				| Interface
+				| Namespace
+				| Property
+				| Repeat
+				| Section
+				| Select
+				| Trap
+				| Until
+				| While
+				| With
+				) (?=\\s|$)
+			)
+			|
+			# Opening tag of a GNU APL heredoc
+			<[?%] (?:=|apl(?=\\s|$))
+			\\s* (?:⍝.*)? $
+		"""
+		decreaseIndentPattern: """(?x)
+			^ \\s*
+			(?:
+				(?: ∇    # Footer of a function/operator definition
+				| [?%]>  # Closing tag of a GNU APL heredoc
+				) \\s* (?:⍝.*)? $
+				
+				|
+				
+				# Dyalog extensions for control flow and OOP
+				:End
+				( Class
+				| Disposable
+				| For
+				| If
+				| Interface
+				| Namespace
+				| Property
+				| Repeat
+				| Section
+				| Select
+				| Trap
+				| While
+				| With
+				) (?=\\s|$)
+			)
+		"""
