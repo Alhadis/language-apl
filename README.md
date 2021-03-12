@@ -20,9 +20,9 @@ Furthermore, Windows and Mac OS both ship with fonts that support APL symbols
 If the characters aren't displaying correctly, try installing any or all of these:
 
 * [APL385 Unicode](http://archive.vector.org.uk/resource/apl385.ttf)
-* [SImPL](http://www.chastney.com/~philip/sixpack/sixpack_medium.ttf)
+* [SImPL](https://web.archive.org/web/20140316112809/http://www.chastney.com/~philip/sixpack/sixpack_medium.ttf)
 * [Noto Sans Symbols](https://www.google.com/get/noto/#sans-zsym)
-* [Symbola](http://users.teilar.gr/~g1951d/Symbola.zip)
+* [Symbola](https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip)
 
 **Side-note:** I recommend installing Symbola anyway, even if you think you don't need it.
 Noto Sans Symbols is highly‑recommended as well.
