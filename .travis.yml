@@ -4,11 +4,13 @@ branches:
 git:
     depth: 10
 
-language: objective-c
+language: cpp
 
 notifications:
     email:
         on_success: never
         on_failure: change
 
-script: "curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh"
+script:
+    - "nvm install 12.0 && node --version"
+    - "curl -sL https://git.io/fji1w | sh"
