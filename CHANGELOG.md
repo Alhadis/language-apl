@@ -4,6 +4,13 @@ Change Log
 This project adheres to [Semantic Versioning](http://semver.org).
 
 
+[Staged]
+--------------------------------------------------------------------------------
+* __Fixed:__ [Various inaccuracies](https://github.com/github/linguist/pull/5271)
+related to Emacs and Vim modeline recognition.
+
+
+
 [v1.2.2]
 --------------------------------------------------------------------------------
 **May 6th, 2019**  
