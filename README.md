@@ -7,7 +7,7 @@ APL language support in Atom
 
 This package adds Atom support for everybody's favourite array-wrangling crypto-language.
 
-![Do you even ⍨, bro?](https://raw.githubusercontent.com/Alhadis/language-apl/master/preview.png)
+![Do you even ⍨, bro?](https://raw.githubusercontent.com/Alhadis/language-apl/950c4e2/preview.png)
 
 
 Font Support
