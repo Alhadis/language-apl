@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org).
 [Staged]
 --------------------------------------------------------------------------------
 * __Added:__ Auto-indentation of functions, Dyalog keywords, and `<?apl`…`?>`
+* __Added:__ Support for `dyalogscript` executables and the `.apls` extrension
+* __Added:__ Support for Emacs [`dyalog-mode`](https://melpa.org/#/dyalog-mode)
 * __Fixed:__ Missing colons in Dyalog keyword snippets
 * __Fixed:__ [Various inaccuracies](https://github.com/github/linguist/pull/5271)
 related to Emacs and Vim modeline recognition.

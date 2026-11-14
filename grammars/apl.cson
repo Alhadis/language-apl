@@ -8,6 +8,7 @@ fileTypes: [
 	"apli"
 	"apln"
 	"aplo"
+	"apls"
 	"dyalog"
 	"dyapp"
 	"mipage"
@@ -19,7 +20,7 @@ firstLineMatch: """(?x)
 
 	# Hashbang
 	^\\#!.*(?:\\s|\\/|(?<=!)\\b)
-		(?:gnu[-._]?apl|aplx?|dyalog)
+		(?:gnu[-._]?apl|aplx?|dyalog(?:script)?)
 	(?:$|\\s)
 	|
 
@@ -27,7 +28,7 @@ firstLineMatch: """(?x)
 	(?:
 		# Emacs
 		-\\*-(?i:[ \\t]*(?=[^:;\\s]+[ \\t]*-\\*-)|(?:.*?[ \\t;]|(?<=-\\*-))[ \\t]*mode[ \\t]*:[ \\t]*)
-			(?i:apl)
+			(?i:apl|dyalog)
 		(?=[ \\t;]|(?<![-*])-\\*-).*?-\\*-
 		
 		|
