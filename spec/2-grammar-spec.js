@@ -1021,4 +1021,98 @@ describe("Syntax highlighting", () => {
 			lines[3][0].should.eql({value: "⌺ ⌻ ⌼ ⌾ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍊ ⍌ ⍍ ⍏ ⍐ ⍑ ⍓ ⍔ ⍖ ⍗ ⍘ ⍚ ⍛ ⍜ ⍞ ⍡ ⍢ ⍥ ⍦ ⍧ ⍩ ⍭ ⍮ ⍯ ⍰ ⍸", scopes: ["source.apl", "text.embedded.apl"]});
 		});
 	});
+
+	describe("Byte-order marks", () => {
+		it("tokenises system commands after a BOM", () => {
+			const lines = grammar.tokenizeLines("\uFEFF)NS X.Y.Z\n");
+			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
+			lines[0][1].should.eql({value: ")", scopes: ["source.apl", "meta.system.command.apl", "entity.name.command.apl", "punctuation.definition.command.apl"]});
+			lines[0][2].should.eql({value: "NS", scopes: ["source.apl", "meta.system.command.apl", "entity.name.command.apl"]});
+			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.system.command.apl"]});
+			lines[0][4].should.eql({value: "X", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
+			lines[0][5].should.eql({value: ".", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "keyword.operator.dot.apl"]});
+			lines[0][6].should.eql({value: "Y", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
+			lines[0][7].should.eql({value: ".", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "keyword.operator.dot.apl"]});
+			lines[0][8].should.eql({value: "Z", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
+		});
+		
+		it("tokenises user commands after a BOM", () => {
+			const lines = grammar.tokenizeLines("\uFEFF]Boxing on\n");
+			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
+			lines[0][1].should.eql({value: "]", scopes: ["source.apl", "meta.user.command.apl", "entity.name.command.apl", "punctuation.definition.command.apl"]});
+			lines[0][2].should.eql({value: "Boxing", scopes: ["source.apl", "meta.user.command.apl", "entity.name.command.apl"]});
+			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.user.command.apl"]});
+			lines[0][4].should.eql({value: "on", scopes: ["source.apl", "meta.user.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
+		});
+
+		it("tokenises EOF terminators after a BOM", () => {
+			const lines = grammar.tokenizeLines("\uFEFF)OFF\n⍝ Lamp");
+			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
+			lines[0][1].should.eql({value: ")", scopes: ["source.apl", "entity.name.command.eof.apl", "punctuation.definition.command.apl"]});
+			lines[0][2].should.eql({value: "OFF", scopes: ["source.apl", "entity.name.command.eof.apl"]});
+			lines[1][0].should.eql({value: "⍝ Lamp", scopes: ["source.apl", "text.embedded.apl"]});
+		});
+		
+		it("tokenises labels after a BOM", () => {
+			const lines = grammar.tokenizeLines("\uFEFFLabel:\n");
+			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
+			lines[0][1].should.eql({value: "Label", scopes: ["source.apl", "meta.label.apl", "entity.label.name.apl"]});
+			lines[0][2].should.eql({value: ":", scopes: ["source.apl", "meta.label.apl", "punctuation.definition.label.end.apl"]});
+		});
+		
+		it("tokenises function definitions after a BOM", () => {
+			const lines = grammar.tokenizeLines("\uFEFF∇R ← FUNCTION X\n\tR ← X + X\n∇");
+			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
+			lines[0][1].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "keyword.operator.nabla.apl"]});
+			lines[0][2].should.eql({value: "R", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.return-value.apl"]});
+			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl"]});
+			lines[0][4].should.eql({value: "←", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "keyword.operator.assignment.apl"]});
+			lines[0][5].should.eql({value: " ", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl"]});
+			lines[0][6].should.eql({value: "FUNCTION", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.name.apl", "markup.bold.identifier.apl"]});
+			lines[0][7].should.eql({value: " ", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl"]});
+			lines[0][8].should.eql({value: "X", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.arguments.right.apl"]});
+			lines[1][0].should.eql({value: "\t", scopes: ["source.apl", "meta.function.apl"]});
+			lines[1][1].should.eql({value: "R", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[1][2].should.eql({value: " ", scopes: ["source.apl", "meta.function.apl"]});
+			lines[1][3].should.eql({value: "←", scopes: ["source.apl", "meta.function.apl", "keyword.spaced.operator.assignment.apl"]});
+			lines[1][4].should.eql({value: " ", scopes: ["source.apl", "meta.function.apl"]});
+			lines[1][5].should.eql({value: "X", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[1][6].should.eql({value: " ", scopes: ["source.apl", "meta.function.apl"]});
+			lines[1][7].should.eql({value: "+", scopes: ["source.apl", "meta.function.apl", "keyword.operator.plus.apl"]});
+			lines[1][8].should.eql({value: " ", scopes: ["source.apl", "meta.function.apl"]});
+			lines[1][9].should.eql({value: "X", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
+			lines[2][0].should.eql({value: "∇", scopes: ["source.apl", "meta.function.apl", "keyword.operator.nabla.apl"]});
+		});
+		
+		it("tokenises structured-control keywords after a BOM", () => {
+			const lines = grammar.tokenizeLines("\uFEFF:If x\n");
+			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
+			lines[0][1].should.eql({value: ":", scopes: ["source.apl", "keyword.control.sck.apl", "punctuation.definition.sck.begin.apl"]});
+			lines[0][2].should.eql({value: "If", scopes: ["source.apl", "keyword.control.sck.apl"]});
+			lines[0][3].should.eql({value: " ", scopes: ["source.apl"]});
+			lines[0][4].should.eql({value: "x", scopes: ["source.apl", "variable.other.readwrite.apl"]});
+		});
+		
+		it("tokenises Dyalog class definitions after a BOM", () => {
+			const lines = grammar.tokenizeLines("\uFEFF:Class Name: Superclass, Interface, 'Interface'\n\n:EndClass\n");
+			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
+			lines[0][1].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
+			lines[0][2].should.eql({value: "Class", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl"]});
+			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.class.apl"]});
+			lines[0][4].should.eql({value: "Name", scopes: ["source.apl", "meta.class.apl", "entity.name.type.class.apl"]});
+			lines[0][5].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl", "punctuation.separator.inheritance.apl"]});
+			lines[0][6].should.eql({value: " ", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl"]});
+			lines[0][7].should.eql({value: "Superclass", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl"]});
+			lines[0][8].should.eql({value: ",", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "punctuation.separator.apl"]});
+			lines[0][9].should.eql({value: " ", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl"]});
+			lines[0][10].should.eql({value: "Interface", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "variable.other.readwrite.apl"]});
+			lines[0][11].should.eql({value: ",", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "punctuation.separator.apl"]});
+			lines[0][12].should.eql({value: " ", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl"]});
+			lines[0][13].should.eql({value: "'", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl", "punctuation.definition.string.begin.apl"]});
+			lines[0][14].should.eql({value: "Interface", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl"]});
+			lines[0][15].should.eql({value: "'", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl", "punctuation.definition.string.end.apl"]});
+			lines[2][0].should.eql({value: ":", scopes: ["source.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
+			lines[2][1].should.eql({value: "EndClass", scopes: ["source.apl", "keyword.control.class.apl"]});
+		});
+	});
 });

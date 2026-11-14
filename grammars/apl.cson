@@ -59,7 +59,7 @@ patterns: [
 	# EOF terminators for GNU APL
 	{
 		contentName: "text.embedded.apl"
-		begin: "^\\s*((\\))OFF|(\\])NEXTFILE)\\b(.*)$"
+		begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\))OFF|(\\])NEXTFILE)\\b(.*)$"
 		end:   "(?=N)A"
 		beginCaptures:
 			1: {name: "entity.name.command.eof.apl"}
@@ -94,7 +94,7 @@ patterns: [
 	# System commands
 	{
 		name: "meta.system.command.apl"
-		begin: "^\\s*((\\))\\S+)"
+		begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\))\\S+)"
 		end:   "$"
 		beginCaptures:
 			1: {name: "entity.name.command.apl"}
@@ -110,7 +110,7 @@ patterns: [
 	# User commands
 	{
 		name: "meta.user.command.apl"
-		begin: "^\\s*((\\])\\S+)"
+		begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\])\\S+)"
 		end:   "$"
 		beginCaptures:
 			1: {name: "entity.name.command.apl"}
@@ -203,7 +203,7 @@ repository:
 		patterns: [{
 			name:  "meta.label.apl"
 			match: """(?x)
-				^\\s*
+				(?:^|(?<=\\A\uFEFF))\\s*
 				(
 					[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ]
 					[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]*
@@ -361,7 +361,7 @@ repository:
 		patterns: [{
 			name:  "meta.function.apl"
 			begin: "(?x)
-				^\\s*?
+				(?:^|(?<=\\A\uFEFF))\\s*?
 
 				(?# 1: keyword.operator.nabla.apl)
 				(∇)
@@ -858,7 +858,7 @@ repository:
 	sck:
 		patterns: [{
 			name: "keyword.control.sck.apl"
-			match: "(?<=\\s|^)(:)[A-Za-z]+"
+			match: "(?<=\\s|^|\\A\uFEFF)(:)[A-Za-z]+"
 			captures:
 				1: {name: "punctuation.definition.sck.begin.apl"}
 		}]
@@ -868,7 +868,7 @@ repository:
 	class:
 		patterns: [{
 			begin: """(?x)
-				(?<=\\s|^)
+				(?<=\\s|^|\\A\uFEFF)
 				((:)Class)
 				\\s+
 				(
