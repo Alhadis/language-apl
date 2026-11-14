@@ -163,12 +163,16 @@ repository:
 	# String literals
 	strings:
 		patterns: [{
+			applyEndPatternLast: yes
 			name: "string.quoted.single.apl"
 			begin: "'"
 			end:   "'|$"
 			beginCaptures: {0: {name: "punctuation.definition.string.begin.apl"}}
 			endCaptures:   {0: {name: "punctuation.definition.string.end.apl"}}
 			patterns: [{
+				name: "constant.character.escape.single-quote.apl"
+				match: "''"
+			},{
 				match: "[^']*[^'\\n\\r\\\\]$"
 				name: "invalid.illegal.string.apl"
 			}]
