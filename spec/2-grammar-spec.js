@@ -9,16 +9,18 @@ describe("Syntax highlighting", () => {
 	describe("Comments", () => {
 		it("tokenises comment-lines", () => {
 			const {tokens} = grammar.tokenizeLine("⍝ Comment");
-			tokens[0].should.eql({value: "⍝", scopes: ["source.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
-			tokens[1].should.eql({value: " Comment", scopes: ["source.apl", "comment.line.apl"]});
+			tokens[0].should.eql({value: "⍝", scopes: ["source.apl", "comment.line.lamp.apl", "punctuation.definition.comment.apl"]});
+			tokens[1].should.eql({value: " Comment", scopes: ["source.apl", "comment.line.lamp.apl"]});
 		});
 		
 		it("tokenises hashbangs", () => {
 			const hashbang = "#!/usr/local/bin/apl --script";
 			const lines = grammar.tokenizeLines(`${hashbang}\n`.repeat(2));
-			const scopes = ["source.apl", "comment.line.shebang.apl"];
-			lines[0][0].should.eql({value: hashbang, scopes});
-			lines[1][0].should.not.eql({value: hashbang, scopes});
+			const scopes = ["source.apl", "comment.line.hashbang.apl"];
+			lines[0][0].should.eql({value: "#!", scopes: [...scopes, "punctuation.definition.comment.hashbang.apl"]});
+			lines[0][1].should.eql({value: "/usr/local/bin/apl --script", scopes});
+			lines[1][0].should.not.eql({value: "#!", scopes: [...scopes, "punctuation.definition.comment.hashbang.apl"]});
+			lines[1][1].should.not.eql({value: "/usr/local/bin/apl --script", scopes});
 		});
 	});
 	
@@ -716,19 +718,19 @@ describe("Syntax highlighting", () => {
 			lines[0][8].should.eql({value: "a", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
 			lines[0][9].should.eql({value: ";", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl", "punctuation.separator.apl"]});
 			lines[0][10].should.eql({value: "b       ", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
-			lines[0][11].should.eql({value: "⍝ Locals", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "comment.line.apl"]});
+			lines[0][11].should.eql({value: "⍝ Locals", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "comment.line.lamp.apl"]});
 			lines[1][1].should.eql({value: ";", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl", "punctuation.separator.apl"]});
 			lines[1][2].should.eql({value: "c", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
 			lines[1][3].should.eql({value: ";", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl", "punctuation.separator.apl"]});
 			lines[1][4].should.eql({value: "d       ", scopes: ["source.apl", "meta.function.apl", "entity.function.definition.apl", "entity.function.local-variables.apl"]});
-			lines[1][5].should.eql({value: "⍝", scopes: ["source.apl", "meta.function.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
-			lines[1][6].should.eql({value: " More locals", scopes: ["source.apl", "meta.function.apl", "comment.line.apl"]});
-			lines[2][1].should.eql({value: "(", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "punctuation.round.bracket.begin.apl"]});
+			lines[1][5].should.eql({value: "⍝", scopes: ["source.apl", "meta.function.apl", "comment.line.lamp.apl", "punctuation.definition.comment.apl"]});
+			lines[1][6].should.eql({value: " More locals", scopes: ["source.apl", "meta.function.apl", "comment.line.lamp.apl"]});
+			lines[2][1].should.eql({value: "(", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "punctuation.bracket.round.begin.apl"]});
 			lines[2][2].should.eql({value: "a", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
 			lines[2][4].should.eql({value: "b", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
 			lines[2][6].should.eql({value: "c", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
 			lines[2][8].should.eql({value: "d", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "variable.other.readwrite.apl"]});
-			lines[2][9].should.eql({value: ")", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "punctuation.round.bracket.end.apl"]});
+			lines[2][9].should.eql({value: ")", scopes: ["source.apl", "meta.function.apl", "meta.round.bracketed.group.apl", "punctuation.bracket.round.end.apl"]});
 			lines[2][10].should.eql({value: "←", scopes: ["source.apl", "meta.function.apl", "keyword.operator.assignment.apl"]});
 			lines[2][11].should.eql({value: "y", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
 			lines[3][1].should.eql({value: "r", scopes: ["source.apl", "meta.function.apl", "variable.other.readwrite.apl"]});
@@ -747,8 +749,8 @@ describe("Syntax highlighting", () => {
 	describe("Classes", () => {
 		it("tokenises classes", () => {
 			const lines = grammar.tokenizeLines(":Class Bird: 'Animal', FlyingCreature, WarmBlooded\n:EndClass");
-			lines[0][0].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
-			lines[0][1].should.eql({value: "Class", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl"]});
+			lines[0][0].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.begin.apl", "punctuation.definition.class.apl"]});
+			lines[0][1].should.eql({value: "Class", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.begin.apl"]});
 			lines[0][3].should.eql({value: "Bird", scopes: ["source.apl", "meta.class.apl", "entity.name.type.class.apl"]});
 			lines[0][4].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl", "punctuation.separator.inheritance.apl"]});
 			lines[0][6].should.eql({value: "'", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl", "string.quoted.single.apl", "punctuation.definition.string.begin.apl"]});
@@ -758,14 +760,14 @@ describe("Syntax highlighting", () => {
 			lines[0][11].should.eql({value: "FlyingCreature", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "variable.other.readwrite.apl"]});
 			lines[0][12].should.eql({value: ",", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "punctuation.separator.apl"]});
 			lines[0][14].should.eql({value: "WarmBlooded", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "variable.other.readwrite.apl"]});
-			lines[1][0].should.eql({value: ":", scopes: ["source.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
-			lines[1][1].should.eql({value: "EndClass", scopes: ["source.apl", "keyword.control.class.apl"]});
+			lines[1][0].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.end.apl", "punctuation.definition.class.apl"]});
+			lines[1][1].should.eql({value: "EndClass", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.end.apl"]});
 		});
 		
 		it("tokenises subclasses", () => {
 			const lines = grammar.tokenizeLines(":Class Name: Superclass, Interface, 'Interface'\n\t⍝ Comment\n:EndClass");
-			lines[0][0].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
-			lines[0][1].should.eql({value: "Class", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl"]});
+			lines[0][0].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.begin.apl", "punctuation.definition.class.apl"]});
+			lines[0][1].should.eql({value: "Class", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.begin.apl"]});
 			lines[0][3].should.eql({value: "Name", scopes: ["source.apl", "meta.class.apl", "entity.name.type.class.apl"]});
 			lines[0][4].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl", "punctuation.separator.inheritance.apl"]});
 			lines[0][6].should.eql({value: "Superclass", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl"]});
@@ -775,10 +777,10 @@ describe("Syntax highlighting", () => {
 			lines[0][12].should.eql({value: "'", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl", "punctuation.definition.string.begin.apl"]});
 			lines[0][13].should.eql({value: "Interface", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl"]});
 			lines[0][14].should.eql({value: "'", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl", "punctuation.definition.string.end.apl"]});
-			lines[1][1].should.eql({value: "⍝", scopes: ["source.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
-			lines[1][2].should.eql({value: " Comment", scopes: ["source.apl", "comment.line.apl"]});
-			lines[2][0].should.eql({value: ":", scopes: ["source.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
-			lines[2][1].should.eql({value: "EndClass", scopes: ["source.apl", "keyword.control.class.apl"]});
+			lines[1][1].should.eql({value: "⍝", scopes: ["source.apl", "meta.class.apl", "comment.line.lamp.apl", "punctuation.definition.comment.apl"]});
+			lines[1][2].should.eql({value: " Comment", scopes: ["source.apl", "meta.class.apl", "comment.line.lamp.apl"]});
+			lines[2][0].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.end.apl", "punctuation.definition.class.apl"]});
+			lines[2][1].should.eql({value: "EndClass", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.end.apl"]});
 		});
 	});
 	
@@ -964,8 +966,8 @@ describe("Syntax highlighting", () => {
 			lines[0][7].should.eql({value: "'", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.single.apl", "punctuation.definition.string.begin.apl"]});
 			lines[0][8].should.eql({value: "END-OF-STORY", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.single.apl"]});
 			lines[0][9].should.eql({value: "'", scopes: ["source.apl", "meta.heredoc.apl", "string.quoted.single.apl", "punctuation.definition.string.end.apl"]});
-			lines[2][0].should.eql({value: "⍝", scopes: ["source.apl", "meta.heredoc.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
-			lines[2][1].should.eql({value: " APL comment", scopes: ["source.apl", "meta.heredoc.apl", "comment.line.apl"]});
+			lines[2][0].should.eql({value: "⍝", scopes: ["source.apl", "meta.heredoc.apl", "comment.line.lamp.apl", "punctuation.definition.comment.apl"]});
+			lines[2][1].should.eql({value: " APL comment", scopes: ["source.apl", "meta.heredoc.apl", "comment.line.lamp.apl"]});
 			lines[3][0].should.eql({value: "Z", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
 			lines[3][1].should.eql({value: "←", scopes: ["source.apl", "meta.heredoc.apl", "keyword.operator.assignment.apl"]});
 			lines[3][2].should.eql({value: "Z", scopes: ["source.apl", "meta.heredoc.apl", "variable.other.readwrite.apl"]});
@@ -1015,10 +1017,10 @@ describe("Syntax highlighting", () => {
 			const lines = grammar.tokenizeLines(")OFF ⍝ The following lines should be unhinted:\n\n⍝ Comment\n⌺ ⌻ ⌼ ⌾ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍊ ⍌ ⍍ ⍏ ⍐ ⍑ ⍓ ⍔ ⍖ ⍗ ⍘ ⍚ ⍛ ⍜ ⍞ ⍡ ⍢ ⍥ ⍦ ⍧ ⍩ ⍭ ⍮ ⍯ ⍰ ⍸");
 			lines[0][0].should.eql({value: ")",   scopes: ["source.apl", "entity.name.command.eof.apl", "punctuation.definition.command.apl"]});
 			lines[0][1].should.eql({value: "OFF", scopes: ["source.apl", "entity.name.command.eof.apl"]});
-			lines[0][3].should.eql({value: "⍝",   scopes: ["source.apl", "comment.line.apl", "punctuation.definition.comment.apl"]});
-			lines[0][4].should.eql({value: " The following lines should be unhinted:", scopes: ["source.apl", "comment.line.apl"]});
-			lines[2][0].should.eql({value: "⍝ Comment", scopes: ["source.apl", "text.embedded.apl"]});
-			lines[3][0].should.eql({value: "⌺ ⌻ ⌼ ⌾ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍊ ⍌ ⍍ ⍏ ⍐ ⍑ ⍓ ⍔ ⍖ ⍗ ⍘ ⍚ ⍛ ⍜ ⍞ ⍡ ⍢ ⍥ ⍦ ⍧ ⍩ ⍭ ⍮ ⍯ ⍰ ⍸", scopes: ["source.apl", "text.embedded.apl"]});
+			lines[0][3].should.eql({value: "⍝",   scopes: ["source.apl", "comment.line.lamp.apl", "punctuation.definition.comment.apl"]});
+			lines[0][4].should.eql({value: " The following lines should be unhinted:", scopes: ["source.apl", "comment.line.lamp.apl"]});
+			lines[2][0].should.eql({value: "⍝ Comment", scopes: ["source.apl", "comment.block.documentation.apl"]});
+			lines[3][0].should.eql({value: "⌺ ⌻ ⌼ ⌾ ⍁ ⍂ ⍃ ⍄ ⍅ ⍆ ⍇ ⍈ ⍊ ⍌ ⍍ ⍏ ⍐ ⍑ ⍓ ⍔ ⍖ ⍗ ⍘ ⍚ ⍛ ⍜ ⍞ ⍡ ⍢ ⍥ ⍦ ⍧ ⍩ ⍭ ⍮ ⍯ ⍰ ⍸", scopes: ["source.apl", "comment.block.documentation.apl"]});
 		});
 	});
 
@@ -1050,14 +1052,14 @@ describe("Syntax highlighting", () => {
 			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
 			lines[0][1].should.eql({value: ")", scopes: ["source.apl", "entity.name.command.eof.apl", "punctuation.definition.command.apl"]});
 			lines[0][2].should.eql({value: "OFF", scopes: ["source.apl", "entity.name.command.eof.apl"]});
-			lines[1][0].should.eql({value: "⍝ Lamp", scopes: ["source.apl", "text.embedded.apl"]});
+			lines[1][0].should.eql({value: "⍝ Lamp", scopes: ["source.apl", "comment.block.documentation.apl"]});
 		});
 		
 		it("tokenises labels after a BOM", () => {
 			const lines = grammar.tokenizeLines("\uFEFFLabel:\n");
 			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
 			lines[0][1].should.eql({value: "Label", scopes: ["source.apl", "meta.label.apl", "entity.label.name.apl"]});
-			lines[0][2].should.eql({value: ":", scopes: ["source.apl", "meta.label.apl", "punctuation.definition.label.end.apl"]});
+			lines[0][2].should.eql({value: ":", scopes: ["source.apl", "meta.label.apl", "punctuation.definition.label.apl"]});
 		});
 		
 		it("tokenises function definitions after a BOM", () => {
@@ -1087,7 +1089,7 @@ describe("Syntax highlighting", () => {
 		it("tokenises structured-control keywords after a BOM", () => {
 			const lines = grammar.tokenizeLines("\uFEFF:If x\n");
 			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
-			lines[0][1].should.eql({value: ":", scopes: ["source.apl", "keyword.control.sck.apl", "punctuation.definition.sck.begin.apl"]});
+			lines[0][1].should.eql({value: ":", scopes: ["source.apl", "keyword.control.sck.apl", "punctuation.definition.keyword.sck.apl"]});
 			lines[0][2].should.eql({value: "If", scopes: ["source.apl", "keyword.control.sck.apl"]});
 			lines[0][3].should.eql({value: " ", scopes: ["source.apl"]});
 			lines[0][4].should.eql({value: "x", scopes: ["source.apl", "variable.other.readwrite.apl"]});
@@ -1096,8 +1098,8 @@ describe("Syntax highlighting", () => {
 		it("tokenises Dyalog class definitions after a BOM", () => {
 			const lines = grammar.tokenizeLines("\uFEFF:Class Name: Superclass, Interface, 'Interface'\n\n:EndClass\n");
 			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
-			lines[0][1].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
-			lines[0][2].should.eql({value: "Class", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.apl"]});
+			lines[0][1].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.begin.apl", "punctuation.definition.class.apl"]});
+			lines[0][2].should.eql({value: "Class", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.begin.apl"]});
 			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.class.apl"]});
 			lines[0][4].should.eql({value: "Name", scopes: ["source.apl", "meta.class.apl", "entity.name.type.class.apl"]});
 			lines[0][5].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "entity.other.inherited-class.apl", "punctuation.separator.inheritance.apl"]});
@@ -1111,8 +1113,8 @@ describe("Syntax highlighting", () => {
 			lines[0][13].should.eql({value: "'", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl", "punctuation.definition.string.begin.apl"]});
 			lines[0][14].should.eql({value: "Interface", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl"]});
 			lines[0][15].should.eql({value: "'", scopes: ["source.apl", "meta.class.apl", "entity.other.class.interfaces.apl", "string.quoted.single.apl", "punctuation.definition.string.end.apl"]});
-			lines[2][0].should.eql({value: ":", scopes: ["source.apl", "keyword.control.class.apl", "punctuation.definition.class.apl"]});
-			lines[2][1].should.eql({value: "EndClass", scopes: ["source.apl", "keyword.control.class.apl"]});
+			lines[2][0].should.eql({value: ":", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.end.apl", "punctuation.definition.class.apl"]});
+			lines[2][1].should.eql({value: "EndClass", scopes: ["source.apl", "meta.class.apl", "keyword.control.class.end.apl"]});
 		});
 	});
 });
