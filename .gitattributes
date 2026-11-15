@@ -1,5 +1,8 @@
 # Include CSON files in GitHub's language breakdown graph
-*.cson  linguist-detectable=true
+*.cson  linguist-detectable
+
+# Mark APL files I didn't write as vendored
+/spec/fixtures/* linguist-vendored
 
 # Exclude these files from downloaded tarballs
 .editorconfig  export-ignore
