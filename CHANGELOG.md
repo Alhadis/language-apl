@@ -7,8 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org).
 [Staged]
 --------------------------------------------------------------------------------
 * __Added:__ Auto-indentation of functions, Dyalog keywords, and `<?apl`…`?>`
-* __Added:__ Support for `dyalogscript` executables and the `.apls` extrension
+* __Added:__ Support for `dyalogscript` executables and the `.apls` extension
 * __Added:__ Support for Emacs's [`dyalog-mode`][] and [`gnu-apl-mode`][]
+* __Fixed:__ Comments on right-hand side of function name highlighted as errors
 * __Fixed:__ Missing colons in Dyalog keyword snippets
 * __Fixed:__ Missing highlighting for escaped quotes in single-quoted strings
 * __Fixed:__ Tokenisation of keywords immediately following a byte-order mark

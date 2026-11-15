@@ -532,12 +532,15 @@ repository:
 
 			\\s*
 
-			# 50: invalid.illegal.arguments.right.apl
-			([^;]+)?
+			(?:
+				(⍝.*)   # 50: comment.line.lamp.apl
+				|
+				([^;]+) # 51: invalid.illegal.arguments.right.apl
+			)?
 
-			# 51: entity.function.local-variables.apl
+			# 52: entity.function.local-variables.apl
 			(
-				# 52: Include “;”
+				# 53: Include “;”
 				(
 					(?>
 						\\s*
@@ -551,13 +554,13 @@ repository:
 					)+
 				)
 				|
-				# 53: invalid.illegal.local-variables.apl
+				# 54: invalid.illegal.local-variables.apl
 				([^⍝]+)
 			)?
 
 			\\s*
 
-			# 54: comment.line.lamp.apl
+			# 55: comment.line.lamp.apl
 			(⍝.*)?
 		$"""
 		end: "^\\s*?(?:(∇)|(⍫))\\s*?(⍝.*?)?$"
@@ -633,11 +636,12 @@ repository:
 			47: name: "entity.function.arguments.right.apl"
 			48: name: "punctuation.definition.arguments.begin.apl"
 			49: name: "punctuation.definition.arguments.end.apl"
-			50: name: "invalid.illegal.arguments.right.apl"
-			51: name: "entity.function.local-variables.apl"
-			52: patterns: [name: "punctuation.separator.apl", match: ";"]
-			53: name: "invalid.illegal.local-variables.apl"
-			54: name: "comment.line.lamp.apl"
+			50: name: "comment.line.lamp.apl"
+			51: name: "invalid.illegal.arguments.right.apl"
+			52: name: "entity.function.local-variables.apl"
+			53: patterns: [name: "punctuation.separator.apl", match: ";"]
+			54: name: "invalid.illegal.local-variables.apl"
+			55: name: "comment.line.lamp.apl"
 		endCaptures:
 			1:  name: "keyword.operator.nabla.apl"
 			2:  name: "keyword.operator.lock.apl"
