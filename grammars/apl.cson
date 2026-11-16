@@ -262,6 +262,7 @@ repository:
 			{match: "⎕",       name: "keyword.operator.quad.apl"}
 			{match: "##",      name: "constant.language.namespace.parent.apl"}
 			{match: "#",       name: "constant.language.namespace.root.apl"}
+			{match: "::",      name: "keyword.operator.error-guard.dyalog.apl"}
 
 
 			# Unused
