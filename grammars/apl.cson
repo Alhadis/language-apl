@@ -707,12 +707,39 @@ repository:
 
 	# User commands
 	usercmds:
-		name: "meta.user.command.apl"
-		begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\])\\S+)"
-		end:   "$"
-		beginCaptures:
-			1: name: "entity.name.command.apl"
-			2: name: "punctuation.definition.command.apl"
+		patterns: [{
+			# Execute named user command: “]CMD”
+			name: "meta.user.command.apl"
+			begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\])(\\S+))"
+			end:   "$"
+			beginCaptures:
+				1: name: "entity.name.command.user.apl"
+				2: name: "punctuation.definition.command.apl"
+				3: patterns: [
+					# List commands in user-command name (filepath argument)
+					name: "string.unquoted.filepath.apl"
+					match: "(?:\\G|^)(?:/[^/]+)++"
+					captures:
+						0: name: "constant.other.reference.link"
+
+					{match: "\\.", name: "punctuation.delimiter.group.namespace.separator.apl"}
+					{match: "\\*", name: "keyword.operator.glob.wildcard.apl"}
+					{match: "(?:^|\\G)(⎕←)", name: "keyword.operator.quad.display-result.line-by-line.apl"}
+					{include: "#symbols"}
+				]
+			patterns: [include: "#usercmdInnards"]
+		},{
+			# User help command: “] -?”
+			name: "meta.user.command.apl"
+			begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\]))(?=$|\\s)"
+			end:   "$"
+			beginCaptures:
+				1: name: "entity.name.command.user.help.apl"
+				2: name: "punctuation.definition.command.apl"
+			patterns: [include: "#usercmdInnards"]
+		}]
+	
+	usercmdInnards:
 		patterns: [
 			{include: "#command-arguments"}
 			{include: "#command-switches"}

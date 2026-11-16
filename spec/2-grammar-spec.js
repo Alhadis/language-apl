@@ -1041,8 +1041,8 @@ describe("Syntax highlighting", () => {
 		it("tokenises user commands after a BOM", () => {
 			const lines = grammar.tokenizeLines("\uFEFF]Boxing on\n");
 			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
-			lines[0][1].should.eql({value: "]", scopes: ["source.apl", "meta.user.command.apl", "entity.name.command.apl", "punctuation.definition.command.apl"]});
-			lines[0][2].should.eql({value: "Boxing", scopes: ["source.apl", "meta.user.command.apl", "entity.name.command.apl"]});
+			lines[0][1].should.eql({value: "]", scopes: ["source.apl", "meta.user.command.apl", "entity.name.command.user.apl", "punctuation.definition.command.apl"]});
+			lines[0][2].should.eql({value: "Boxing", scopes: ["source.apl", "meta.user.command.apl", "entity.name.command.user.apl"]});
 			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.user.command.apl"]});
 			lines[0][4].should.eql({value: "on", scopes: ["source.apl", "meta.user.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
 		});
