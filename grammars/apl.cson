@@ -70,6 +70,7 @@ repository:
 		patterns: [
 			{include: "#class"}
 			{include: "#definition"}
+			{include: "#namespaces"}
 			{include: "#comment"}
 			{include: "#label"}
 			{include: "#sck"}
@@ -113,13 +114,21 @@ repository:
 		}]
 
 
+	# Member access
+	dot:
+		name: "punctuation.delimiter.group.namespace.separator.apl"
+		match: "\\."
+		captures:
+			0: patterns: [include: "#punct"]
+
+
 	# Patterns to improve GitHub's display of punctuation characters
 	punct:
 		patterns: [
 			{match: "{|}",     name: "brackethighlighter.curly"}
 			{match: "\\[|\\]", name: "brackethighlighter.square"}
 			{match: "\\(|\\)", name: "brackethighlighter.round"}
-			{match: ",|;",     name: "brackethighlighter.tag"}
+			{match: "[,;.]",   name: "brackethighlighter.tag"}
 		]
 
 
@@ -172,6 +181,32 @@ repository:
 	name:
 		name:  "variable.other.readwrite.apl"
 		match: "(?![¯0-9])[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+"
+
+
+	# Dot-separated namespace qualifiers
+	namespaces:
+		name: "meta.namespaces.apl"
+		match: """(?x) (?<!\\w)
+			(?:
+				(?<=\\)) \\.
+				|
+				(?: (?![¯0-9]) [A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+
+				|   \\#\\#?
+				|   ⎕SE
+				)
+				(?:\\[ (?:[^\\[\\]]+) \\])?+
+				\\.
+				(?!\\#|⎕SE\\b)
+			)++
+		"""
+		captures:
+			0: patterns: [
+				{include: "#index"}
+				{match: "⎕SE", name: "support.constant.system.namespace.apl"}
+				{match: "[^\\s#.]", name: "entity.name.tag.namespace.apl"}
+				{include: "#dot"}
+				{include: "#symbols"}
+			]
 
 
 	# Labels
@@ -673,6 +708,16 @@ repository:
 		match: ".+"
 
 
+	# Array indexing
+	index:
+		name:  "meta.array.index.item-access.apl"
+		begin: "(?<=[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9])\\["
+		end:   "\\]"
+		beginCaptures: 0: name: "punctuation.definition.item-access.begin.apl", patterns: [include: "#punct"]
+		endCaptures:   0: name: "punctuation.definition.item-access.end.apl",   patterns: [include: "#punct"]
+		patterns: [include: "#common"]
+
+
 	# Direct definition notation (Lambda functions)
 	lambda:
 		name: "meta.lambda.function.apl"
@@ -711,17 +756,33 @@ repository:
 
 	# System commands
 	syscmds:
-		name: "meta.system.command.apl"
-		begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\))\\S+)"
-		end:   "$"
-		beginCaptures:
-			1: name: "entity.name.command.apl"
-			2: name: "punctuation.definition.command.apl"
-		patterns: [
-			{include: "#command-arguments"}
-			{include: "#command-switches"}
-			{include: "#common"}
-		]
+		patterns: [{
+			# “)NS” — Define namespace
+			name:  "meta.system.command.define-namespace.apl"
+			begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\))NS)(?=$|\\s)"
+			end:   "\\S+|(?=\\s*(?:$|⍝))"
+			beginCaptures:
+				1: name: "entity.name.command.apl"
+				2: name: "punctuation.definition.command.apl"
+			endCaptures: 0: patterns: [
+				{include: "#namespaces"}
+				{include: "#name"}
+				{match: ".+", name: "invalid.illegal.bad-namespace.apl"}
+			]
+		},{
+			# Other commands
+			name: "meta.system.command.apl"
+			begin: "(?:^|(?<=\\A\uFEFF))\\s*((\\))\\S+)"
+			end:   "$"
+			beginCaptures:
+				1: name: "entity.name.command.apl"
+				2: name: "punctuation.definition.command.apl"
+			patterns: [
+				{include: "#command-arguments"}
+				{include: "#command-switches"}
+				{include: "#common"}
+			]
+		}]
 
 
 	# User commands
@@ -741,7 +802,7 @@ repository:
 					captures:
 						0: name: "constant.other.reference.link"
 
-					{match: "\\.", name: "punctuation.delimiter.group.namespace.separator.apl"}
+					{include: "#dot"}
 					{match: "\\*", name: "keyword.operator.glob.wildcard.apl"}
 					{match: "(?:^|\\G)(⎕←)", name: "keyword.operator.quad.display-result.line-by-line.apl"}
 					{include: "#symbols"}

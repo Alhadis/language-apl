@@ -1048,14 +1048,14 @@ describe("Syntax highlighting", () => {
 		it("tokenises system commands after a BOM", () => {
 			const lines = grammar.tokenizeLines("\uFEFF)NS X.Y.Z\n");
 			lines[0][0].should.eql({value: "\uFEFF", scopes: ["source.apl"]});
-			lines[0][1].should.eql({value: ")", scopes: ["source.apl", "meta.system.command.apl", "entity.name.command.apl", "punctuation.definition.command.apl"]});
-			lines[0][2].should.eql({value: "NS", scopes: ["source.apl", "meta.system.command.apl", "entity.name.command.apl"]});
-			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.system.command.apl"]});
-			lines[0][4].should.eql({value: "X", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
-			lines[0][5].should.eql({value: ".", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "keyword.operator.dot.apl"]});
-			lines[0][6].should.eql({value: "Y", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
-			lines[0][7].should.eql({value: ".", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "keyword.operator.dot.apl"]});
-			lines[0][8].should.eql({value: "Z", scopes: ["source.apl", "meta.system.command.apl", "variable.parameter.argument.apl", "variable.other.readwrite.apl"]});
+			lines[0][1].should.eql({value: ")", scopes: ["source.apl", "meta.system.command.define-namespace.apl", "entity.name.command.apl", "punctuation.definition.command.apl"]});
+			lines[0][2].should.eql({value: "NS", scopes: ["source.apl", "meta.system.command.define-namespace.apl", "entity.name.command.apl"]});
+			lines[0][3].should.eql({value: " ", scopes: ["source.apl", "meta.system.command.define-namespace.apl"]});
+			lines[0][4].should.eql({value: "X", scopes: ["source.apl", "meta.system.command.define-namespace.apl", "meta.namespaces.apl", "entity.name.tag.namespace.apl"]});
+			lines[0][5].should.eql({value: ".", scopes: ["source.apl", "meta.system.command.define-namespace.apl", "meta.namespaces.apl", "punctuation.delimiter.group.namespace.separator.apl", "brackethighlighter.tag"]});
+			lines[0][6].should.eql({value: "Y", scopes: ["source.apl", "meta.system.command.define-namespace.apl", "meta.namespaces.apl", "entity.name.tag.namespace.apl"]});
+			lines[0][7].should.eql({value: ".", scopes: ["source.apl", "meta.system.command.define-namespace.apl", "meta.namespaces.apl", "punctuation.delimiter.group.namespace.separator.apl", "brackethighlighter.tag"]});
+			lines[0][8].should.eql({value: "Z", scopes: ["source.apl", "meta.system.command.define-namespace.apl", "variable.other.readwrite.apl"]});
 		});
 		
 		it("tokenises user commands after a BOM", () => {
