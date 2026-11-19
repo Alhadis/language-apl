@@ -61,7 +61,6 @@ repository:
 			{include: "#heredocs"}
 			{include: "#common"}
 			{include: "#eof"}
-			{include: "#brackets"}
 			{include: "#syscmds"}
 			{include: "#usercmds"}
 		]
@@ -80,6 +79,7 @@ repository:
 			{include: "#sysvars"}
 			{include: "#symbols"}
 			{include: "#name"}
+			{include: "#brackets"}
 		]
 
 
@@ -99,18 +99,36 @@ repository:
 			name: "meta.round.bracketed.group.apl"
 			begin: "\\("
 			end:   "\\)"
-			beginCaptures: 0: name: "punctuation.bracket.round.begin.apl"
-			endCaptures:   0: name: "punctuation.bracket.round.end.apl"
+			beginCaptures: 0: name: "punctuation.bracket.round.begin.apl", patterns: [include: "#punct"]
+			endCaptures:   0: name: "punctuation.bracket.round.end.apl",   patterns: [include: "#punct"]
 			patterns: [include: "#common"]
 		},{
 			# Square brackets
 			name: "meta.square.bracketed.group.apl"
 			begin: "\\["
 			end:   "\\]"
-			beginCaptures: 0: name: "punctuation.bracket.square.begin.apl"
-			endCaptures:   0: name: "punctuation.bracket.square.end.apl"
+			beginCaptures: 0: name: "punctuation.bracket.square.begin.apl", patterns: [include: "#punct"]
+			endCaptures:   0: name: "punctuation.bracket.square.end.apl",   patterns: [include: "#punct"]
 			patterns: [include: "#common"]
 		}]
+
+
+	# Patterns to improve GitHub's display of punctuation characters
+	punct:
+		patterns: [
+			{match: "{|}",     name: "brackethighlighter.curly"}
+			{match: "\\[|\\]", name: "brackethighlighter.square"}
+			{match: "\\(|\\)", name: "brackethighlighter.round"}
+			{match: ",|;",     name: "brackethighlighter.tag"}
+		]
+
+
+	# Semicolon separator
+	semi:
+		name: "punctuation.separator.delimiter.semicolon.apl"
+		match: ";"
+		captures:
+			0: patterns: [include: "#punct"]
 
 
 	# Numeric literal
@@ -584,63 +602,63 @@ repository:
 			"""
 			captures:
 				0: name: "entity.function.local-variables.apl"
-				1: patterns: [name: "punctuation.separator.apl", match: ";"]
+				1: patterns: [include: "#semi"]
 		}, include: "#main"]
 		beginCaptures:
 			0:  name: "entity.function.definition.apl"
 			1:  name: "keyword.operator.nabla.apl"
 			2:  name: "entity.function.return-value.apl"
 			3:  name: "entity.function.return-value.shy.apl"
-			4:  name: "punctuation.definition.return-value.begin.apl"
-			5:  name: "punctuation.definition.return-value.end.apl"
-			6:  name: "punctuation.definition.return-value.begin.apl"
-			7:  name: "punctuation.definition.return-value.end.apl"
-			8:  name: "punctuation.definition.return-value.begin.apl"
-			9:  name: "punctuation.definition.return-value.end.apl"
-			10: name: "punctuation.definition.return-value.begin.apl"
-			11: name: "punctuation.definition.return-value.end.apl"
+			4:  name: "punctuation.definition.return-value.begin.apl", patterns: [include: "#punct"]
+			5:  name: "punctuation.definition.return-value.end.apl",   patterns: [include: "#punct"]
+			6:  name: "punctuation.definition.return-value.begin.apl", patterns: [include: "#punct"]
+			7:  name: "punctuation.definition.return-value.end.apl",   patterns: [include: "#punct"]
+			8:  name: "punctuation.definition.return-value.begin.apl", patterns: [include: "#punct"]
+			9:  name: "punctuation.definition.return-value.end.apl",   patterns: [include: "#punct"]
+			10: name: "punctuation.definition.return-value.begin.apl", patterns: [include: "#punct"]
+			11: name: "punctuation.definition.return-value.end.apl",   patterns: [include: "#punct"]
 			12: name: "keyword.operator.assignment.apl"
 			13: name: "entity.function.name.apl", patterns: [include: "#embolden"]
 			14: name: "entity.function.axis.apl"
-			15: name: "punctuation.definition.axis.begin.apl"
+			15: name: "punctuation.definition.axis.begin.apl", patterns: [include: "#punct"]
 			16: name: "invalid.illegal.extra-characters.apl"
 			17: name: "invalid.illegal.apl"
-			18: name: "punctuation.definition.axis.end.apl"
+			18: name: "punctuation.definition.axis.end.apl", patterns: [include: "#punct"]
 			19: name: "entity.function.arguments.right.apl"
-			20: name: "punctuation.definition.arguments.begin.apl"
-			21: name: "punctuation.definition.arguments.end.apl"
+			20: name: "punctuation.definition.arguments.begin.apl", patterns: [include: "#punct"]
+			21: name: "punctuation.definition.arguments.end.apl",   patterns: [include: "#punct"]
 			22: name: "entity.function.arguments.left.apl"
 			23: name: "entity.function.arguments.left.optional.apl"
-			24: name: "punctuation.definition.arguments.begin.apl"
-			25: name: "punctuation.definition.arguments.end.apl"
-			26: name: "punctuation.definition.arguments.begin.apl"
-			27: name: "punctuation.definition.arguments.end.apl"
-			28: name: "punctuation.definition.arguments.begin.apl"
-			29: name: "punctuation.definition.arguments.end.apl"
+			24: name: "punctuation.definition.arguments.begin.apl", patterns: [include: "#punct"]
+			25: name: "punctuation.definition.arguments.end.apl",   patterns: [include: "#punct"]
+			26: name: "punctuation.definition.arguments.begin.apl", patterns: [include: "#punct"]
+			27: name: "punctuation.definition.arguments.end.apl",   patterns: [include: "#punct"]
+			28: name: "punctuation.definition.arguments.begin.apl", patterns: [include: "#punct"]
+			29: name: "punctuation.definition.arguments.end.apl",   patterns: [include: "#punct"]
 			30: name: "entity.function.name.apl", patterns: [include: "#embolden"]
 			31: name: "entity.function.axis.apl"
-			32: name: "punctuation.definition.axis.begin.apl"
+			32: name: "punctuation.definition.axis.begin.apl", patterns: [include: "#punct"]
 			33: name: "invalid.illegal.extra-characters.apl"
 			34: name: "invalid.illegal.apl"
-			35: name: "punctuation.definition.axis.end.apl"
+			35: name: "punctuation.definition.axis.end.apl", patterns: [include: "#punct"]
 			36: name: "entity.function.operands.apl"
-			37: name: "punctuation.definition.operands.begin.apl"
+			37: name: "punctuation.definition.operands.begin.apl", patterns: [include: "#punct"]
 			38: name: "entity.function.operands.left.apl"
 			39: name: "entity.function.name.apl", patterns: [include: "#embolden"]
 			40: name: "entity.function.axis.apl"
-			41: name: "punctuation.definition.axis.begin.apl"
+			41: name: "punctuation.definition.axis.begin.apl", patterns: [include: "#punct"]
 			42: name: "invalid.illegal.extra-characters.apl"
 			43: name: "invalid.illegal.apl"
-			44: name: "punctuation.definition.axis.end.apl"
+			44: name: "punctuation.definition.axis.end.apl", patterns: [include: "#punct"]
 			45: name: "entity.function.operands.right.apl"
-			46: name: "punctuation.definition.operands.end.apl"
+			46: name: "punctuation.definition.operands.end.apl", patterns: [include: "#punct"]
 			47: name: "entity.function.arguments.right.apl"
-			48: name: "punctuation.definition.arguments.begin.apl"
-			49: name: "punctuation.definition.arguments.end.apl"
+			48: name: "punctuation.definition.arguments.begin.apl", patterns: [include: "#punct"]
+			49: name: "punctuation.definition.arguments.end.apl",   patterns: [include: "#punct"]
 			50: name: "comment.line.lamp.apl"
 			51: name: "invalid.illegal.arguments.right.apl"
 			52: name: "entity.function.local-variables.apl"
-			53: patterns: [name: "punctuation.separator.apl", match: ";"]
+			53: patterns: [include: "#semi"]
 			54: name: "invalid.illegal.local-variables.apl"
 			55: name: "comment.line.lamp.apl"
 		endCaptures:
@@ -660,8 +678,8 @@ repository:
 		name: "meta.lambda.function.apl"
 		begin: "\\{"
 		end:   "\\}"
-		beginCaptures: 0: name: "punctuation.definition.lambda.begin.apl"
-		endCaptures:   0: name: "punctuation.definition.lambda.end.apl"
+		beginCaptures: 0: name: "punctuation.definition.lambda.begin.apl", patterns: [include: "#punct"]
+		endCaptures:   0: name: "punctuation.definition.lambda.end.apl",   patterns: [include: "#punct"]
 		patterns: [
 			{include: "#common"}
 			{include: "#lambda-variables"}
@@ -878,10 +896,12 @@ repository:
 
 	# Sequence of comma-separated values
 	csv:
-		patterns: [
-			{match: ",", name: "punctuation.separator.apl"}
-			{include: "#main"}
-		]
+		patterns: [{
+			name: "punctuation.separator.delimiter.comma.apl"
+			match: ","
+			captures:
+				0: patterns: [include: "#punct"]
+		}, include: "#main"]
 
 
 
