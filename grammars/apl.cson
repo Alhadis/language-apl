@@ -114,12 +114,26 @@ repository:
 		}]
 
 
+	# List delimiter, only used in Dyalog-specific contexts where APL operators aren't expected
+	comma:
+		name: "punctuation.separator.delimiter.comma.apl"
+		match: ","
+		captures:
+			0: patterns: [include: "#punct"]
+
+
 	# Member access
 	dot:
 		name: "punctuation.delimiter.group.namespace.separator.apl"
 		match: "\\."
 		captures:
 			0: patterns: [include: "#punct"]
+
+
+	# Wildcard match symbol
+	glob:
+		name: "keyword.operator.glob.wildcard.apl"
+		match: "\\*"
 
 
 	# Patterns to improve GitHub's display of punctuation characters
@@ -803,7 +817,7 @@ repository:
 						0: name: "constant.other.reference.link"
 
 					{include: "#dot"}
-					{match: "\\*", name: "keyword.operator.glob.wildcard.apl"}
+					{include: "#glob"}
 					{match: "(?:^|\\G)(⎕←)", name: "keyword.operator.quad.display-result.line-by-line.apl"}
 					{include: "#symbols"}
 				]
@@ -858,7 +872,7 @@ repository:
 	sck:
 		patterns: [{
 			# :Require file://[path]/file.dyalog
-			name:  "meta.require.apl"
+			name:  "meta.statement.require.apl"
 			begin: "(?<=\\s|^|\\A\uFEFF)(:)Require(?=$|\\s)"
 			end:   "([^⍝\\s]+)|(?=\\s*(?:$|⍝))"
 			beginCaptures:
@@ -871,6 +885,163 @@ repository:
 					captures:
 						1: name: "invalid.illegal.not-allowed.apl"
 				}]
+		},{
+			# :Namespace NS
+			name:  "meta.namespace-script.apl"
+			begin: "(?<=^|\\A\uFEFF)\\s*((:)Namespace)(?=$|\\s)(?:\\s+((?![¯0-9])[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+))?"
+			end:   "^\\s*((:)EndNamespace)(?=$|\\s)"
+			beginCaptures:
+				0: name: "meta.statement.namespace.apl"
+				1: name: "keyword.control.directive.namespace.begin.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+				3: name: "entity.name.tag.namespace.apl"
+			endCaptures:
+				0: name: "meta.statement.end-namespace.apl"
+				1: name: "keyword.control.directive.namespace.end.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+			patterns: [include: "#main"]
+		},{
+			# :Access <Private|Public> <Instance|Shared> <Overridable|Override>
+			name:  "meta.statement.access.apl"
+			begin: "(?i)^\\s*((:)Access)(?=$|\\s)"
+			end:   "(?=\\s*(?:$|⍝))"
+			beginCaptures:
+				1: name: "keyword.control.directive.access.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+			patterns: [{
+				name: "storage.modifier.access.${1:/downcase}.apl"
+				match: "(?i)(?<=\\s)(Private|Public)(?=$|\\s)"
+			},{
+				name: "storage.modifier.instantiation.${1:/downcase}.apl"
+				match: "(?i)(?<=\\s)(Instance|Shared)(?=$|\\s)"
+			},{
+				name: "storage.modifier.method.${1:/downcase}.apl"
+				match: "(?i)(?<=\\s)(Overridable|Override)(?=$|\\s)"
+			},{
+				name: "storage.modifier.method.web.apl"
+				match: "(?i)(?<=\\s)WebMethod(?=$|\\s)"
+			}]
+		},{
+			# “:Interface” statement
+			name:  "meta.interface-script.apl"
+			begin: "(?i)(?<=^|\\A\uFEFF)\\s*((:)Interface)(?=$|\\s)(?:\\s+((?![¯0-9])[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+))?"
+			end:   "^\\s*((:)EndInterface)(?=$|\\s)"
+			beginCaptures:
+				0: name: "meta.statement.interface.apl"
+				1: name: "keyword.control.directive.interface.begin.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+				3: name: "entity.other.class.interface.apl"
+			endCaptures:
+				0: name: "meta.statement.end-interface.apl"
+				1: name: "keyword.control.directive.interface.end.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+			patterns: [include: "#main"]
+		},{
+			# “:Implements” statement
+			name:  "meta.statement.implements.apl"
+			begin: "(?i)^\\s*((:)Implements)(?=$|\\s)"
+			end:   "(?=\\s*(?:$|⍝))"
+			beginCaptures:
+				1: name: "keyword.control.directive.implements.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+			patterns: [{
+				name:  "meta.constructor-spec.apl"
+				begin: "(?i)\\G\\s+(Constructor)(?=$|\\s)"
+				end:   "(?=\\s*(?:$|⍝))"
+				beginCaptures:
+					1: name: "constant.language.implementation.apl"
+				patterns: [{
+					# Optional :Base constructor
+					match: "(?i)\\G\\s+((:)Base)(?=$|\\s)(?:\\s+((?=\\S)[^⍝]+))?"
+					beginCaptures:
+						1: name: "keyword.control.directive.base-constructor.apl"
+						2: name: "punctuation.definition.keyword.sck.apl"
+						3: patterns: [include: "#common"]
+				}]
+			},{
+				name:  "meta.destructor-spec.apl"
+				match: "(?i)\\G\\s+(Destructor)(?=$|\\s)"
+				captures:
+					1: name: "constant.language.implementation.apl"
+			},{
+				name:  "meta.method-spec.apl"
+				begin: "(?i)\\G\\s+(Method)(?=$|\\s)"
+				end:   "([^\\s⍝]+)|(?=\\s*(?:$|⍝))"
+				beginCaptures:
+					1: name: "constant.language.implementation.apl"
+				endCaptures:
+					1: patterns: [
+						{include: "#namespaces"}
+						{include: "#name"}
+					]
+			},{
+				name:  "meta.trigger-spec.apl"
+				begin: "(?i)\\G\\s+(Trigger)(?=$|\\s)"
+				end:   "(?=\\s*(?:$|⍝))"
+				beginCaptures:
+					1: name: "constant.language.implementation.apl"
+				patterns: [
+					{include: "#namespaces"}
+					{include: "#name"}
+					{include: "#comma"}
+					
+					match: "\\G\\s+(\\*)(?=\\s*(?:$|⍝))"
+					captures:
+						1: patterns: [include: "#glob"]
+				]
+			}]
+		},{
+			# :Using DotNetNamespace,Assembly
+			name:  "meta.statement.using.apl"
+			match: "(?i)^\\s*((:)Using)(?=$|\\s)(?:\\s+((?:[^\\s,⍝.]+\\.)++)?([^\\s,⍝.]+)?(?:(,)(([^\\s⍝]+)))?)?"
+			captures:
+				1: name: "keyword.control.directive.using.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+				3: patterns: [include: "#namespaces"]
+				4: name: "entity.other.dotnet-namespace.apl"
+				5: patterns: [include: "#comma"]
+				6: name: "string.unquoted.filepath.dotnet-assembly.apl"
+				7: name: "constant.other.reference.link"
+		},{
+			# :Attribute DotNetAttribute constructor-arg-list
+			name:  "meta.statement.attribute.apl"
+			begin: "(?i)^\\s*((:)Attribute)(?=$|\\s)"
+			end:   "(?=\\s*(?:$|⍝))"
+			beginCaptures:
+				1: name: "keyword.control.directive.attribute.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+			patterns: [{
+				# DotNet attribute name
+				match: "\\G\\s+(\\w+)"
+				captures:
+					1: name: "entity.other.attribute-name.apl"
+			}, include: "#common"]
+		},{
+			# :Signature resultType←methodName ArgNType ArgNName
+			name:  "meta.statement.signature.apl"
+			begin: "(?i)^\\s*((:)Signature)(?=$|\\s)"
+			end:   "(?=\\s*(?:$|⍝))"
+			beginCaptures:
+				1: name: "keyword.control.directive.signature.apl"
+				2: name: "punctuation.definition.keyword.sck.apl"
+			patterns: [{
+				name:  "meta.result-type.apl"
+				match: "\\G\\s+((?:[^\\s,⍝.]+\\.)++)?([^\\s,⍝.]+)(←)((?![¯0-9])[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+)"
+				captures:
+					1: patterns: [include: "#namespaces"]
+					2: name: "storage.type.result.dotnet.apl", patterns: [include: "#brackets"]
+					3: name: "keyword.operator.assignment.apl"
+					4: name: "entity.name.method.apl"
+			},{
+				name:  "meta.argument-spec.apl"
+				match: """(?x) (?!\\G)
+					((?![¯0-9])[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+) \\s+
+					((?![¯0-9])[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+)
+				"""
+				captures:
+					1: name: "storage.type.argument.apl"
+					2: name: "variable.parameter.argument.apl"
+			}, include: "#comma"]
 		},{
 			# Other control statements
 			name: "keyword.control.sck.apl"
@@ -923,6 +1094,7 @@ repository:
 			2: name: "punctuation.definition.class.apl"
 		patterns: [
 			{include: "#field"}
+			{include: "#property"}
 			{include: "#main"}
 		]
 
@@ -955,14 +1127,36 @@ repository:
 		}]
 
 
+	# Class property definition
+	property:
+		name: "meta.property.apl"
+		begin: """(?xi) ^\\s*
+			((:)Property)
+			(?:\\s+(Numbered|Keyed))?
+			(?:\\s+(Default))?
+			\\s+('(?:[^']|'')*+'|(?![¯0-9])[A-Z_a-zÀ-ÖØ-Ýßà-öø-üþ∆⍙Ⓐ-Ⓩ¯0-9]+)
+		"""
+		end: "(?<=\\s|^)((:)EndProperty)(?=\\b)"
+		beginCaptures:
+			0: name: "meta.statement.property.apl"
+			1: name: "keyword.control.property.begin.apl"
+			2: name: "punctuation.definition.property.apl"
+			3: name: "storage.modifier.property.${3:/downcase}.apl"
+			4: name: "storage.modifier.default-property.apl"
+			5: name: "entity.name.property.apl", patterns: [include: "#strings"]
+		endCaptures:
+			0: name: "meta.statement.end-property.apl"
+			1: name: "keyword.control.property.end.apl"
+			2: name: "punctuation.definition.property.apl"
+		patterns: [include: "#main"]
+
+
 	# Sequence of comma-separated values
 	csv:
-		patterns: [{
-			name: "punctuation.separator.delimiter.comma.apl"
-			match: ","
-			captures:
-				0: patterns: [include: "#punct"]
-		}, include: "#main"]
+		patterns: [
+			{include: "#comma"}
+			{include: "#main"}
+		]
 
 
 
